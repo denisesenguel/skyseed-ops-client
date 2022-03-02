@@ -1,0 +1,22 @@
+// overwrite theme variables
+// $primary: #11414D;
+// $secondary: #18D57F;
+// $light: #EFEFEB;
+// this does not work for some reason. 
+// It seems to be overridden with default default values.
+
+// define bootstrap custom colors instead
+$theme-colors: (
+    "primary-cstm": #11414D,
+    "secondary-cstm": #18D57F,
+    "neutral-grey": #F4F6F7,
+    "neutral-beige": #EFEFEB,
+    "error-cstm": #d53118,
+    "success-cstm": #114d1d,
+    // the ones below are optional and might not be needed
+    "info-cstm": #189181,
+    "warning-cstm": #4d2311
+    );
+
+// this needs to be imported at the bottom of the file!
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

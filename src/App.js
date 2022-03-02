@@ -7,7 +7,7 @@ import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
-    <div>
+    <div className="text-primary-cstm">
       <Routes>
         <Route path="/" element={ <LandingPage /> } />
         <Route path="/signup" element={ <SignupPage />} />
