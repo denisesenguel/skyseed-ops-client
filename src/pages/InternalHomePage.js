@@ -6,11 +6,12 @@ import ProjectCreatePage from './ProjectCreatePage';
 import CustomersPage from './CustomersPage';
 import CustomerDetailsPage from './CustomerDetailsPage';
 import CustomerCreatePage from './CustomerCreatePage';
+import Header from '../components/Header';
 
 export default function InternalHomePage() {
-
   return (
     <div>
+    <Header />
     <h1>InternalHomePage</h1>
       <Routes>
         <Route path="/" element={ <ProjectsList /> }/>

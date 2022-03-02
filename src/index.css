@@ -29,7 +29,8 @@ p {
   font-weight: lighter;
 }
 
-.LandingPage {
+.bg-forest {
   background-image: url('./images/forest_bg_website.jpg');
   background-size: cover;
+  background-position: center;
 }
