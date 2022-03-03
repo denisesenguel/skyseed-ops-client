@@ -6,7 +6,7 @@ import logoDark from '../logo/brand_dark.png';
 export default function NavBar() {
   return (
     <div>
-        <Navbar bg="neutral-grey" className="header-height px-4 d-flex justify-content-between" sticky="top">
+        <Navbar bg="neutral-grey" className="fix-header-height bg-neutral-grey px-4 d-flex justify-content-between" sticky="top">
             <Navbar.Brand>
                 <Link to="/">
                     <img height="32px" src={ logoDark } alt="Skyseed Logo"/>

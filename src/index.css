@@ -58,3 +58,7 @@ p {
   background-color: #18D57F !important;
   border: none;
 }
+
+.cstm-max-width {
+  max-width: 620px !important;
+}
