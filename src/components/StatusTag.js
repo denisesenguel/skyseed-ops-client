@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 export default function StatusTag(props) {
 
-    const { status, className }  = props;
+    const { status, className, clickHandler }  = props;
     const colorMapping = {
         planned: "warning-cstm",
         ongoing: "info-cstm",
@@ -12,6 +12,7 @@ export default function StatusTag(props) {
     return(
         <div>
             <Button 
+                onClick={ clickHandler }
                 size="sm" 
                 variant="custom" 
                 className={ `bg-${colorMapping[status]} text-white rounded-pill ${className}` }>

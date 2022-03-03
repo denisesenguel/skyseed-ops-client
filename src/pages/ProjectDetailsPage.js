@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Nav, Button } from 'react-bootstrap';
+import { Nav, Button, ToastContainer, Toast } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
 import ButtonMailTo from '../components/ButtonMailTo';
@@ -13,6 +13,7 @@ export default function ProjectDetailsPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
+  const [showSelectStatus, setShowSelectStatus] = useState(false);
 
   useEffect(() => {
     axios
@@ -44,12 +45,19 @@ export default function ProjectDetailsPage() {
       .catch((error) => console.log("Error updating project: ", error));
   }
 
+  const toggleSelectStatus = () => setShowSelectStatus((previous) => !previous); 
+
+  function editStatus(id, newStatus) {
+    editProject(id, {status: newStatus});
+    toggleSelectStatus();
+  }
+
   return (
     <div className="m-5 w-100">
         <h4>{ project.title } - { project.season } { project.year }</h4>
         <div className="d-flex">
           <p className="my-auto">{ project.location}</p>
-          <StatusTag className="mx-3" status={ project.status } />
+          <StatusTag clickHandler={ toggleSelectStatus } className="mx-3" status={ project.status } />
         </div>
         <div className="w-100 d-flex justify-content-between align-items-center">
         <Link 
@@ -87,6 +95,23 @@ export default function ProjectDetailsPage() {
         <div className="d-flex justify-content-end">
           <Button onClick={ () => deleteProject(project._id) } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
         </div>
+
+          <div>
+              <ToastContainer position="top-center" className="mt-5 p-3">
+                  <Toast onClose={ toggleSelectStatus } show={ showSelectStatus }  bg="neutral-grey">
+                      <Toast.Header className="d-flex justify-content-between text-secondary-cstm bg-neutral-grey">
+                        <h6>Change status</h6>
+                      </Toast.Header>
+                      <Toast.Body>
+                        <div className="d-flex justify-content-center">
+                          {
+                            ['ongoing', 'planned', 'finished'].map((type) => <StatusTag clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
+                          }
+                        </div>
+                      </Toast.Body>
+                  </Toast>
+              </ToastContainer>
+          </div>
 
     </div>
   )
