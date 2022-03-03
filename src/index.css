@@ -34,3 +34,11 @@ p {
   background-size: cover;
   background-position: center;
 }
+
+.fix-header-height {
+  height: 60px;
+}
+
+.fix-content-height {
+  height: calc(100vh - 60px);
+}
