@@ -2,7 +2,7 @@ import React from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
-  CDBSidebarFooter,
+  //CDBSidebarFooter,
   CDBSidebarHeader,
   CDBSidebarMenu,
   CDBSidebarMenuItem,
@@ -42,11 +42,11 @@ function SideBar() {
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter>
+        {/* <CDBSidebarFooter>
           <div className="px-4 text-center">
              <p> ⓒ Skyseed GmbH </p>
           </div>
-        </CDBSidebarFooter>
+        </CDBSidebarFooter> */}
       </CDBSidebar>
     </div>
   );

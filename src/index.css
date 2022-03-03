@@ -42,3 +42,21 @@ p {
 .fix-content-height {
   height: calc(100vh - 60px);
 }
+
+.hover-beige {
+  font-weight: inherit;
+}
+
+.hover-beige:hover {
+  background-color: beige;
+  color: #11414D
+}
+
+.active-green {
+  font-weight: inherit;
+}
+
+.active-green:active {
+  background-color: #18D57F;
+  color: white;
+}
