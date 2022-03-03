@@ -13,7 +13,7 @@ export default function InternalHomePage() {
   return (
     <div>
       <Header />
-      <div className="fix-content-height d-flex">
+      <div className="fix-content-height d-flex bg-neutral-grey">
         <SideBar />
           <Routes>
             <Route path="/" element={ <ProjectsList /> }/>
