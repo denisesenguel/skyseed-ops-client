@@ -13,7 +13,6 @@ export default function ProjectDetailsPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios
@@ -38,13 +37,12 @@ export default function ProjectDetailsPage() {
   function editProject(id, newProject) {
     axios
       .put(`${process.env.REACT_APP_API_URL}/projects/${id}`, newProject)
-      .then((updatedProject) => {
-        setProject(updatedProject)
+      .then((response) => {
+        setProject(response.data)
+        console.log("success!", response.data)
       })
       .catch((error) => console.log("Error updating project: ", error));
   }
-
-  const toggleEditMode = () => setEditMode((previous) => !previous);
 
   return (
     <div className="m-5 w-100">
@@ -82,14 +80,11 @@ export default function ProjectDetailsPage() {
           </Nav.Item>
         </Nav>
 
-        { selectedTab === 'summary' && <ProjectSummary project={ project } editMode={ editMode } onEdit={ editProject }/> }
+        { selectedTab === 'summary' && <ProjectSummary project={ project } onEdit={ editProject }/> }
         { selectedTab === 'details' && <div> Will be populated when model gets extended </div> }
-        { selectedTab === 'checklist' && <ProjectChecklist project={ project } editMode={ editMode } onEdit={ editProject }/> }
+        { selectedTab === 'checklist' && <ProjectChecklist project={ project } onEdit={ editProject }/> }
 
         <div className="d-flex justify-content-end">
-          <Button onClick={ toggleEditMode } variant="custom" className="bg-secondary-cstm mx-2" >
-            { editMode ? "Save Changes" : "Edit Details" }
-          </Button>
           <Button onClick={ () => deleteProject(project._id) } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
         </div>
 
