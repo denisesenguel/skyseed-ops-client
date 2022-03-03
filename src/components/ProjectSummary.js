@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Container, Row, Col, Card } from 'react-bootstrap';
 import userImg from '../images/domi_small.png';
+import ButtonMailTo from './ButtonMailTo';
 
 export default function ProjectSummary(props) {
     
@@ -40,7 +41,9 @@ export default function ProjectSummary(props) {
                                 <Card>
                                     <Card.Img variant="top" src={ userImg }></Card.Img>
                                     <h6 className="text-center">Denise</h6>
-                                    <Button size="sm" variant="custom" className="bg-secondary-cstm">Send Email</Button>
+                                    <Button size="sm" variant="custom" className="bg-secondary-cstm">
+                                    <ButtonMailTo label="Send Email" mailto={ `mailto:${user.email}` }/>
+                                    </Button>
                                 </Card>
                             </Col>
                         ))

@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
+import ButtonMailTo from '../components/ButtonMailTo';
+import StatusTag from '../components/StatusTag';
 
 export default function ProjectDetailsPage() {
 
@@ -25,14 +27,19 @@ export default function ProjectDetailsPage() {
   return (
     <div className="m-5 w-100">
         <h4>{ project.title } - { project.season } { project.year }</h4>
-        <p>{ project.location }</p>
+        <div className="d-flex">
+          <p className="my-auto">{ project.location}</p>
+          <StatusTag className="mx-3" status={ project.status } />
+        </div>
         <div className="w-100 d-flex justify-content-between align-items-center">
         <Link 
           className="text-decoration-none text-primary-cstm" 
           to={ `/home/customers/${project.customer?._id}` }>
           <h6>Client: { [project.customer?.firstName, project.customer?.lastName].join(" ") }</h6>
         </Link>
-        <Button size="sm" variant="custom" className="bg-secondary-cstm">Email Client</Button>
+        <Button size="sm" variant="custom" className="bg-secondary-cstm">
+          <ButtonMailTo label="Email Client" mailto={ `mailto:${project.customer?.email}` }/>
+        </Button>
         </div>
 
         <Nav 

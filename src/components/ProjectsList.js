@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
+import StatusTag from './StatusTag';
 
 export default function ProjectsList() {
-
-  const colorMapping = {
-    planned: "warning-cstm",
-    ongoing: "info-cstm",
-    finished: "success-cstm"
-  }
 
   const [projects, setProjects] = useState([]);
 
@@ -47,12 +42,7 @@ export default function ProjectsList() {
                     <Col xs={2}>{ [project.season, project.year].join(" ") } </Col>
                     <Col xs={3}>{ project.location }</Col>
                     <Col xs={2}> 
-                      <Button 
-                        size="sm" 
-                        variant="primary-cstm" 
-                        className={ `bg-${colorMapping[project.status]} text-white rounded-pill` }>
-                        { project.status }
-                      </Button> 
+                    <StatusTag status={ project.stats }/>
                     </Col>
                     <Col xs={2}>{ moment(project.updatedAt).fromNow() }</Col>
                   </Row>
