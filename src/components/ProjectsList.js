@@ -42,7 +42,7 @@ export default function ProjectsList() {
                     <Col xs={2}>{ [project.season, project.year].join(" ") } </Col>
                     <Col xs={3}>{ project.location }</Col>
                     <Col xs={2}> 
-                    <StatusTag status={ project.stats }/>
+                    <StatusTag status={ project.status }/>
                     </Col>
                     <Col xs={2}>{ moment(project.updatedAt).fromNow() }</Col>
                   </Row>

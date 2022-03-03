@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
@@ -9,6 +9,7 @@ import ProjectChecklist from '../components/ProjectChecklist';
 
 export default function ProjectDetailsPage() {
 
+  const navigate = useNavigate();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
@@ -24,6 +25,14 @@ export default function ProjectDetailsPage() {
       .catch((error) => console.log("Error getting project: ", error))
   }, [])
 
+  function deleteProject() {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
+      .then(() => {
+        navigate("/home/projects?deleted=true");
+      })
+      .catch((error) => console.log("Error deleting project: ", error))
+  }
 
   return (
     <div className="m-5 w-100">
@@ -64,6 +73,11 @@ export default function ProjectDetailsPage() {
         { selectedTab === 'summary' && <ProjectSummary project={ project }/> }
         { selectedTab === 'details' && <div> Will be populated when model gets extended </div> }
         { selectedTab === 'checklist' && <ProjectChecklist project={ project }/> }
+
+        <div className="d-flex justify-content-end">
+          {/* <Button variant="custom" className="bg-secondary-cstm mx-2" >Edit Details</Button> */}
+          <Button onClick={ deleteProject } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
+        </div>
 
     </div>
   )

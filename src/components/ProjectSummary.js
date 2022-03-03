@@ -52,10 +52,6 @@ export default function ProjectSummary(props) {
                 </Row>
             </Container>
 
-            <div className="d-flex justify-content-end">
-                {/* <Button variant="custom" className="bg-secondary-cstm mx-2" >Edit Details</Button> */}
-                <Button variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
-            </div>
         </div>
 
     )
