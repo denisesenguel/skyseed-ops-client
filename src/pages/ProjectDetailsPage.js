@@ -5,6 +5,7 @@ import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
 import ButtonMailTo from '../components/ButtonMailTo';
 import StatusTag from '../components/StatusTag';
+import ProjectChecklist from '../components/ProjectChecklist';
 
 export default function ProjectDetailsPage() {
 
@@ -61,8 +62,8 @@ export default function ProjectDetailsPage() {
         </Nav>
 
         { selectedTab === 'summary' && <ProjectSummary project={ project }/> }
-        { selectedTab === 'details' && <div> Render Sowing details here </div> }
-        { selectedTab === 'checklist' && <div> Render summary here </div> }
+        { selectedTab === 'details' && <div> Will be populated when model gets extended </div> }
+        { selectedTab === 'checklist' && <ProjectChecklist project={ project }/> }
 
     </div>
   )
