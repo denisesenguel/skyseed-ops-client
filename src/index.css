@@ -43,20 +43,11 @@ p {
   height: calc(100vh - 60px);
 }
 
-.hover-beige {
+.active-secondary{
   font-weight: inherit;
 }
 
-.hover-beige:hover {
-  background-color: beige;
-  color: #11414D
-}
-
-.active-green {
-  font-weight: inherit;
-}
-
-.active-green:active {
-  background-color: #18D57F;
-  color: white;
+.active-secondary:active, .active-green:focus {
+  background-color: #18D57F !important;
+  border: none;
 }
