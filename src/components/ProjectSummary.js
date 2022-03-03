@@ -1,31 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col, Card } from 'react-bootstrap';
 import userImg from '../images/domi_small.png';
 import ButtonMailTo from './ButtonMailTo';
 
 export default function ProjectSummary(props) {
     
-    const { project } = props;
-    
+    const { project, onEdit, editMode } = props;
+    const [description, setDescription] = useState(project.description);
+    const [sizeInHa, setSizeInHa] = useState(project.sizeInHa);
+
+    function handleSubmit(evnt) {
+        evnt.preventDefault();
+        onEdit(project._id, {sizeInHa, description});
+    }
+
     return (
         <div className="mt-3">
-            <Form>
+            <Form onSubmit={ handleSubmit }>
                 <Form.Group controlId="description">
                     <Form.Label>Description</Form.Label>
                     <Form.Control 
-                        readOnly={ true }
+                        readOnly={ editMode ? false : true }
                         className="bg-white"
-                        as="textarea" rows={3} placeholder="Give a short description"
-                        value={ project.description } 
+                        as="textarea" rows={3}
+                        onChange={ (e) => setDescription(e.target.value) }
+                        value={ description } 
                     />
                 </Form.Group>
                 <Form.Group controlId="sizeInHa">
                     <Form.Label>Size (in ha)</Form.Label>
                     <Form.Control 
-                        readOnly={ true }
+                        readOnly={ editMode ? false : true }
                         type="number" 
                         className="bg-white"
-                        value={ project.sizeInHa } 
+                        onChange={ (e) => setSizeInHa(e.target.value) } 
+                        value={ sizeInHa } 
                     />
                 </Form.Group>
                 <h6 className="text-secondary-cstm my-3">More Infos following later...</h6>

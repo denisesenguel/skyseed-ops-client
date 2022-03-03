@@ -13,6 +13,7 @@ export default function ProjectDetailsPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,14 +26,25 @@ export default function ProjectDetailsPage() {
       .catch((error) => console.log("Error getting project: ", error))
   }, [])
 
-  function deleteProject() {
+  function deleteProject(id) {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/projects/${id}`)
       .then(() => {
         navigate("/home/projects?deleted=true");
       })
       .catch((error) => console.log("Error deleting project: ", error))
   }
+
+  function editProject(id, newProject) {
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/projects/${id}`, newProject)
+      .then((updatedProject) => {
+        setProject(updatedProject)
+      })
+      .catch((error) => console.log("Error updating project: ", error));
+  }
+
+  const toggleEditMode = () => setEditMode((previous) => !previous);
 
   return (
     <div className="m-5 w-100">
@@ -70,13 +82,15 @@ export default function ProjectDetailsPage() {
           </Nav.Item>
         </Nav>
 
-        { selectedTab === 'summary' && <ProjectSummary project={ project }/> }
+        { selectedTab === 'summary' && <ProjectSummary project={ project } editMode={ editMode } onEdit={ editProject }/> }
         { selectedTab === 'details' && <div> Will be populated when model gets extended </div> }
-        { selectedTab === 'checklist' && <ProjectChecklist project={ project }/> }
+        { selectedTab === 'checklist' && <ProjectChecklist project={ project } editMode={ editMode } onEdit={ editProject }/> }
 
         <div className="d-flex justify-content-end">
-          {/* <Button variant="custom" className="bg-secondary-cstm mx-2" >Edit Details</Button> */}
-          <Button onClick={ deleteProject } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
+          <Button onClick={ toggleEditMode } variant="custom" className="bg-secondary-cstm mx-2" >
+            { editMode ? "Save Changes" : "Edit Details" }
+          </Button>
+          <Button onClick={ () => deleteProject(project._id) } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
         </div>
 
     </div>
