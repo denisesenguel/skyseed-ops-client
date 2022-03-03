@@ -7,8 +7,8 @@ export default function LandingPage() {
         <div>
             <NavBar />
             <div className="fix-content-height bg-forest text-neutral-grey d-flex flex-column justify-content-center align-items-center">
-                <h1>LandingPage!</h1>
-                <h4>Something cool about Reforestation</h4>
+                <h1>Reforestation at Scale</h1>
+                <h4 className="font-roboto-slab">Using Drones and Pelletized Seeds</h4>
             </div>
       </div>
     )
