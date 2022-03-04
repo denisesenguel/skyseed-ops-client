@@ -16,20 +16,28 @@ export default function ProjectDetailsPage() {
   const [selectedTab, setSelectedTab] = useState("summary");
   const [showSelectStatus, setShowSelectStatus] = useState(false);
 
+  const storedToken = localStorage.getItem("authToken");
+
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/projects/${projectId}`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
       .then((response) => {
         console.log("server response: ", response.data)
         setProject(response.data)
       }
       )
       .catch((error) => console.log("Error getting project: ", error))
-  }, [projectId])
+  }, [projectId, storedToken])
 
   function deleteProject(id) {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/projects/${id}`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/projects/${id}`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
       .then(() => {
         navigate("/home/projects?deleted=true");
       })
@@ -38,7 +46,11 @@ export default function ProjectDetailsPage() {
 
   function editProject(id, newProject) {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/projects/${id}`, newProject)
+      .put(
+        `${process.env.REACT_APP_API_URL}/projects/${id}`, 
+        newProject,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
       .then((response) => {
         setProject(response.data)
         console.log("success!", response.data)

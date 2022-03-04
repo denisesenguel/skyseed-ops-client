@@ -15,13 +15,18 @@ export default function InternalHomePage() {
 
   const [projects, setProjects] = useState([]);
   const { user } = useContext(AuthContext);
+  const storedToken = localStorage.getItem('authToken');
+  console.log(storedToken);
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/projects`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/projects`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
       .then((response) => setProjects(response.data))
       .catch((error) => console.log("Could not get projects from DB: ", error));
-  }, []);
+  }, [storedToken]);
 
   function getMyProjects(userId) {
     if (projects?.length > 0) {

@@ -15,12 +15,16 @@ export default function ProjectCreatePage() {
   const [submitState, setSubmitState] = useState(undefined);
   
   const { user } = useContext(AuthContext);
+  const storedToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     
     // get list of all users first names + email for managers dropdown in form 
     axios
-    .get(`${process.env.REACT_APP_API_URL}/users`)
+    .get(
+      `${process.env.REACT_APP_API_URL}/users`,
+      { headers: { Authorization: `Bearer ${storedToken}` } }
+    )
     .then((response) => {
       const usersFormatted = response.data.map(user => {
         return {
@@ -34,7 +38,10 @@ export default function ProjectCreatePage() {
     
     // get list of all customer names incl emails (for unique matching)
     axios
-    .get(`${process.env.REACT_APP_API_URL}/customers`)
+    .get(
+      `${process.env.REACT_APP_API_URL}/customers`,
+      { headers: { Authorization: `Bearer ${storedToken}` } }
+    )
     .then((response) => {
       const customersFormatted = response.data.map(customer => {
         return {
@@ -45,7 +52,7 @@ export default function ProjectCreatePage() {
       setAllCustomers(customersFormatted);
     })
     .catch((error) => console.log("Error getting customers from API: ", error));
-  }, []);
+  }, [storedToken]);
   
   function handleInputs(evnt) {
     const newInputs = {...formInputs};
@@ -66,7 +73,11 @@ export default function ProjectCreatePage() {
       const reqBody = {...rest, customer: customerId, managers: managerIds, owner: user._id};
   
       axios
-        .post(`${process.env.REACT_APP_API_URL}/projects`, reqBody)
+        .post(
+          `${process.env.REACT_APP_API_URL}/projects`, 
+          reqBody,
+          { headers: { Authorization: `Bearer ${storedToken}` } }
+        )
         .then((response) => {
           setSubmitState('success');
           const newInputs = {...formInputs};
