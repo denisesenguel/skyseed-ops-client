@@ -25,7 +25,7 @@ export default function ProjectDetailsPage() {
       }
       )
       .catch((error) => console.log("Error getting project: ", error))
-  }, [])
+  }, [projectId])
 
   function deleteProject(id) {
     axios

@@ -62,7 +62,7 @@ export default function ProjectSummary(props) {
                     (!project || !project?.managers || project?.managers?.length === 0) ?
                         <p> None assigned yet.</p> :
                         project.managers.map((user) => (
-                            <Col key={user._id} xs={2} className="mx-0 px-0 text-primary-cstm d-flex align-items-center" key={ user._id }>
+                            <Col key={user._id} xs={2} className="mx-0 px-0 text-primary-cstm d-flex align-items-center">
                                 <Card>
                                     <Card.Img variant="top" src={ userImg }></Card.Img>
                                     <h6 className="text-center">Denise</h6>
