@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import InternalHomePage from "./pages/InternalHomePage";
 import ErrorPage from "./pages/ErrorPage";
+import IsPrivate from "./components/IsPrivate";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" element={ <LandingPage /> } />
         <Route path="/signup" element={ <SignupPage />} />
         <Route path="/login" element={ <LoginPage />} />
-        <Route path="/home/*" element={ <InternalHomePage />}/>
+        <Route path="/home/*" element={ <IsPrivate> <InternalHomePage /> </IsPrivate> }/>
         <Route path="*" element={<ErrorPage status={404} message="Requested URL not found" />}/>
       </Routes>
     </div>

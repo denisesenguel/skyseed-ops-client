@@ -16,11 +16,12 @@ export default function LoginPage() {
 
     function loginUser(evnt) {
         evnt.preventDefault();
-
         axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {email, password})
             .then((response) => {
                 storeToken(response.data.authToken);
+                console.log("token stored")
                 verifyStoredToken();
+                console.log("token verified");
                 navigate("/home");
             })
             .catch((error) => {
