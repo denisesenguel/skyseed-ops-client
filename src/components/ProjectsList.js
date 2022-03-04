@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
-import axios from 'axios';
+import React from 'react';
+import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import moment from 'moment';
 import StatusTag from './StatusTag';
 
-export default function ProjectsList() {
+export default function ProjectsList(props) {
 
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/projects`)
-      .then((response) => setProjects(response.data))
-      .catch((error) => console.log("Could not get projects from DB: ", error));
-  }, []);
+  const { projects } = props;
 
   return (
     <div>
