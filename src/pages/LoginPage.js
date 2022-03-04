@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
+import axios from 'axios';
+import { AuthContext } from '../context/auth.context';
 
 export default function LoginPage() {
 
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [failure, setFailure] = useState({ hasOccured: false });
+
+    const { storeToken, verifyStoredToken } = useContext(AuthContext);
 
     function loginUser(evnt) {
         evnt.preventDefault();
-        console.log({email, password});
+
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {email, password})
+            .then((response) => {
+                storeToken(response.data.authToken);
+                verifyStoredToken();
+                navigate("/home");
+            })
+            .catch((error) => {
+                console.log('Error on Login: ', error);
+                setFailure({
+                    hasOccured:true,
+                    message: error.response.data.message
+                });
+            })
     }
 
     return (
@@ -46,6 +65,7 @@ export default function LoginPage() {
                     <p className="text-center mt-3">
                         Don't have an account yet? Signup <Link className="text-secondary-cstm" to="/signup">here</Link>
                     </p>
+                    { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
                 </Container>
             </div>
         </div>
