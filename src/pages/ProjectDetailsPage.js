@@ -6,6 +6,7 @@ import ProjectSummary from '../components/ProjectSummary';
 import ButtonMailTo from '../components/ButtonMailTo';
 import StatusTag from '../components/StatusTag';
 import ProjectChecklist from '../components/ProjectChecklist';
+import { enumArrays } from '../config/dataConfigs';
 
 export default function ProjectDetailsPage() {
 
@@ -105,7 +106,7 @@ export default function ProjectDetailsPage() {
                       <Toast.Body>
                         <div className="d-flex justify-content-center">
                           {
-                            ['ongoing', 'planned', 'finished'].map((type) => <StatusTag clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
+                            enumArrays.status.map((type) => <StatusTag clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
                           }
                         </div>
                       </Toast.Body>

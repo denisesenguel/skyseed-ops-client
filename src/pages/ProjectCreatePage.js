@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import DropDown from '../components/DropDown';
 import axios from 'axios';
+import { enumArrays } from '../config/dataConfigs';
 //import { useNavigate } from 'react-router-dom';
 
 export default function ProjectCreatePage() {
-
-  // put this somewhere else?
-  const seasons = ['Spring', 'Summer', 'Fall', 'Winter'];
-  const status = ['planned', 'ongoing', 'finished'];
 
   //const navigate = useNavigate();
   const [formInputs, setFormInputs] = useState({});
@@ -105,7 +102,7 @@ export default function ProjectCreatePage() {
               />
             </Form.Group>
             <DropDown 
-              optionsArray={ seasons } 
+              optionsArray={ enumArrays.season } 
               label="Season" fieldName="season"
               formInputs={ formInputs }
               onChange={ handleInputs }
@@ -134,7 +131,7 @@ export default function ProjectCreatePage() {
               />
             </Form.Group>
             <DropDown 
-              optionsArray={ status } 
+              optionsArray={ enumArrays.status } 
               label="Status" 
               fieldName="status" 
               formInputs={ formInputs }
