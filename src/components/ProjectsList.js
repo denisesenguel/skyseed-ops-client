@@ -27,8 +27,9 @@ export default function ProjectsList(props) {
                   <Link 
                     to={ `/home/projects/${project._id}` }
                     className="text-decoration-none active-green text-primary-cstm"
+                    key={ project._id }
                   >
-                    <Row key={ project._id } className="shadow rounded p-4 my-2">
+                    <Row className="shadow rounded p-4 my-2">
                         <Col xs={3}>{ project.title }</Col>
                         <Col xs={2}>{ [project.season, project.year].join(" ") } </Col>
                         <Col xs={3}>{ project.location }</Col>

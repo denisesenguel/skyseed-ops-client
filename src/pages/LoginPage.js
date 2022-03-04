@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
@@ -12,7 +12,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [failure, setFailure] = useState({ hasOccured: false });
 
-    const { storeToken, verifyStoredToken } = useContext(AuthContext);
+    const { storeToken, verifyStoredToken, isLoggedIn } = useContext(AuthContext);
 
     function loginUser(evnt) {
         evnt.preventDefault();
@@ -21,7 +21,8 @@ export default function LoginPage() {
                 storeToken(response.data.authToken);
                 console.log("token stored")
                 verifyStoredToken();
-                console.log("token verified");
+                console.log(isLoggedIn);
+                // this again redirects to 
                 navigate("/home");
             })
             .catch((error) => {
