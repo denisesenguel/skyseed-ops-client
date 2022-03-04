@@ -70,7 +70,7 @@ p {
   }
 }
 
-@media only screen and (min-device-width: 1200px) or (orientation: landscape) {
+@media only screen and (min-device-width: 1200px) and (orientation: landscape) {
   .res-width-container {
     width: 60%
   } 
