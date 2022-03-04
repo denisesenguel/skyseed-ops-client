@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import DropDown from '../components/DropDown';
 import axios from 'axios';
 import { enumArrays } from '../config/dataConfigs';
@@ -97,7 +97,7 @@ export default function ProjectCreatePage() {
   }
 
   return (
-    <div className="mx-5">
+    <div className="px-5 res-width-container">
       <h2 className="my-4">Add a new Project</h2>
         <Form onSubmit={ handleSubmit }>
           <Form.Group controlId="title">

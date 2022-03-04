@@ -16,7 +16,7 @@ function SideBar() {
 
   return (
     <div className="d-flex fix-content-height overflow-scroll">
-      <CDBSidebar className="bg-primary-cstm text-neutral-grey">
+      <CDBSidebar className="fix-sidebar-width bg-primary-cstm text-neutral-grey">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           Hello, { user?.firstName }
           { (user?.role === 'admin') && <p className="mb-1">Admin</p> } 

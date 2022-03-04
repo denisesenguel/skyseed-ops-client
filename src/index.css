@@ -35,7 +35,6 @@ p {
   letter-spacing: normal;
 }
 
-
 .bg-forest {
   background-image: url('./images/forest_bg_website.jpg');
   background-size: cover;
@@ -50,15 +49,29 @@ p {
   height: calc(100vh - 60px);
 }
 
-.active-secondary{
-  font-weight: inherit;
+.fix-sidebar-width {
+  width: 80px;
 }
 
-.active-secondary:active, .active-green:focus {
-  background-color: #18D57F !important;
-  border: none;
+.fix-content-width {
+  width: calc(100vw - 80px)
 }
 
-.cstm-max-width {
-  max-width: 620px !important;
+.res-width-container {
+  width: 100%
+}
+
+@media only screen and (min-device-width: 768px) {
+  .fix-sidebar-width {
+    width: 270px
+  }
+  .fix-content-width {
+    width: calc(100vw - 270px)
+  }
+}
+
+@media only screen and (min-device-width: 1200px) or (orientation: landscape) {
+  .res-width-container {
+    width: 60%
+  } 
 }

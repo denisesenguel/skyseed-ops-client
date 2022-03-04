@@ -66,7 +66,7 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="m-5 w-100">
+    <div className="res-width-container p-5">
         <h4>{ project.title } - { project.season } { project.year }</h4>
         <div className="d-flex">
           <p className="my-auto">{ project.location}</p>

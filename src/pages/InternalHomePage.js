@@ -40,19 +40,21 @@ export default function InternalHomePage() {
     <div>
       <Header />
       <div className="fix-content-height d-flex bg-neutral-grey">
-        <SideBar />
-          <Routes>
-            <Route path="/" element={ <ProjectsList projects={ projects } /> }/>
-            {/* nest further here later */}
-            <Route path="/projects" element={ <ProjectsList projects={ projects } /> }/>
-            {/* My-projects might be the same page as InternalHomePage */}
-            <Route path="/projects/my-projects" element={ <ProjectsList projects={ getMyProjects(user._id) } />} />
-            <Route path="/projects/create" element={ <ProjectCreatePage />} />
-            <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
-            <Route path="/customers" element={ <CustomersPage /> }/>
-            <Route path="/customers/create" element={ <CustomerCreatePage />}/>
-            <Route path="/customers/:customerId" element={ <CustomerDetailsPage /> }/>
-          </Routes>
+        <SideBar/>
+          <div className="fix-content-width">
+            <Routes>
+              <Route path="/" element={ <ProjectsList projects={ projects } /> }/>
+              {/* nest further here later */}
+              <Route path="/projects" element={ <ProjectsList projects={ projects } /> }/>
+              {/* My-projects might be the same page as InternalHomePage */}
+              <Route path="/projects/my-projects" element={ <ProjectsList projects={ getMyProjects(user._id) } />} />
+              <Route path="/projects/create" element={ <ProjectCreatePage />} />
+              <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
+              <Route path="/customers" element={ <CustomersPage /> }/>
+              <Route path="/customers/create" element={ <CustomerCreatePage />}/>
+              <Route path="/customers/:customerId" element={ <CustomerDetailsPage /> }/>
+            </Routes>
+          </div>
       </div>
     </div>
   )
