@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -8,13 +8,18 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from "../context/auth.context";
 
 function SideBar() { 
+
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="d-flex fix-content-height overflow-scroll">
-      <CDBSidebar className="bg-primary-cstm text-white">
+      <CDBSidebar className="bg-primary-cstm text-neutral-grey">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          Hello, Person!
+          Hello, { user?.firstName }
+          { (user?.role === 'admin') && <p className="mb-1">Admin</p> } 
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
