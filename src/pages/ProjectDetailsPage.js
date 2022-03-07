@@ -54,7 +54,7 @@ export default function ProjectDetailsPage() {
         setProject(response.data)
         console.log("success!", response.data)
       })
-      .catch((error) => console.log("Error updating project: ", error));
+      .catch((error) => console.log("Error updating project: ", error.response));
   }
 
   const toggleSelectStatus = () => setShowSelectStatus((previous) => !previous); 
@@ -69,11 +69,15 @@ export default function ProjectDetailsPage() {
         <h4>{ project.title } - { project.season } { project.year }</h4>
         <div className="d-flex">
           <p className="my-auto">{ project.location}</p>
-          <StatusTag clickHandler={ toggleSelectStatus } className="mx-3" status={ project.status } />
+          {
+            !project.status ? 
+              <Button onClick={ toggleSelectStatus } variant="custom" className="text-decoration-underline text-secondary-cstm"> Add Project Status </Button> :
+              <StatusTag clickHandler={ toggleSelectStatus } className="mx-3" status={ project.status } />
+          }
         </div>
         <div className="w-100 d-flex justify-content-between align-items-center">
         <Link 
-          className="text-decoration-none text-primary-cstm" 
+          className="text-decoration-none text-primary-cstm mt-2" 
           to={ `/home/customers/${project.customer?._id}` }>
           <h6>Client: { [project.customer?.firstName, project.customer?.lastName].join(" ") }</h6>
         </Link>
