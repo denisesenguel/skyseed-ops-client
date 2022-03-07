@@ -1,26 +1,57 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomerCreatePage() {
 
-  const [formInputArray, setFormInputs] = useState([{}]);
+  const navigate = useNavigate();
+  const [formInputArray, setFormInputArray] = useState([{}]);
+  const [failure, setFailure] = useState({ hasOccured: false });
+
+  const storedToken = localStorage.getItem('authToken');
 
   function handleInputs(index, evnt) {
     const newInputs = {...formInputArray[index]};
-    console.log(newInputs);
     newInputs[evnt.target.id] = evnt.target.value;
-    setFormInputs((previous) => previous[index] = newInputs);
+    setFormInputArray((previous) => {
+      previous[index] = newInputs;
+      return previous;
+    });
   }
 
-  function addForm() {
-    setFormInputs((previous) => [...previous, {}]);
+  const addForm = () => setFormInputArray((previous) => [...previous, {}]);
+
+  function removeForm() {
+    if (formInputArray.length > 1) {
+      const newArr = [...formInputArray];
+      newArr.pop();
+      setFormInputArray(newArr);
+    }
   }
 
-  console.log("formarray:", formInputArray);
+  function createCustomers(evnt) {
+    evnt.preventDefault();
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/customers`, 
+        formInputArray,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
+      .then(() => navigate("/home/customers"))
+      .catch((error) => {
+        console.log("Error creating Customer(s): ", error);
+        setFailure({hasOccured: true, message: error.response.data.message});
+      })
+  }
+
   return (
     <div className="px-5 res-width-container">
-      <h2 className="my-4">Add new Customer</h2>
-      <Form>
+      
+      { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
+
+      <h2 className="my-4 w-100">Add new Customers</h2>
+      <Form onSubmit={ createCustomers }>
         {
           formInputArray.map((formInputs, index) => (
             <><h6 className="mt-4">Customer { index + 1 }</h6>
@@ -46,9 +77,10 @@ export default function CustomerCreatePage() {
               </Form.Group></>
           ))
         }
-        <Button onClick={ addForm } className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >AddMore</Button>
+        <Button onClick={ addForm } className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >Add More</Button>
+        <Button onClick={ removeForm } className="bg-secondary-cstm text-primary-cstm mt-4 mx-2" variant="custom" >Remove</Button>
         <br />
-        <Button type="submit" className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >Create</Button>
+        <Button type="submit" className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >Create All</Button>
       </Form>
     </div>
   )
