@@ -121,7 +121,7 @@ export default function ProjectDetailsPage() {
                       <Toast.Body>
                         <div className="d-flex justify-content-center">
                           {
-                            enumArrays.status.map((type) => <StatusTag clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
+                            enumArrays.status.map((type, index) => <StatusTag key={ index } clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
                           }
                         </div>
                       </Toast.Body>

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import DropDown from '../components/DropDown';
 import axios from 'axios';
 import { enumArrays } from '../config/dataConfigs';
 import { AuthContext } from '../context/auth.context';
@@ -25,15 +24,7 @@ export default function ProjectCreatePage() {
       `${process.env.REACT_APP_API_URL}/users`,
       { headers: { Authorization: `Bearer ${storedToken}` } }
     )
-    .then((response) => {
-      const usersFormatted = response.data.map(user => {
-        return {
-          selectString: `${user.firstName} (${user.email})`,
-          _id: user._id
-        };
-      })
-      setAllUsers(usersFormatted);
-    })
+    .then((response) => setAllUsers(response.data))
     .catch((error) => console.log("Error getting users from API: ", error));
     
     // get list of all customer names incl emails (for unique matching)
@@ -42,16 +33,9 @@ export default function ProjectCreatePage() {
       `${process.env.REACT_APP_API_URL}/customers`,
       { headers: { Authorization: `Bearer ${storedToken}` } }
     )
-    .then((response) => {
-      const customersFormatted = response.data.map(customer => {
-        return {
-          selectString: `${customer.firstName} ${customer.lastName} (${customer.email})`,
-          _id: customer._id
-        };
-      })
-      setAllCustomers(customersFormatted);
-    })
+    .then((response) => setAllCustomers(response.data))
     .catch((error) => console.log("Error getting customers from API: ", error));
+
   }, [storedToken]);
   
   function handleInputs(evnt) {
@@ -63,19 +47,12 @@ export default function ProjectCreatePage() {
   function handleSubmit(evnt) {
     
     evnt.preventDefault();
-
+    console.log({ ...formInputs, owner: user._id })
     try {
-      const { customer: customerString, managers: managerString, ...rest} = formInputs;
-      const customerId = allCustomers.filter(customer => customer.selectString === customerString)[0]["_id"];
-      // this below needs to be modified
-      const managerIds = allUsers.filter(user => user.selectString === managerString)[0]["_id"];
-      
-      const reqBody = {...rest, customer: customerId, managers: managerIds, owner: user._id};
-  
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/projects`, 
-          reqBody,
+          { ...formInputs, owner: user._id },
           { headers: { Authorization: `Bearer ${storedToken}` } }
         )
         .then((response) => {
@@ -115,12 +92,17 @@ export default function ProjectCreatePage() {
                 value={ formInputs.location } onChange={ handleInputs }
               />
             </Form.Group>
-            <DropDown 
-              optionsArray={ enumArrays.season } 
-              label="Season" fieldName="season"
-              formInputs={ formInputs }
-              onChange={ handleInputs }
-            />
+            <Form.Group controlId="season" className="mx-2">
+              <Form.Label>Season</Form.Label>
+              <Form.Select aria-label={ formInputs.season } onChange={ handleInputs }>
+                <option></option>
+                {
+                  enumArrays.season.map((season, index) => (
+                    <option key={ index } value={ season }>{ season }</option>
+                  ))
+                }
+              </Form.Select>
+            </Form.Group>
             <Form.Group controlId="year">
               <Form.Label>Year</Form.Label>
               <Form.Control 
@@ -144,28 +126,45 @@ export default function ProjectCreatePage() {
                 value={ formInputs.sizeInHa } onChange={ handleInputs }
               />
             </Form.Group>
-            <DropDown 
-              optionsArray={ enumArrays.status } 
-              label="Status" 
-              fieldName="status" 
-              formInputs={ formInputs }
-              onChange={ handleInputs }
-            />
+            <Form.Group controlId="status" className="mx-2">
+              <Form.Label> Project Status </Form.Label>
+              <Form.Select aria-label={ formInputs.status } onChange={ handleInputs }>
+                <option> </option>
+                {
+                  enumArrays.status.map((status, index) => (
+                    <option key={ index } value={ status }>{ status }</option>
+                  ))
+                }
+              </Form.Select>
+            </Form.Group>
           </div>
-          <DropDown 
-            optionsArray={ allCustomers.map(customer => customer.selectString) } 
-            label="Client" 
-            fieldName="customer" 
-            formInputs={ formInputs }
-            onChange={ handleInputs }
-          />
-          <DropDown 
-            optionsArray={ allUsers.map(user => user.selectString) } 
-            label="Pick at least one Project Manager" 
-            fieldName="managers" 
-            formInputs={ formInputs }
-            onChange={ handleInputs }
-          />
+          <Form.Group controlId="customer">
+            <Form.Label> Customer </Form.Label>
+            <Form.Select aria-label={ formInputs.customer } onChange={ handleInputs }>
+              <option> </option>
+              {
+                allCustomers.map(customer => (
+                  <option key={ customer._id } value={ customer._id }>
+                    { `${customer.firstName} ${customer.lastName} (${customer.email})` } 
+                  </option>
+                ))
+              }
+            </Form.Select>
+          </Form.Group>
+          <Form.Group controlId="managers">
+            <Form.Label> Project Managers </Form.Label>
+            <Form.Select aria-label={ formInputs.managers } onChange={ handleInputs }>
+              <option> </option>
+              {
+                allUsers.map(user => (
+                  <option key={ user._id } value={ user._id }>
+                    { `${user.firstName} (${user.email})` } 
+                  </option>
+                ))
+              }
+            </Form.Select>
+          </Form.Group>
+
           <Button className="bg-secondary-cstm text-primary-cstm mt-4" variant="secondary-cstm" type="submit">Add Project</Button>
         </Form>
         { submitState === 'success' && <h4 className="mt-4 bg-success-cstm text-white"> Project successfully created. </h4> }
