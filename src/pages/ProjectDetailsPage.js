@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { Nav, Button, ToastContainer, Toast } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
 import ButtonMailTo from '../components/ButtonMailTo';
 import StatusTag from '../components/StatusTag';
 import ProjectChecklist from '../components/ProjectChecklist';
+import SuccessToast from '../components/SuccessToast';
 import { enumArrays } from '../config/dataConfigs';
 
 export default function ProjectDetailsPage() {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
+  const [ searchParams ] = useSearchParams();
+  
+  const [showSuccess, setShowSuccess] = useState(searchParams.get('created') ? true : false);
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
   const [showSelectStatus, setShowSelectStatus] = useState(false);
@@ -64,9 +68,13 @@ export default function ProjectDetailsPage() {
     toggleSelectStatus();
   }
 
+  const toggleShowSuccess = () => setShowSuccess((previous) => !previous);
+
   return (
     <div className="res-width-container p-5">
+
         <h4>{ project.title } - { project.season } { project.year }</h4>
+
         <div className="d-flex">
           <p className="my-auto">{ project.location}</p>
           {
@@ -75,6 +83,7 @@ export default function ProjectDetailsPage() {
               <StatusTag clickHandler={ toggleSelectStatus } className="mx-3" status={ project.status } />
           }
         </div>
+
         <div className="w-100 d-flex justify-content-between align-items-center">
         <Link 
           className="text-decoration-none text-primary-cstm mt-2" 
@@ -112,22 +121,28 @@ export default function ProjectDetailsPage() {
           <Button onClick={ () => deleteProject(project._id) } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
         </div>
 
-          <div>
-              <ToastContainer position="top-center" className="mt-5 p-3">
-                  <Toast onClose={ toggleSelectStatus } show={ showSelectStatus }  bg="neutral-grey">
-                      <Toast.Header className="d-flex justify-content-between text-secondary-cstm bg-neutral-grey">
-                        <h6>Change status</h6>
-                      </Toast.Header>
-                      <Toast.Body>
-                        <div className="d-flex justify-content-center">
-                          {
-                            enumArrays.status.map((type, index) => <StatusTag key={ index } clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
-                          }
-                        </div>
-                      </Toast.Body>
-                  </Toast>
-              </ToastContainer>
-          </div>
+        <div>
+            <ToastContainer position="top-center" className="mt-5 p-3">
+                <Toast onClose={ toggleSelectStatus } show={ showSelectStatus }  bg="neutral-grey">
+                    <Toast.Header className="d-flex justify-content-between text-secondary-cstm bg-neutral-grey">
+                      <h6>Change status</h6>
+                    </Toast.Header>
+                    <Toast.Body>
+                      <div className="d-flex justify-content-center">
+                        {
+                          enumArrays.status.map((type, index) => <StatusTag key={ index } clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
+                        }
+                      </div>
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
+        </div>
+
+        <SuccessToast 
+          showSuccess={ showSuccess } 
+          toggleShowSuccess={ toggleShowSuccess } 
+          message="Project successfully added" 
+        />
 
     </div>
   )
