@@ -9,6 +9,7 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from "../context/auth.context";
+import { Accordion } from 'react-bootstrap';
 
 function SideBar() { 
 
@@ -28,23 +29,39 @@ function SideBar() {
             <NavLink exact="true" to="/home" >
               <CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
             </NavLink>
-            <h6 className="mx-4 mt-3">Projects</h6>
-            <NavLink exact="true" to="/home/projects">
-                <CDBSidebarMenuItem icon="tree">View All</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact="true" to="/home/projects/my-projects">
-                <CDBSidebarMenuItem icon="tree">My Projects</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact="true" to="/home/projects/create">
-                <CDBSidebarMenuItem icon="plus">Add new</CDBSidebarMenuItem>
-            </NavLink>
-            <h6 className="mx-4 mt-3">Customers</h6>
-            <NavLink exact="true" to="/home/customers">
-              <CDBSidebarMenuItem icon="list">View All</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact="true" to="/home/customers/create">
-              <CDBSidebarMenuItem icon="plus">Add new</CDBSidebarMenuItem>
-            </NavLink>
+            <Accordion className="bg-primary-cstm">
+              <Accordion.Item eventKey="0" className="bg-primary-cstm">
+                <Accordion.Header className="bg-primary-cstm p-0">
+                  <CDBSidebarMenuItem className="m-0" icon="tree">Projects</CDBSidebarMenuItem>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <NavLink exact="true" to="/home/projects">
+                      <CDBSidebarMenuItem>View All</CDBSidebarMenuItem>
+                  </NavLink>
+                  <NavLink exact="true" to="/home/projects/my-projects">
+                      <CDBSidebarMenuItem>My Projects</CDBSidebarMenuItem>
+                  </NavLink>
+                  <NavLink exact="true" to="/home/projects/create">
+                      <CDBSidebarMenuItem>Add new</CDBSidebarMenuItem>
+                  </NavLink>
+                </Accordion.Body>
+              </Accordion.Item>
+              </Accordion>
+              <Accordion>
+              <Accordion.Item eventKey="0" className="bg-primary-cstm">
+                <Accordion.Header className="bg-primary-cstm p-0">
+                  <CDBSidebarMenuItem className="m-0" icon="list">Customers</CDBSidebarMenuItem>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <NavLink exact="true" to="/home/customers">
+                      <CDBSidebarMenuItem>View All</CDBSidebarMenuItem>
+                  </NavLink>
+                  <NavLink exact="true" to="/home/customers/create">
+                      <CDBSidebarMenuItem>Add new</CDBSidebarMenuItem>
+                  </NavLink>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
