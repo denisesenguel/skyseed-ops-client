@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function ProjectCreatePage() {
 
   const navigate = useNavigate();
-  const [formInputs, setFormInputs] = useState({ managers: [{}] });
+  const [formInputs, setFormInputs] = useState({ managers: [''] });
   const [allUsers, setAllUsers] = useState([]);
   const [allCustomers, setAllCustomers] = useState([]);
   const [failure, setFailure] = useState({ hasOccured: false });
@@ -65,24 +65,22 @@ export default function ProjectCreatePage() {
 
   function handleSubmit(evnt) {
     evnt.preventDefault();
-    try {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/projects`, 
-          { ...formInputs, owner: user._id },
-          { headers: { Authorization: `Bearer ${storedToken}` } }
-        )
-        .then((response) => {
-          navigate(`/home/projects/${response.data._id}?created=true`);
-        })
-
-    } catch (error) {
-      console.log("Error creating project: ", error)
-      setFailure({
-        hasOccured: true,
-        message: error.response.data.message
-      });
-    }
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/projects`, 
+        { ...formInputs, owner: user._id },
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
+      .then((response) => {
+        navigate(`/home/projects/${response.data._id}?created=true`);
+      })
+      .catch((error) => {
+        console.log("Error creating project: ", error);
+        setFailure({
+          hasOccured: true,
+          message: error.response.data.error.message
+        });
+      })
   }
 
   return (
