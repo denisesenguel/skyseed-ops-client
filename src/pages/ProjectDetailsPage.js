@@ -70,11 +70,11 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="res-width-container p-5">
+    <div className="res-width-container fix-content-height p-5 position-relative">
 
         <h4>{ project.title } - { project.season } { project.year }</h4>
 
-        <div className="d-flex">
+        <div className="d-flex my-2">
           <p className="my-auto">{ project.location}</p>
           {
             !project.status ? 
@@ -116,15 +116,13 @@ export default function ProjectDetailsPage() {
         { selectedTab === 'details' && <div> Will be populated when model gets extended </div> }
         { selectedTab === 'checklist' && <ProjectChecklist project={ project } onEdit={ editProject }/> }
 
-        <div className="d-flex justify-content-end">
-          <Button 
-            onClick={ () => deleteProject(project._id) } 
-            variant="custom" 
-            className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
-          >
-            Delete this project
-          </Button>
-        </div>
+        <Button 
+          onClick={ () => deleteProject(project._id) } 
+          variant="custom" 
+          className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
+        >
+          Delete this project
+        </Button>
 
         <div>
             <ToastContainer position="top-center" className="mt-5 p-3">

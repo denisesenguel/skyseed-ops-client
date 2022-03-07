@@ -46,10 +46,11 @@ export default function ProjectSummary(props) {
                     />
                 </Form.Group>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={ toggleEditMode } 
+                    <Button 
+                        onClick={ toggleEditMode } 
                         type={ !editMode ? "submit" : "button"} 
                         variant="custom" 
-                        className="border-secondary-cstm text-secondary-cstm m-2" >
+                        className="border-secondary-cstm text-secondary-cstm my-4" >
                         { editMode ? "Save Changes" : "Edit Details" }
                     </Button>
                 </div>
