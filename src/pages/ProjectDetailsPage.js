@@ -117,7 +117,13 @@ export default function ProjectDetailsPage() {
         { selectedTab === 'checklist' && <ProjectChecklist project={ project } onEdit={ editProject }/> }
 
         <div className="d-flex justify-content-end">
-          <Button onClick={ () => deleteProject(project._id) } variant="custom" className="bg-error-cstm text-neutral-grey">Delete this project</Button>
+          <Button 
+            onClick={ () => deleteProject(project._id) } 
+            variant="custom" 
+            className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
+          >
+            Delete this project
+          </Button>
         </div>
 
         <div>
@@ -129,7 +135,13 @@ export default function ProjectDetailsPage() {
                     <Toast.Body>
                       <div className="d-flex justify-content-center">
                         {
-                          enumArrays.status.map((type, index) => <StatusTag key={ index } clickHandler={ () => editStatus(project._id, type) } status={ type } className="mx-2"/>)
+                          enumArrays.status.map((type, index) => (
+                            <StatusTag 
+                              key={ index } 
+                              clickHandler={ () => editStatus(project._id, type) } 
+                              status={ type } 
+                              className="mx-2"/>
+                          ))
                         }
                       </div>
                     </Toast.Body>

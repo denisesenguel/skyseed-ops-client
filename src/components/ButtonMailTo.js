@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ButtonMailTo({ mailto, label }) {
+function ButtonMailTo(props) {
+
+    let { mailto, label, className } = props;
+    if (!className) className = "text-decoration-none text-primary-cstm";
+
     return (
         <Link
-            className="text-decoration-none text-primary-cstm"
+            className={ className }
             to='#'
             onClick={(e) => {
                 window.location = mailto;

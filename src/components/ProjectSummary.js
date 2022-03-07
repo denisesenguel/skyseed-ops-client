@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Container, Row, Col, Card } from 'react-bootstrap';
-import userImg from '../images/domi_small.png';
+import { Button, Form, Card } from 'react-bootstrap';
+import userImg from '../images/forest_bg_website.jpg';
 import ButtonMailTo from './ButtonMailTo';
 
 export default function ProjectSummary(props) {
@@ -25,7 +25,7 @@ export default function ProjectSummary(props) {
     return (
         <div className="mt-3">
             <Form onSubmit={ handleSubmit }>
-                <Form.Group controlId="description">
+                <Form.Group controlId="description" className="mt-2">
                     <Form.Label>Description</Form.Label>
                     <Form.Control 
                         readOnly={ editMode ? false : true }
@@ -35,7 +35,7 @@ export default function ProjectSummary(props) {
                         value={ description } 
                     />
                 </Form.Group>
-                <Form.Group controlId="sizeInHa">
+                <Form.Group controlId="sizeInHa" className="mt-2">
                     <Form.Label>Size (in ha)</Form.Label>
                     <Form.Control 
                         readOnly={ editMode ? false : true }
@@ -45,38 +45,39 @@ export default function ProjectSummary(props) {
                         value={ sizeInHa } 
                     />
                 </Form.Group>
-                <h6 className="text-secondary-cstm my-3">More Infos following later...</h6>
                 <div className="d-flex justify-content-end">
                     <Button onClick={ toggleEditMode } 
                         type={ !editMode ? "submit" : "button"} 
                         variant="custom" 
-                        className="bg-secondary-cstm mx-2" >
+                        className="border-secondary-cstm text-secondary-cstm m-2" >
                         { editMode ? "Save Changes" : "Edit Details" }
                     </Button>
                 </div>
             </Form>
             <h6>Project Managers</h6>
-            <Container fluid>
-                <Row>
+            <div className="w-50">
                 {
                     (!project || !project?.managers || project?.managers?.length === 0) ?
                         <p> None assigned yet.</p> :
                         project.managers.map((user) => (
-                            <Col key={user._id} xs={2} className="mx-0 px-0 text-primary-cstm d-flex align-items-center">
-                                <Card>
-                                    <Card.Img variant="top" src={ userImg }></Card.Img>
-                                    <h6 className="text-center">{ user.firstName }</h6>
-                                    <Button size="sm" variant="custom" className="bg-secondary-cstm">
-                                    <ButtonMailTo label="Send Email" mailto={ `mailto:${user.email}` }/>
-                                    </Button>
-                                </Card>
-                            </Col>
-                        ))
-                                
+                            <Card key={ user._id } className="d-flex flex-row align-items-center my-1">
+                                <img 
+                                    src={ userImg } 
+                                    className="rounded-circle fix-img-height m-2" 
+                                    alt={ user.firstName }
+                                />
+                                <div className="mx-2">
+                                    <h6 className="mb-0">{ user.firstName }</h6>
+                                    <ButtonMailTo 
+                                        label={ user.email } 
+                                        mailto={ `mailto:${user.email}` }
+                                        className="text-decoration-underline text-secondary-cstm"
+                                    />
+                                </div>
+                            </Card>
+                        ))        
                 }
-                </Row>
-            </Container>
-
+            </div>
         </div>
 
     )
