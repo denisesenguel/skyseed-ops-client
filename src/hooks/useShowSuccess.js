@@ -5,9 +5,17 @@ export default function useShowSuccess() {
     
     const [ searchParams ] = useSearchParams();
     const created = searchParams.get('created') ? true : false;
+    const deleted = searchParams.get('deleted') ? true : false;
   
-    const [showSuccess, setShowSuccess] = useState(created);
-    const [successMessage, setSuccessMessage] = useState(created ? "Successfully created" : null);
+    let message;
+    if (created) {
+        message = "Successfully created";
+    } else if (deleted) {
+        message = "Successfully deleted";
+    }
+
+    const [showSuccess, setShowSuccess] = useState(created || deleted);
+    const [successMessage, setSuccessMessage] = useState(message);
   
     const toggleShowSuccess = () => setShowSuccess((previous) => !previous);
 
