@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 export default function ProjectCreatePage() {
 
   const navigate = useNavigate();
-  const [formInputs, setFormInputs] = useState({ managers: ["", ""]});
-  const [allUsers, setAllUsers] = useState(["None in the DB yet", "Add some"]);
-  const [allCustomers, setAllCustomers] = useState(["None in the DB yet"]);
-  const [submitState, setSubmitState] = useState(undefined);
+  const [formInputs, setFormInputs] = useState({ managers: [{}] });
+  const [allUsers, setAllUsers] = useState([]);
+  const [allCustomers, setAllCustomers] = useState([]);
+  const [failure, setFailure] = useState({ hasOccured: false });
   
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
@@ -49,9 +49,22 @@ export default function ProjectCreatePage() {
     setFormInputs(newInputs);
   }
 
+  function addSelectField() {
+    const newInputs = JSON.parse(JSON.stringify(formInputs));
+    newInputs.managers.push({});
+    setFormInputs(newInputs);
+  }
+
+  function removeSelectField() {
+    if (formInputs.managers.length > 1) {
+      const newInputs = JSON.parse(JSON.stringify(formInputs));
+      newInputs.managers.pop();
+      setFormInputs(newInputs);
+    }
+  }
+
   function handleSubmit(evnt) {
     evnt.preventDefault();
-    console.log({ ...formInputs, owner: user._id })
     try {
       axios
         .post(
@@ -60,19 +73,15 @@ export default function ProjectCreatePage() {
           { headers: { Authorization: `Bearer ${storedToken}` } }
         )
         .then((response) => {
-          setSubmitState('success');
-          const newInputs = {...formInputs};
-          for (const key in newInputs) {
-            newInputs[key] = "";
-          }
-          setFormInputs(newInputs);
-          navigate(`/home/projects/${response.data._id}`);
-          ;
+          navigate(`/home/projects/${response.data._id}?created=true`);
         })
 
     } catch (error) {
       console.log("Error creating project: ", error)
-      setSubmitState("error");
+      setFailure({
+        hasOccured: true,
+        message: error.response.data.message
+      });
     }
   }
 
@@ -89,7 +98,7 @@ export default function ProjectCreatePage() {
             />
           </Form.Group>
 
-          <div className="d-flex">
+          <div className="d-flex mt-2">
             <Form.Group controlId="location">
               <Form.Label>Location</Form.Label>
               <Form.Control 
@@ -117,7 +126,7 @@ export default function ProjectCreatePage() {
             </Form.Group>
           </div>
 
-          <Form.Group controlId="description">
+          <Form.Group controlId="description" className="mt-2">
             <Form.Label>Description</Form.Label>
             <Form.Control 
               as="textarea" rows={3} placeholder="Give a short description"
@@ -125,7 +134,7 @@ export default function ProjectCreatePage() {
             />
           </Form.Group>
 
-          <div className="d-flex">
+          <div className="d-flex mt-2">
             <Form.Group controlId="sizeInHa">
               <Form.Label>Size (in ha)</Form.Label>
               <Form.Control 
@@ -146,7 +155,7 @@ export default function ProjectCreatePage() {
             </Form.Group>
           </div>
 
-          <Form.Group controlId="customer">
+          <Form.Group controlId="customer" className="mt-2">
             <Form.Label> Customer </Form.Label>
             <Form.Select aria-label={ formInputs.customer } onChange={ handleInputs }>
               <option> </option>
@@ -160,34 +169,45 @@ export default function ProjectCreatePage() {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group controlId="managers">
-            <Form.Label> Project Managers </Form.Label>
-            <Form.Select aria-label={ formInputs.managers[0] } onChange={ (e) => handleInputs(e, 0) }>
-              <option> </option>
-              {
-                allUsers.map(user => (
-                  <option key={ user._id } value={ user._id }>
-                    { `${user.firstName} (${user.email})` } 
-                  </option>
-                ))
-              }
-            </Form.Select>
-            <Form.Select aria-label={ formInputs.managers[1] } onChange={ (e) => handleInputs(e, 1) }>
-              <option> </option>
-              {
-                allUsers.map(user => (
-                  <option key={ user._id } value={ user._id }>
-                    { `${user.firstName} (${user.email})` } 
-                  </option>
-                ))
-              }
-            </Form.Select>
+          <Form.Group controlId="managers" className="mt-2">
+            <Form.Label> Select at least one Project Manager </Form.Label>
+            {
+              formInputs.managers.map((value, index) => (
+                <Form.Select aria-label={ value } onChange={ (e) => handleInputs(e, index) } className="my-1">
+                  <option> </option>
+                  {
+                    allUsers.map(user => (
+                      <option key={ user._id } value={ user._id }>
+                        { `${user.firstName} (${user.email})` } 
+                      </option>
+                    ))
+                  }
+                </Form.Select>
+              ))
+            }
+            <div className="mt-2">
+              <Button 
+                onClick={ addSelectField } 
+                variant="custom" size="sm"
+                className="border-primary-cstm text-primary-cstm" 
+              >
+                Add More
+              </Button>
+              <Button 
+                onClick={ removeSelectField } 
+                variant="custom" size="sm mx-2"
+                className="border-primary-cstm text-primary-cstm" 
+              > 
+                Remove
+              </Button>
+            </div>
           </Form.Group>
 
-          <Button className="bg-secondary-cstm text-primary-cstm mt-4" variant="secondary-cstm" type="submit">Add Project</Button>
+          <Button className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" type="submit">
+            Add Project
+          </Button>
         </Form>
-        { submitState === 'success' && <h4 className="mt-4 text-success-cstm"> Project successfully created. </h4> }
-        { submitState === 'error' && <h4 className="mt-4 text-error-cstm"> Error creating project. Please try again. </h4> }
+        { failure.hasOccured && <h4 className="mt-4 text-error-cstm"> Error creating project. { failure.message } </h4> }
     </div>
   )
 }
