@@ -19,10 +19,7 @@ export default function LoginPage() {
         axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {email, password})
             .then((response) => {
                 storeToken(response.data.authToken);
-                console.log("token stored")
                 verifyStoredToken();
-                console.log(isLoggedIn);
-                // this again redirects to 
                 navigate("/home");
             })
             .catch((error) => {

@@ -15,7 +15,6 @@ export default function InternalHomePage() {
   const [projects, setProjects] = useState([]);
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
-  console.log(storedToken);
 
   useEffect(() => {
     axios
