@@ -12,7 +12,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [failure, setFailure] = useState({ hasOccured: false });
 
-    const { storeToken, verifyStoredToken, isLoggedIn } = useContext(AuthContext);
+    const { storeToken, verifyStoredToken } = useContext(AuthContext);
 
     function loginUser(evnt) {
         evnt.preventDefault();
