@@ -97,8 +97,8 @@ export default function ProjectCreatePage() {
   }
 
   return (
-    <div className="px-5 res-width-container">
-      <h2 className="my-4">Add a new Project</h2>
+    <div className="p-5 res-width-container">
+      <h1 className="mb-5">Add Project</h1>
         <Form onSubmit={ handleSubmit }>
           <Form.Group controlId="title">
             <Form.Label>Title</Form.Label>

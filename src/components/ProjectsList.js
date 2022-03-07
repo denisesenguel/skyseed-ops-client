@@ -22,7 +22,7 @@ export default function ProjectsList(props) {
         {
           (projects.length === 0) ?
             <div className="mx-0">
-              <p className="my-2">No projects found.</p> 
+              <p className="my-4">No projects found.</p> 
               <Button variant="custom" className="bg-secondary-cstm"> 
                 <Link to="/home/projects/create" className="text-decoration-none text-primary-cstm">
                   Add one now

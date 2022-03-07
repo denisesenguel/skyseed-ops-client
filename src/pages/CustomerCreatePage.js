@@ -46,15 +46,15 @@ export default function CustomerCreatePage() {
   }
 
   return (
-    <div className="px-5 res-width-container">
+    <div className="p-5 res-width-container">
       
       { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
 
-      <h2 className="my-4 w-100">Add new Customers</h2>
+      <h1>Add Customers</h1>
       <Form onSubmit={ createCustomers }>
         {
           formInputArray.map((formInputs, index) => (
-            <><h6 className="mt-4">Customer { index + 1 }</h6>
+            <><h5 className="my-3 mt-5">Customer { index + 1 }</h5>
               <div className="d-flex w-100">
                 <Form.Group className="w-50" controlId="firstName">
                   <Form.Label>First Name</Form.Label>
