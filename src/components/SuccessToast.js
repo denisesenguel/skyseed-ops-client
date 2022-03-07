@@ -12,7 +12,7 @@ export default function SuccessToast(props) {
             <Toast 
                 onClose={ toggleShowSuccess } 
                 show={ showSuccess } 
-                autohide delay={ 3000 }
+                autohide delay={ 2000 }
                 className="bg-success-cstm"
             >
                 <Toast.Body className="text-center text-neutral-grey">{ message }</Toast.Body>

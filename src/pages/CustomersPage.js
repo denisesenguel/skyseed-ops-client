@@ -3,12 +3,14 @@ import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 import exampleImg from '../images/forest_bg_website.jpg';
 import ButtonMailTo from '../components/ButtonMailTo';
+import SuccessToast from '../components/SuccessToast';
+import useShowSuccess from '../hooks/useShowSuccess';
 import { generateAlphabet } from '../utils/helpers';
 
 export default function CustomersPage() {
 
   const [customers, setCustomers] = useState([]);
-
+  const { showSuccess, toggleShowSuccess, successMessage } = useShowSuccess();
   const storedToken = localStorage.getItem('authToken');
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function CustomersPage() {
         (customers.length === 0) ?
           <p>No customers found.</p> :
 
-            generateAlphabet().map(letter => (
+          generateAlphabet().map(letter => (
             <ListGroup className="mb-1">
               <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
               {
@@ -51,9 +53,13 @@ export default function CustomersPage() {
                 )))
               }
             </ListGroup>
-            ))
+          ))
       }
-
-      </div>
+    <SuccessToast
+      showSuccess={ showSuccess }
+      toggleShowSuccess={ toggleShowSuccess }
+      message={ successMessage }
+    />
+    </div>
   )
 }

@@ -38,7 +38,7 @@ export default function CustomerCreatePage() {
         formInputArray,
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
-      .then(() => navigate("/home/customers"))
+      .then(() => navigate("/home/customers?created=true"))
       .catch((error) => {
         console.log("Error creating Customer(s): ", error);
         setFailure({hasOccured: true, message: error.response.data.message});

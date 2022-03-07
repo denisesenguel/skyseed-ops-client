@@ -10,15 +10,14 @@ export default function ProjectsList(props) {
 
   return (
     <div className="res-width-container-lg">
-      <Container fluid className="w-100 p-5">
-      <h1 className="mb-5">All Projects</h1>
-          <Row className="text-neutral-grey bg-primary-cstm rounded p-3">
-            <Col xs={3}>Title</Col>
-            <Col xs={2}>When?</Col>
-            <Col xs={2}>Where?</Col>
-            <Col xs={3}>status</Col>
-            <Col xs={2}>Last Update</Col>
-          </Row>
+      <Container fluid className="w-100">
+        <Row className="text-neutral-grey bg-primary-cstm rounded p-3">
+          <Col xs={3}>Title</Col>
+          <Col xs={2}>When?</Col>
+          <Col xs={2}>Where?</Col>
+          <Col xs={3}>status</Col>
+          <Col xs={2}>Last Update</Col>
+        </Row>
         {
           (projects.length === 0) ?
             <div className="mx-0">

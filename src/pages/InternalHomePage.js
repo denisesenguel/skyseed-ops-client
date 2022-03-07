@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import ProjectsList from '../components/ProjectsList';
+import AllProjectsPage from './AllProjectsPage';
+import MyProjectsPage from './MyProjectsPage';
 import ProjectDetailsPage from './ProjectDetailsPage';
 import ProjectCreatePage from './ProjectCreatePage';
 import CustomersPage from './CustomersPage';
@@ -45,11 +46,11 @@ export default function InternalHomePage() {
         <SideBar/>
           <div className="fix-content-width">
             <Routes>
-              <Route path="/" element={ <ProjectsList projects={ projects } /> }/>
+              <Route path="/" element={ <AllProjectsPage projects={ projects } /> }/>
               {/* nest further here later */}
-              <Route path="/projects" element={ <ProjectsList projects={ projects } /> }/>
+              <Route path="/projects" element={ <AllProjectsPage projects={ projects }/> }/>
               {/* My-projects might be the same page as InternalHomePage */}
-              <Route path="/projects/my-projects" element={ <ProjectsList projects={ getMyProjects(user._id) } />} />
+              <Route path="/projects/my-projects" element={ <MyProjectsPage projects={ getMyProjects(user._id) } />} />
               <Route path="/projects/create" element={ <ProjectCreatePage />} />
               <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
               <Route path="/customers" element={ <CustomersPage /> }/>

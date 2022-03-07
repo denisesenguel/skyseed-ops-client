@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Nav, Button, ToastContainer, Toast } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
@@ -8,14 +8,14 @@ import StatusTag from '../components/StatusTag';
 import ProjectChecklist from '../components/ProjectChecklist';
 import SuccessToast from '../components/SuccessToast';
 import { enumArrays } from '../config/dataConfigs';
+import useShowSuccess from '../hooks/useShowSuccess';
 
 export default function ProjectDetailsPage() {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const [ searchParams ] = useSearchParams();
-  
-  const [showSuccess, setShowSuccess] = useState(searchParams.get('created') ? true : false);
+  const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage} = useShowSuccess();  
+
   const [project, setProject] = useState({});
   const [selectedTab, setSelectedTab] = useState("summary");
   const [showSelectStatus, setShowSelectStatus] = useState(false);
@@ -55,8 +55,9 @@ export default function ProjectDetailsPage() {
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then((response) => {
-        setProject(response.data)
-        console.log("success!", response.data)
+        setProject(response.data);
+        toggleShowSuccess();
+        setSuccessMessage("Project successfully updated");
       })
       .catch((error) => console.log("Error updating project: ", error.response));
   }
@@ -67,8 +68,6 @@ export default function ProjectDetailsPage() {
     editProject(id, {status: newStatus});
     toggleSelectStatus();
   }
-
-  const toggleShowSuccess = () => setShowSuccess((previous) => !previous);
 
   return (
     <div className="res-width-container p-5">
@@ -141,7 +140,7 @@ export default function ProjectDetailsPage() {
         <SuccessToast 
           showSuccess={ showSuccess } 
           toggleShowSuccess={ toggleShowSuccess } 
-          message="Project successfully added" 
+          message={ successMessage } 
         />
 
     </div>
