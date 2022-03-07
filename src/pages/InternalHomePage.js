@@ -5,7 +5,6 @@ import ProjectsList from '../components/ProjectsList';
 import ProjectDetailsPage from './ProjectDetailsPage';
 import ProjectCreatePage from './ProjectCreatePage';
 import CustomersPage from './CustomersPage';
-import CustomerDetailsPage from './CustomerDetailsPage';
 import CustomerCreatePage from './CustomerCreatePage';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
@@ -30,7 +29,11 @@ export default function InternalHomePage() {
 
   function getMyProjects(userId) {
     if (projects?.length > 0) {
-      return projects.filter(project => project.owner === userId || project.managers.includes(userId));  
+      return projects.filter((project) => {
+        const isOwner = project.owner === userId; 
+        const isManager = project.managers.some(manager => manager._id === userId);
+        return (isOwner || isManager);
+      });  
     } else {
       return [];
     }
@@ -39,7 +42,7 @@ export default function InternalHomePage() {
   return (
     <div>
       <Header />
-      <div className="fix-content-height d-flex bg-neutral-grey">
+      <div className="d-flex bg-neutral-grey min-content-height">
         <SideBar/>
           <div className="fix-content-width">
             <Routes>
@@ -52,7 +55,6 @@ export default function InternalHomePage() {
               <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
               <Route path="/customers" element={ <CustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
-              <Route path="/customers/:customerId" element={ <CustomerDetailsPage /> }/>
             </Routes>
           </div>
       </div>

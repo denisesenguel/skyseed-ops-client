@@ -25,7 +25,6 @@ export default function ProjectDetailsPage() {
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then((response) => {
-        console.log("server response: ", response.data)
         setProject(response.data)
       }
       )

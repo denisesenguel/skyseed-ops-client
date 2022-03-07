@@ -1,17 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import logoLight from '../logo/brand_light.png'
+import logoLight from '../logo/brand_light.png';
+import { AuthContext } from '../context/auth.context';
 
 export default function Header() {
+
+    const { logOutUser } = useContext(AuthContext);
+
     return (
         <div>
-            <Navbar className="bg-forest fix-header-height mb-1 px-4 d-flex justify-content-between" sticky="top">
+            <Navbar className="sticky-top bg-forest fix-header-height px-4 d-flex justify-content-between" sticky="top">
             <Navbar.Brand>
                 <Link to="/">
                     <img height="32px" src={ logoLight } alt="Skyseed Logo"/>
                 </Link>
             </Navbar.Brand>
+            <NavLink className="nav-link text-white" to="/" onClick={ logOutUser }>
+                Logout
+            </NavLink>
         </Navbar>
         </div>
     )

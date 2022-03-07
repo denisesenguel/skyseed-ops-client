@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import moment from 'moment';
 import StatusTag from './StatusTag';
 
@@ -9,7 +9,7 @@ export default function ProjectsList(props) {
   const { projects } = props;
 
   return (
-    <div>
+    <div className="res-width-container-lg">
       <Container fluid className="w-100 p-5">
       <h1 className="mb-5">All Projects</h1>
           <Row className="text-neutral-grey bg-primary-cstm rounded p-3">
@@ -21,7 +21,14 @@ export default function ProjectsList(props) {
           </Row>
         {
           (projects.length === 0) ?
-            <p>No projects found.</p> :
+            <div className="mx-0">
+              <p className="my-2">No projects found.</p> 
+              <Button variant="custom" className="bg-secondary-cstm"> 
+                <Link to="/home/projects/create" className="text-decoration-none text-primary-cstm">
+                  Add one now
+                </Link> 
+              </Button> 
+            </div> :
               projects.map((project) => (
 
                   <Link 

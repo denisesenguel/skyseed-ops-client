@@ -65,7 +65,7 @@ export default function ProjectSummary(props) {
                             <Col key={user._id} xs={2} className="mx-0 px-0 text-primary-cstm d-flex align-items-center">
                                 <Card>
                                     <Card.Img variant="top" src={ userImg }></Card.Img>
-                                    <h6 className="text-center">Denise</h6>
+                                    <h6 className="text-center">{ user.firstName }</h6>
                                     <Button size="sm" variant="custom" className="bg-secondary-cstm">
                                     <ButtonMailTo label="Send Email" mailto={ `mailto:${user.email}` }/>
                                     </Button>

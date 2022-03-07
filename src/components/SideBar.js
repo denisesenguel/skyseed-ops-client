@@ -15,7 +15,7 @@ function SideBar() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="d-flex fix-content-height overflow-scroll">
+    <div className="d-flex fix-content-height overflow-scroll fix-sidebar-position">
       <CDBSidebar className="fix-sidebar-width bg-primary-cstm text-neutral-grey">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           Hello, { user?.firstName }

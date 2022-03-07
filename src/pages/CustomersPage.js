@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ListGroup, Button } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
 import exampleImg from '../images/forest_bg_website.jpg';
 import ButtonMailTo from '../components/ButtonMailTo';
 import { generateAlphabet } from '../utils/helpers';
@@ -22,7 +22,7 @@ export default function CustomersPage() {
         console.log("Error getting customers from API: ", error)
       })
     
-  }, [])
+  }, [storedToken])
 
   return (
     <div className="res-width-container p-5">
@@ -35,7 +35,7 @@ export default function CustomersPage() {
             <ListGroup className="mb-1">
               <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
               {
-                (customers.filter(customer => customer.lastName.indexOf(letter) > -1).length == 0) ?
+                (customers.filter(customer => customer.lastName.indexOf(letter) > -1).length === 0) ?
                   <ListGroup.Item className="text-muted"> None </ListGroup.Item> :
 
                   customers
