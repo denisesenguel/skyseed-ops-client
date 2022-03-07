@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function ProjectCreatePage() {
 
   const navigate = useNavigate();
-  const [formInputs, setFormInputs] = useState({});
+  const [formInputs, setFormInputs] = useState({ managers: ["", ""]});
   const [allUsers, setAllUsers] = useState(["None in the DB yet", "Add some"]);
   const [allCustomers, setAllCustomers] = useState(["None in the DB yet"]);
   const [submitState, setSubmitState] = useState(undefined);
@@ -18,7 +18,7 @@ export default function ProjectCreatePage() {
 
   useEffect(() => {
     
-    // get list of all users first names + email for managers dropdown in form 
+    // get list of all users for managers selection
     axios
     .get(
       `${process.env.REACT_APP_API_URL}/users`,
@@ -27,7 +27,7 @@ export default function ProjectCreatePage() {
     .then((response) => setAllUsers(response.data))
     .catch((error) => console.log("Error getting users from API: ", error));
     
-    // get list of all customer names incl emails (for unique matching)
+    // get list of all customer for customer selection
     axios
     .get(
       `${process.env.REACT_APP_API_URL}/customers`,
@@ -38,14 +38,18 @@ export default function ProjectCreatePage() {
 
   }, [storedToken]);
   
-  function handleInputs(evnt) {
-    const newInputs = {...formInputs};
-    newInputs[evnt.target.id] = evnt.target.value;
+  function handleInputs(evnt, index=null) {
+
+    const newInputs = JSON.parse(JSON.stringify(formInputs));
+    if (evnt.target.id === 'managers') {
+      newInputs[evnt.target.id][index] = evnt.target.value;
+    } else {
+      newInputs[evnt.target.id] = evnt.target.value;
+    }
     setFormInputs(newInputs);
   }
 
   function handleSubmit(evnt) {
-    
     evnt.preventDefault();
     console.log({ ...formInputs, owner: user._id })
     try {
@@ -70,13 +74,13 @@ export default function ProjectCreatePage() {
       console.log("Error creating project: ", error)
       setSubmitState("error");
     }
-
   }
 
   return (
     <div className="p-5 res-width-container">
       <h1 className="mb-5">Add Project</h1>
         <Form onSubmit={ handleSubmit }>
+
           <Form.Group controlId="title">
             <Form.Label>Title</Form.Label>
             <Form.Control 
@@ -84,6 +88,7 @@ export default function ProjectCreatePage() {
               value={ formInputs.title } onChange={ handleInputs }  
             />
           </Form.Group>
+
           <div className="d-flex">
             <Form.Group controlId="location">
               <Form.Label>Location</Form.Label>
@@ -111,6 +116,7 @@ export default function ProjectCreatePage() {
               />
             </Form.Group>
           </div>
+
           <Form.Group controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control 
@@ -118,6 +124,7 @@ export default function ProjectCreatePage() {
               value={ formInputs.description } onChange={ handleInputs }
             />
           </Form.Group>
+
           <div className="d-flex">
             <Form.Group controlId="sizeInHa">
               <Form.Label>Size (in ha)</Form.Label>
@@ -138,6 +145,7 @@ export default function ProjectCreatePage() {
               </Form.Select>
             </Form.Group>
           </div>
+
           <Form.Group controlId="customer">
             <Form.Label> Customer </Form.Label>
             <Form.Select aria-label={ formInputs.customer } onChange={ handleInputs }>
@@ -151,9 +159,20 @@ export default function ProjectCreatePage() {
               }
             </Form.Select>
           </Form.Group>
+
           <Form.Group controlId="managers">
             <Form.Label> Project Managers </Form.Label>
-            <Form.Select aria-label={ formInputs.managers } onChange={ handleInputs }>
+            <Form.Select aria-label={ formInputs.managers[0] } onChange={ (e) => handleInputs(e, 0) }>
+              <option> </option>
+              {
+                allUsers.map(user => (
+                  <option key={ user._id } value={ user._id }>
+                    { `${user.firstName} (${user.email})` } 
+                  </option>
+                ))
+              }
+            </Form.Select>
+            <Form.Select aria-label={ formInputs.managers[1] } onChange={ (e) => handleInputs(e, 1) }>
               <option> </option>
               {
                 allUsers.map(user => (
@@ -167,8 +186,8 @@ export default function ProjectCreatePage() {
 
           <Button className="bg-secondary-cstm text-primary-cstm mt-4" variant="secondary-cstm" type="submit">Add Project</Button>
         </Form>
-        { submitState === 'success' && <h4 className="mt-4 bg-success-cstm text-white"> Project successfully created. </h4> }
-        { submitState === 'error' && <h4 className="mt-4 bg-error-cstm"> Error creating project. Please try again. </h4> }
+        { submitState === 'success' && <h4 className="mt-4 text-success-cstm"> Project successfully created. </h4> }
+        { submitState === 'error' && <h4 className="mt-4 text-error-cstm"> Error creating project. Please try again. </h4> }
     </div>
   )
 }
