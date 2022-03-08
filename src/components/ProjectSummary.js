@@ -51,7 +51,7 @@ export default function ProjectSummary(props) {
                         <Button 
                             onClick={ toggleEditMode } 
                             type={ !editMode ? "submit" : "button"} 
-                            variant="custom" 
+                            variant="custom"
                             className="border-secondary-cstm text-secondary-cstm my-4" >
                             { editMode ? "Save Changes" : "Edit Details" }
                         </Button>

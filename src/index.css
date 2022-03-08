@@ -10,14 +10,13 @@ body {
 
 h1, h2, h3 {
   font-family: 'Lato';
-  font-weight: bold;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 /* Exact differentiation still tbd */
 h4, h5, h6 {
-  /* font-family: 'Roboto Slab'; */
   font-family: 'Lato';
   font-weight: lighter;
   text-transform: uppercase;
@@ -122,6 +121,20 @@ a:hover, .nav-link:hover, a:focus, a:hover svg, a:focus svg {
 .nav-link.active {
   background-color: inherit !important;
   border-bottom-color: #F4F6F7 !important;
+}
+
+.btn-custom.border-secondary-cstm:hover {
+  background-color:#18D57F;
+  color: white !important;
+}
+
+.btn-custom.text-primary-cstm:hover {
+  color: white !important;
+}
+
+.btn-custom.border-danger:hover {
+  background-color: #d53118; 
+  color: white !important;
 }
 
 
