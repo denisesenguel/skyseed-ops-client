@@ -16,7 +16,7 @@ export default function Header() {
                     <img height="32px" src={ logoLight } alt="Skyseed Logo"/>
                 </Link>
             </Navbar.Brand>
-            <NavLink className="nav-link text-white" to="/" onClick={ logOutUser }>
+            <NavLink className="nav-link text-neutral-grey font-lato-light-uppercase" to="/" onClick={ logOutUser }>
                 Logout
             </NavLink>
         </Navbar>

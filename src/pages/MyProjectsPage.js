@@ -27,7 +27,7 @@ export default function AllProjectsPage(props) {
                 isLoading ?
                     <Spinner animation="border" variant="secondary-cstm"/> :
                     <ProjectsList projects={ getMyProjects(user._id, projects) }/>
-            }
+            } 
         </div>
       )
 }

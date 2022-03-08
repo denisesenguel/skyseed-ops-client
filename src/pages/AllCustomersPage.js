@@ -43,7 +43,7 @@ export default function CustomersPage() {
             <>
               {
                 generateAlphabet().map((letter, index) => (
-                  <ListGroup key={ index } className="mb-1">
+                  <ListGroup key={ index } className="mb-1 shadow">
                     <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
                     {
                       (customers.filter(customer => customer.lastName.indexOf(letter) > -1).length === 0) ?

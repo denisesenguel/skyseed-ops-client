@@ -11,7 +11,7 @@ export default function ProjectsList(props) {
   return (
     <div className="res-width-container-lg">
       <ListGroup className="shadow">
-        <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3 shadow">
+        <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3">
           <Row>
             <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Title</h6></Col>
             <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Time</h6></Col>
@@ -21,15 +21,7 @@ export default function ProjectsList(props) {
           </Row>
         </ListGroup.Item>
         {
-          (projects.length === 0) ?
-            <div className="mx-0">
-              <p className="my-4">No projects found.</p> 
-              <Button variant="custom" className="bg-secondary-cstm"> 
-                <Link to="/home/projects/create" className="text-decoration-none text-primary-cstm">
-                  Add one now
-                </Link> 
-              </Button> 
-            </div> :
+          (projects.length > 0) &&
               projects.map((project) => (
                   <ListGroup.Item action key={ project._id } className="p-3">
                     <Link 
@@ -37,13 +29,13 @@ export default function ProjectsList(props) {
                       className="text-decoration-none active-green text-primary-cstm"
                     >
                       <Row>
-                          <Col xs={3} className="d-flex align-items-center"> { project.title } </Col>
+                          <Col xs={3} className="d-flex align-items-center font-m"> { project.title } </Col>
                           <Col xs={2} className="d-flex align-items-center font-lato-light">{ [project.season, project.year].join(" ") } </Col>
                           <Col xs={3} className="d-flex align-items-center font-lato-light">{ project.location }</Col>
                           <Col xs={2} className="d-flex align-items-center justify-content-center font-lato-light"> 
                             { project.status ? <StatusTag status={ project.status }/> : "Unknown" }
                           </Col>
-                          <Col xs={2} className="d-flex align-items-center font-lato-light"> { moment(project.updatedAt).fromNow() }</Col>
+                          <Col xs={2} className="d-flex align-items-center font-lato-light font-s"> { moment(project.updatedAt).fromNow() }</Col>
                       </Row>
                     </Link>
                   </ListGroup.Item>
@@ -51,6 +43,19 @@ export default function ProjectsList(props) {
               ))
         }
       </ListGroup>
+
+      { 
+        (projects.length === 0) && 
+          <div className="mx-0">
+            <p className="my-4">No projects found.</p> 
+          </div> 
+      }
+
+      <Link to="/home/projects/create" className="text-decoration-none">
+        <Button variant="custom" className="border-secondary-cstm text-secondary-cstm mt-4">
+          { projects.length === 0 ? "Add one now" : "Add another" } 
+        </Button>
+      </Link>
     </div>
   )
 }

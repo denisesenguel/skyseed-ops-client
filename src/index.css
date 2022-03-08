@@ -38,6 +38,14 @@ p, .font-lato-light {
   font-size: 0.7em;
 }
 
+.font-s {
+  font-size:0.9em;
+}
+
+.font-m {
+  font-size: 1.1em;
+}
+
 .bg-forest {
   background-image: url('./images/forest_bg_website.jpg');
   background-size: cover;
