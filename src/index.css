@@ -60,7 +60,7 @@ p {
 }
 
 .fix-content-height-below-header {
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
 }
 
 .SideBar {
@@ -117,6 +117,11 @@ p {
 
 a:hover, .nav-link:hover, a:focus, a:hover svg, a:focus svg {
   color: #18D57F !important;
+}
+
+.nav-link.active {
+  background-color: inherit !important;
+  border-bottom-color: #F4F6F7 !important;
 }
 
 
