@@ -16,14 +16,14 @@ h1, h2, h3 {
 }
 
 /* Exact differentiation still tbd */
-h4, h5, h6 {
+h4, h5, h6, .font-lato-light-uppercase {
   font-family: 'Lato';
   font-weight: lighter;
   text-transform: uppercase;
   letter-spacing: 0.2em;
 } 
 
-p {
+p, .font-lato-light {
   font-family: 'Lato';
   font-weight: lighter;
 }
