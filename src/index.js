@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+// the order of style import matters!!
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
 import './index.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import { AuthProviderWrapper } from './context/AuthContext';
 import reportWebVitals from './reportWebVitals';
