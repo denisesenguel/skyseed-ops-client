@@ -126,7 +126,7 @@ export default function ProjectCreatePage() {
                 <Form.Group controlId="year">
                   <Form.Label>Year</Form.Label>
                   <Form.Control 
-                    type="number" fieldName="year"
+                    type="number"
                     value={ formInputs.year } onChange={ handleInputs }
                   />
                 </Form.Group>

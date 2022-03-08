@@ -58,7 +58,7 @@ export default function ProjectSummary(props) {
             <h6>Project Managers</h6>
             <div className="w-50">
                 {
-                    (!project || !project?.managers || project?.managers?.length === 0) ?
+                    ( !project || !project?.managers || project?.managers?.length === 0 ) ?
                         <p> None assigned yet.</p> :
                         project.managers.map((user) => (
                             <Card key={ user._id } className="d-flex flex-row align-items-center my-1">

@@ -42,24 +42,23 @@ export default function CustomersPage() {
             <p>No customers found.</p> :
             <>
               {
-                generateAlphabet().map(letter => (
-                  <ListGroup className="mb-1">
+                generateAlphabet().map((letter, index) => (
+                  <ListGroup key={ index } className="mb-1">
                     <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
                     {
                       (customers.filter(customer => customer.lastName.indexOf(letter) > -1).length === 0) ?
                         <ListGroup.Item className="text-muted"> None </ListGroup.Item> :
-
                         customers
                           .filter(customer => customer.lastName.indexOf(letter) > -1)
-                          .map((customer => (
-                          <ListGroup.Item className="text-primary-cstm d-flex align-items-center p-3">
-                            <img className="rounded-circle fix-img-height" src={ exampleImg } alt={ customer.lastName } />
-                            <p className="mx-3 mb-0"> 
-                              <h6 className="mb-1"> { customer.firstName } { customer.lastName } </h6>
-                              <ButtonMailTo label={ customer.email } mailto={ `mailto:${customer.email}` }/>
-                            </p> 
-                          </ListGroup.Item>
-                      )))
+                          .map((customer, index) => (
+                            <ListGroup.Item className="text-primary-cstm d-flex align-items-center p-3" key={ index }>
+                              <img className="rounded-circle fix-img-height" src={ exampleImg } alt={ customer.lastName } />
+                              <div className="mx-3 mb-0"> 
+                                <h6 className="mb-1"> { customer.firstName } { customer.lastName } </h6>
+                                <ButtonMailTo label={ customer.email } mailto={ `mailto:${customer.email}` }/>
+                              </div> 
+                            </ListGroup.Item>
+                      ))
                     }
                   </ListGroup>
                 ))
