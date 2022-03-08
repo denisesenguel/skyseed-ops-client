@@ -17,16 +17,16 @@ export default function NavBar() {
                     </Link>
                 </Navbar.Brand>
                 <Nav className="d-flex justify-content-end">
-                    <Nav.Link className="text-primary-cstm" href="http://www.skyseed.eco">About</Nav.Link>
-                    <NavLink className="nav-link text-primary-cstm" to="/home">Internal</NavLink>
+                    <Nav.Link className="text-primary-cstm font-lato-light-uppercase" href="http://www.skyseed.eco">About</Nav.Link>
+                    <NavLink className="nav-link text-primary-cstm font-lato-light-uppercase" to="/home">Internal</NavLink>
                     {
                         isLoggedIn ? 
-                            <NavLink className="nav-link text-primary-cstm" to="/" onClick={ logOutUser }>
+                            <NavLink className="nav-link text-primary-cstm font-lato-light-uppercase" to="/" onClick={ logOutUser }>
                                 Logout
                             </NavLink> :
                             <>
-                            <NavLink className="nav-link text-primary-cstm" to="/signup">Signup</NavLink>
-                            <NavLink className="nav-link text-primary-cstm" to="/login">Login</NavLink>
+                            <NavLink className="nav-link text-primary-cstm font-lato-light-uppercase" to="/signup">Signup</NavLink>
+                            <NavLink className="nav-link text-primary-cstm font-lato-light-uppercase" to="/login">Login</NavLink>
                             </>
                     }
                 </Nav>

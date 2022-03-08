@@ -154,7 +154,7 @@ export default function ProjectDetailsPage() {
             <Button
               onClick={() => deleteProject(project._id)}
               variant="custom"
-              className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
+              className="border-danger text-danger fix-at-bottom-right m-5"
             >
               Delete this project
             </Button>

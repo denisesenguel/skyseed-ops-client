@@ -51,7 +51,7 @@ export default function ProjectSummary(props) {
                         <Button 
                             onClick={ toggleEditMode } 
                             type={ !editMode ? "submit" : "button"} 
-                            variant="custom" 
+                            variant="custom"
                             className="border-secondary-cstm text-secondary-cstm my-4" >
                             { editMode ? "Save Changes" : "Edit Details" }
                         </Button>
@@ -64,7 +64,7 @@ export default function ProjectSummary(props) {
                     ( !project || !project?.managers || project?.managers?.length === 0 ) ?
                         <p> None assigned yet.</p> :
                         project.managers.map((user) => (
-                            <Card key={ user._id } className="d-flex flex-row align-items-center my-1">
+                            <Card key={ user._id } className="d-flex flex-row align-items-center my-1 shadow">
                                 <img 
                                     src={ userImg } 
                                     className="rounded-circle fix-img-height m-2" 

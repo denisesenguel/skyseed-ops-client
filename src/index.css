@@ -10,21 +10,20 @@ body {
 
 h1, h2, h3 {
   font-family: 'Lato';
-  font-weight: bold;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 /* Exact differentiation still tbd */
-h4, h5, h6 {
-  /* font-family: 'Roboto Slab'; */
+h4, h5, h6, .font-lato-light-uppercase {
   font-family: 'Lato';
   font-weight: lighter;
   text-transform: uppercase;
   letter-spacing: 0.2em;
 } 
 
-p {
+p, .font-lato-light {
   font-family: 'Lato';
   font-weight: lighter;
 }
@@ -37,6 +36,14 @@ p {
 
 .font-xs {
   font-size: 0.7em;
+}
+
+.font-s {
+  font-size:0.9em;
+}
+
+.font-m {
+  font-size: 1.1em;
 }
 
 .bg-forest {
@@ -55,12 +62,12 @@ p {
 }
 
 .fix-content-height {
-  height: 100vh;
+  min-height: 100vh;
   margin-top: 60px;
 }
 
 .fix-content-height-below-header {
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
 }
 
 .SideBar {
@@ -105,15 +112,39 @@ p {
   top:70px;
 }
 
-.rounded-circle {
-  border-radius: 50%;
-}
-
 .fix-at-bottom-right {
   position: absolute;
   right: 0px;
   bottom: 0px;
 }
+
+.rounded-circle {
+  border-radius: 50%;
+}
+
+a:hover, .nav-link:hover, a:focus, a:hover svg, a:focus svg {
+  color: #18D57F !important;
+}
+
+.nav-link.active {
+  background-color: inherit !important;
+  border-bottom-color: #F4F6F7 !important;
+}
+
+.btn-custom.border-secondary-cstm:hover {
+  background-color:#18D57F;
+  color: white !important;
+}
+
+.btn-custom.text-primary-cstm:hover {
+  color: white !important;
+}
+
+.btn-custom.border-danger:hover {
+  background-color: #d53118; 
+  color: white !important;
+}
+
 
 @media only screen and (min-width: 576px) {
   .res-width-container-sm {
