@@ -46,8 +46,8 @@ export default function ProjectsList(props) {
 
       { 
         (projects.length === 0) && 
-          <div className="mx-0">
-            <p className="my-4">No projects found.</p> 
+          <div className="mx-0 my-4">
+            No projects found. 
           </div> 
       }
 
