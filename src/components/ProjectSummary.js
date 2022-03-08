@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, Card } from 'react-bootstrap';
 import userImg from '../images/forest_bg_website.jpg';
 import ButtonMailTo from './ButtonMailTo';
+import IsRestricted from './IsRestricted';
 
 export default function ProjectSummary(props) {
     
@@ -46,13 +47,15 @@ export default function ProjectSummary(props) {
                     />
                 </Form.Group>
                 <div className="d-flex justify-content-end">
-                    <Button 
-                        onClick={ toggleEditMode } 
-                        type={ !editMode ? "submit" : "button"} 
-                        variant="custom" 
-                        className="border-secondary-cstm text-secondary-cstm my-4" >
-                        { editMode ? "Save Changes" : "Edit Details" }
-                    </Button>
+                    <IsRestricted project={ project }>
+                        <Button 
+                            onClick={ toggleEditMode } 
+                            type={ !editMode ? "submit" : "button"} 
+                            variant="custom" 
+                            className="border-secondary-cstm text-secondary-cstm my-4" >
+                            { editMode ? "Save Changes" : "Edit Details" }
+                        </Button>
+                    </IsRestricted>
                 </div>
             </Form>
             <h6>Project Managers</h6>

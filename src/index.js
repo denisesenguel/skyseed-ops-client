@@ -5,7 +5,7 @@ import './custom.scss';
 import './index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
-import { AuthProviderWrapper } from './context/auth.context';
+import { AuthProviderWrapper } from './context/AuthContext';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

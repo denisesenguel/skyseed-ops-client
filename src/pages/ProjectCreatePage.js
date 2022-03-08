@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import { enumArrays } from '../config/dataConfigs';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProjectCreatePage() {
