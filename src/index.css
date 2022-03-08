@@ -59,6 +59,9 @@ p {
   margin-top: 60px;
 }
 
+.fix-content-height-below-header {
+  height: calc(100vh - 60px);
+}
 
 .SideBar {
   transition: 350ms;

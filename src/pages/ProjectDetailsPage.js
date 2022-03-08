@@ -78,7 +78,7 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="res-width-container h-100 p-5 position-relative">
+    <div className="res-width-container fix-content-height-below-header p-5 position-relative">
       {isLoading ? (
         <Spinner animation="border" variant="secondary-cstm" />
       ) : (
