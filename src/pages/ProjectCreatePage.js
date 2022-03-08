@@ -200,14 +200,14 @@ export default function ProjectCreatePage() {
                   <Button 
                     onClick={ addSelectField } 
                     variant="custom" size="sm"
-                    className="border-primary-cstm text-primary-cstm" 
+                    className="border-secondary-cstm text-secondary-cstm" 
                   >
                     Add More
                   </Button>
                   <Button 
                     onClick={ removeSelectField } 
                     variant="custom" size="sm mx-2"
-                    className="border-primary-cstm text-primary-cstm" 
+                    className="border-secondary-cstm text-secondary-cstm" 
                   > 
                     Remove
                   </Button>
