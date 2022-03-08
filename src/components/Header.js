@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
         <div>
-            <Navbar className="sticky-top bg-forest fix-header-height px-4 d-flex justify-content-between" sticky="top">
+            <Navbar className="fixed-top bg-forest fix-header-height px-4 d-flex justify-content-between">
             <Navbar.Brand>
                 <Link to="/">
                     <img height="32px" src={ logoLight } alt="Skyseed Logo"/>

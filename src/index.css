@@ -55,28 +55,23 @@ p {
 }
 
 .fix-content-height {
+  height: 100vh;
+  margin-top: 60px;
+}
+
+
+.SideBar {
+  transition: 350ms;
   height: calc(100vh - 60px);
-}
-
-.min-content-height {
-  min-height: calc(100vh - 60px);
-}
-
-.fix-sidebar-width {
-  transition: 350ms;
-  width: 250px;
-}
-
-.fix-sidebar-width-hidden {
-  transition: 350ms;
-  width: 60px;
-}
-
-.fix-sidebar-position {
   position: fixed;
   z-index: 1;
   top: 60px;
   left: 0;
+  width: 250px;
+}
+
+.SideBar.hidden {
+  width: 60px;
 }
 
 .fix-content-width {
@@ -85,10 +80,8 @@ p {
   width: 100%;
 }
 
-.fix-content-width-hidden {
-  transition: 350ms;
+.fix-content-width.hidden {
   margin-left: 60px;
-  width: 100%;
 }
 
 .res-width-container {

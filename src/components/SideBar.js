@@ -32,8 +32,7 @@ function SideBar(props) {
 return (
 	<>
 	<IconContext.Provider value={{ color: "#F4F6F7" }}>
-		<nav className={ `bg-primary-cstm fix-sidebar-position fix-content-height d-flex justify-content-center position-fixed 
-                      ${ (sidebar) ? "fix-sidebar-width" : "fix-sidebar-width-hidden" }` }>
+		<nav className={ `SideBar bg-primary-cstm d-flex justify-content-center ${ (!sidebar) && "hidden" }` }>
 		<div className="w-100">
 
       {
