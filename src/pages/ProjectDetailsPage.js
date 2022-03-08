@@ -9,7 +9,7 @@ import ProjectChecklist from "../components/ProjectChecklist";
 import SuccessToast from "../components/SuccessToast";
 import useShowSuccess from "../hooks/useShowSuccess";
 import StatusSelectToast from "../components/StatusSelectToast";
-import usePermissions from "../hooks/usePermissions";
+import IsRestricted from "../components/IsRestricted";
 
 export default function ProjectDetailsPage() {
   
@@ -17,7 +17,6 @@ export default function ProjectDetailsPage() {
   const { projectId } = useParams();
   const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } = useShowSuccess();
   const [project, setProject] = useState({});
-  const { isAllowedTo } = usePermissions(project);
   const [selectedTab, setSelectedTab] = useState("summary");
   const [showSelectStatus, setShowSelectStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -154,14 +153,15 @@ export default function ProjectDetailsPage() {
             <ProjectChecklist project={project} onEdit={editProject} />
           )}
 
-          <Button
-            disabled={ !isAllowedTo }
-            onClick={() => deleteProject(project._id)}
-            variant="custom"
-            className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
-          >
-            Delete this project
-          </Button>
+          <IsRestricted project={ project }>
+            <Button
+              onClick={() => deleteProject(project._id)}
+              variant="custom"
+              className="border-error-cstm text-error-cstm fix-at-bottom-right m-5"
+            >
+              Delete this project
+            </Button>
+          </IsRestricted>
         </>
       )}
 
