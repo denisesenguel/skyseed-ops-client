@@ -80,13 +80,13 @@ p {
 }
 
 .fix-content-width {
-  /* width: calc(100vw - 80px) */
+  transition: 350ms;
   margin-left: 250px;
   width: 100%;
 }
 
 .fix-content-width-hidden {
-  /* width: calc(100vw - 80px) */
+  transition: 350ms;
   margin-left: 60px;
   width: 100%;
 }
