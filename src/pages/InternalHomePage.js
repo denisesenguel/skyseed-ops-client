@@ -52,7 +52,7 @@ export default function InternalHomePage() {
                 element={ <MyProjectsPage projects={ projects } isLoading={ isLoading }/>}   
               />
               <Route path="/projects/create" element={ <ProjectCreatePage />} />
-              <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
+              <Route path="/projects/:projectId" element={<ProjectDetailsPage />} />
               <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
             </Routes>
