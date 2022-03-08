@@ -16,16 +16,21 @@ export default function InternalHomePage() {
 
   const { sidebar, toggleSidebar } = useSidebar();
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/projects`,
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
-      .then((response) => setProjects(response.data))
+      .then((response) => {
+        setProjects(response.data);
+        setIsLoading(false);
+      })
       .catch((error) => console.log("Could not get projects from DB: ", error));
   }, [storedToken]);
 
@@ -46,13 +51,11 @@ export default function InternalHomePage() {
       <Header />
       <div className="d-flex bg-neutral-grey min-content-height">
         <SideBar sidebar={ sidebar } toggleSidebar={ toggleSidebar }/>
-          <div className={ sidebar ? "fix-content-width" : "fix-content-width-hidden"}>
+          <div className={ sidebar ? "fix-content-width" : "fix-content-width-hidden"}>     
             <Routes>
-              <Route path="/" element={ <AllProjectsPage projects={ projects } /> }/>
-              {/* nest further here later */}
-              <Route path="/projects" element={ <AllProjectsPage projects={ projects }/> }/>
-              {/* My-projects might be the same page as InternalHomePage */}
-              <Route path="/projects/my-projects" element={ <MyProjectsPage projects={ getMyProjects(user._id) } />} />
+              <Route path="/" element={ <AllProjectsPage projects={ projects } isLoading={ isLoading } /> }/>
+              <Route path="/projects" element={ <AllProjectsPage projects={ projects } isLoading={ isLoading }/> }/>
+              <Route path="/projects/my-projects" element={ <MyProjectsPage projects={ getMyProjects(user._id) } isLoading={ isLoading }/>} />
               <Route path="/projects/create" element={ <ProjectCreatePage />} />
               <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
               <Route path="/customers" element={ <CustomersPage /> }/>
