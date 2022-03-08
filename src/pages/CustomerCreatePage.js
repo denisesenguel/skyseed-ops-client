@@ -77,10 +77,24 @@ export default function CustomerCreatePage() {
               </Form.Group></>
           ))
         }
-        <Button onClick={ addForm } className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >Add More</Button>
-        <Button onClick={ removeForm } className="bg-secondary-cstm text-primary-cstm mt-4 mx-2" variant="custom" >Remove</Button>
+        <Button 
+          onClick={ addForm } 
+          className="border-secondary-cstm text-secondary-cstm mt-4" 
+          variant="custom" 
+          size="sm"
+        >Add More</Button>
+        <Button 
+          onClick={ removeForm } 
+          className="border-secondary-cstm text-secondary-cstm mt-4 mx-2" 
+          variant="custom" 
+          size="sm"
+        >Remove</Button>
         <br />
-        <Button type="submit" className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" >Create All</Button>
+        <Button 
+          type="submit" 
+          className="bg-secondary-cstm text-primary-cstm mt-4" 
+          variant="custom" 
+        >Create All</Button>
       </Form>
     </div>
   )

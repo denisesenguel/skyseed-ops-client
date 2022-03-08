@@ -1,78 +1,150 @@
-import React, { useContext } from 'react';
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  //CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import * as RiIcons from "react-icons/ri";
+import * as CgIcons from "react-icons/cg";
+import { IconContext } from "react-icons/lib";
 import { AuthContext } from "../context/auth.context";
-import { Accordion } from 'react-bootstrap';
 
-function SideBar() { 
+// navlink:
+// font-size: 18px;
+// &:hover {
+// 	background: #252831;
+// 	border-left: 4px solid green;
+// 	cursor: pointer;
+// };
 
+
+function SideBar(props) {
+
+  const { sidebar, toggleSidebar } = props;
+
+  const [subNav, setSubNav] = useState([false, false]);
   const { user } = useContext(AuthContext);
+  
+  function toggleSubNav(index) {
+    const newList = [...subNav];
+    newList[index] = !newList[index];
+    setSubNav(newList);
+  }
 
-  return (
-    <div className="d-flex fix-content-height overflow-scroll fix-sidebar-position">
-      <CDBSidebar className="fix-sidebar-width bg-primary-cstm text-neutral-grey">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          Hello, { user?.firstName }
-          { (user?.role === 'admin') && <p className="mb-1">Admin</p> } 
-        </CDBSidebarHeader>
+return (
+	<>
+	<IconContext.Provider value={{ color: "#F4F6F7" }}>
+		<nav className={ `bg-primary-cstm fix-sidebar-position fix-content-height d-flex justify-content-center position-fixed 
+                      ${ (sidebar) ? "fix-sidebar-width" : "fix-sidebar-width-hidden" }` }>
+		<div className="w-100">
 
-        <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            {/* might want to assign activeClassName="activeClicked" to these NavLinks */}
-            <NavLink exact="true" to="/home" >
-              <CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
-            </NavLink>
-            <Accordion className="bg-primary-cstm">
-              <Accordion.Item eventKey="0" className="bg-primary-cstm">
-                <Accordion.Header className="bg-primary-cstm p-0">
-                  <CDBSidebarMenuItem className="m-0" icon="tree">Projects</CDBSidebarMenuItem>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <NavLink exact="true" to="/home/projects">
-                      <CDBSidebarMenuItem>View All</CDBSidebarMenuItem>
-                  </NavLink>
-                  <NavLink exact="true" to="/home/projects/my-projects">
-                      <CDBSidebarMenuItem>My Projects</CDBSidebarMenuItem>
-                  </NavLink>
-                  <NavLink exact="true" to="/home/projects/create">
-                      <CDBSidebarMenuItem>Add new</CDBSidebarMenuItem>
-                  </NavLink>
-                </Accordion.Body>
-              </Accordion.Item>
-              </Accordion>
-              <Accordion>
-              <Accordion.Item eventKey="0" className="bg-primary-cstm">
-                <Accordion.Header className="bg-primary-cstm p-0">
-                  <CDBSidebarMenuItem className="m-0" icon="list">Customers</CDBSidebarMenuItem>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <NavLink exact="true" to="/home/customers">
-                      <CDBSidebarMenuItem>View All</CDBSidebarMenuItem>
-                  </NavLink>
-                  <NavLink exact="true" to="/home/customers/create">
-                      <CDBSidebarMenuItem>Add new</CDBSidebarMenuItem>
-                  </NavLink>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </CDBSidebarMenu>
-        </CDBSidebarContent>
-
-        {/* <CDBSidebarFooter>
-          <div className="px-4 text-center">
-             <p> ⓒ Skyseed GmbH </p>
+      {
+        sidebar ?
+          <div className="d-flex justify-content-between align-items-center p-4 text-neutral-grey border-bottom">
+            <div>
+              <h6 className="m-0">Hello { user.firstName }!</h6> 
+              { (user.role === 'admin') && <p className="m-0 font-xs text-muted">You're an admin.</p> }
+            </div>
+            <Link to="#" className="d-flex align-items-center">
+              <AiIcons.AiOutlineClose onClick={ toggleSidebar } size="20px"/>
+            </Link> 
+          </div> :
+          <div className="w-100 p-4 d-flex align-items-center justify-content-center">
+            <Link to="#">  
+              <FaIcons.FaBars onClick={ toggleSidebar } size="25px"/>
+            </Link>
           </div>
-        </CDBSidebarFooter> */}
-      </CDBSidebar>
-    </div>
-  );
+      }
+			
+      {
+        sidebar &&
+        <div>
+          <Link 
+            to="/home" 
+            className= "d-flex text-neutral-grey justify-content-space-between align-iemts-center mt-4 p-4 text-decoration-none"
+          >
+            <div className="d-flex align-items-center">
+              <RiIcons.RiHome2Line />
+              <span className="mx-2 my-0">Home</span>
+            </div>
+          </Link>
+
+          <Link 
+            to="#" 
+            onClick={ () => toggleSubNav(0) }
+            className= "d-flex text-neutral-grey justify-content-between align-iemts-center p-4 text-decoration-none"
+          >
+          <div className="d-flex align-items-center">
+            <CgIcons.CgTrees />
+            <span className="mx-2 my-0">Projects</span>
+          </div>
+          <div>
+            { subNav[0] ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill /> }
+          </div>
+          </Link>
+          {
+            subNav[0] &&
+              <div>
+                <Link 
+                  to="/home/projects"
+                  className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
+                >
+                  <span> Browse All </span>
+                </Link>
+                <Link 
+                  to="/home/projects/my-projects"
+                  className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
+                >
+                  <span> My Projects </span>
+                </Link>
+                <Link 
+                  to="/home/projects/create"
+                  className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
+                >
+                  {/* icon here? */}
+                  <span> Add New </span>
+                </Link>
+              </div>
+          }
+
+          <Link 
+            to="#" 
+            onClick={ () => toggleSubNav(1) }
+            className= "d-flex text-neutral-grey justify-content-between align-iemts-center p-4 text-decoration-none"
+          >
+          <div className="d-flex align-items-center">
+          <CgIcons.CgList />
+            <span className="mx-2 my-0">Customers</span>
+          </div>
+          <div>
+          { subNav[1] ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill /> }
+          </div>
+          </Link>
+          {
+            subNav[1] &&
+              <div>
+                <Link 
+                  to="/home/customers"
+                  className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
+                >
+                  <span> Browse All </span>
+                </Link>
+                <Link 
+                  to="/home/customers/create"
+                  className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
+                >
+                  <span> Add New </span>
+                </Link>
+              </div>
+          }
+        </div>
+      }
+		</div>
+		</nav>
+	</IconContext.Provider>
+	</>
+);
 };
 
 export default SideBar;
+
+
+
