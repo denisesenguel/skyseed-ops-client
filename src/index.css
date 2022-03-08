@@ -105,15 +105,20 @@ p {
   top:70px;
 }
 
-.rounded-circle {
-  border-radius: 50%;
-}
-
 .fix-at-bottom-right {
   position: absolute;
   right: 0px;
   bottom: 0px;
 }
+
+.rounded-circle {
+  border-radius: 50%;
+}
+
+a:hover, .nav-link:hover, a:focus, a:hover svg, a:focus svg {
+  color: #18D57F !important;
+}
+
 
 @media only screen and (min-width: 576px) {
   .res-width-container-sm {

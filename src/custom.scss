@@ -1,6 +1,8 @@
-// overwrite theme variables
-// $primary: #11414D;
-// $secondary: #18D57F;
+// overwrite theme variables. 
+// note that the order of imports plays an important role!
+// first import bootstrap in index.js, then your custom files
+$primary: #18D57F;
+
 // $light: #EFEFEB;
 // this does not work for some reason. 
 // It seems to be overridden with default default values.

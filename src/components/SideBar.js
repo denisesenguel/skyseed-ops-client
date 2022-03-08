@@ -7,15 +7,6 @@ import * as CgIcons from "react-icons/cg";
 import { IconContext } from "react-icons/lib";
 import { AuthContext } from "../context/AuthContext";
 
-// navlink:
-// font-size: 18px;
-// &:hover {
-// 	background: #252831;
-// 	border-left: 4px solid green;
-// 	cursor: pointer;
-// };
-
-
 function SideBar(props) {
 
   const { sidebar, toggleSidebar } = props;
