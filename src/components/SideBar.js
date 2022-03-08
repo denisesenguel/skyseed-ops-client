@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -16,21 +16,12 @@ import { AuthContext } from "../context/auth.context";
 // };
 
 
-function Sidebar() {
+function SideBar(props) {
 
-  // set breakpoint for window width in px for sidebar autohide
-  const breakPoint = 768;
-  const [sidebar, setSidebar] = useState((window.innerWidth > breakPoint) ? true : false);
+  const { sidebar, toggleSidebar } = props;
+
   const [subNav, setSubNav] = useState([false, false]);
   const { user } = useContext(AuthContext);
-
-  // on window resize update sidebar state
-  useEffect(() => {
-    const onResize = () => setSidebar((window.innerWidth > breakPoint) ? true : false);
-    window.addEventListener('resize', onResize)
-  }, [])
-
-  const toggleSidebar = () => setSidebar(!sidebar);
   
   function toggleSubNav(index) {
     const newList = [...subNav];
@@ -153,7 +144,7 @@ return (
 );
 };
 
-export default Sidebar;
+export default SideBar;
 
 
 

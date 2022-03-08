@@ -9,10 +9,12 @@ import CustomersPage from './CustomersPage';
 import CustomerCreatePage from './CustomerCreatePage';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
+import useSidebar from '../hooks/useSidebar';
 import { AuthContext } from '../context/auth.context';
 
 export default function InternalHomePage() {
 
+  const { sidebar, toggleSidebar } = useSidebar();
   const [projects, setProjects] = useState([]);
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
@@ -43,8 +45,8 @@ export default function InternalHomePage() {
     <div>
       <Header />
       <div className="d-flex bg-neutral-grey min-content-height">
-        <SideBar/>
-          <div className="fix-content-width">
+        <SideBar sidebar={ sidebar } toggleSidebar={ toggleSidebar }/>
+          <div className={ sidebar ? "fix-content-width" : "fix-content-width-hidden"}>
             <Routes>
               <Route path="/" element={ <AllProjectsPage projects={ projects } /> }/>
               {/* nest further here later */}
