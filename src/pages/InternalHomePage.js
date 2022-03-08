@@ -5,7 +5,7 @@ import AllProjectsPage from './AllProjectsPage';
 import MyProjectsPage from './MyProjectsPage';
 import ProjectDetailsPage from './ProjectDetailsPage';
 import ProjectCreatePage from './ProjectCreatePage';
-import CustomersPage from './CustomersPage';
+import AllCustomersPage from './AllCustomersPage';
 import CustomerCreatePage from './CustomerCreatePage';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
@@ -53,7 +53,7 @@ export default function InternalHomePage() {
               />
               <Route path="/projects/create" element={ <ProjectCreatePage />} />
               <Route path="/projects/:projectId" element={ <ProjectDetailsPage />} />
-              <Route path="/customers" element={ <CustomersPage /> }/>
+              <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
             </Routes>
           </div>

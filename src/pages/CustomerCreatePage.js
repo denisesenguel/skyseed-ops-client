@@ -54,7 +54,8 @@ export default function CustomerCreatePage() {
       <Form onSubmit={ createCustomers }>
         {
           formInputArray.map((formInputs, index) => (
-            <><h5 className="my-3 mt-5">Customer { index + 1 }</h5>
+            <>
+              <h5 key={ index } className="my-3 mt-5">Customer { index + 1 }</h5>
               <div className="d-flex w-100">
                 <Form.Group className="w-50" controlId="firstName">
                   <Form.Label>First Name</Form.Label>
@@ -74,7 +75,8 @@ export default function CustomerCreatePage() {
                 <Form.Control
                   type="email" placeholder="horst@forst.de"
                   value={formInputs.email} onChange={ (e) => handleInputs(index, e) } />
-              </Form.Group></>
+              </Form.Group>
+            </>
           ))
         }
         <Button 

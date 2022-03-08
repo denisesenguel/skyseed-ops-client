@@ -89,11 +89,11 @@ export default function ProjectCreatePage() {
 
   return (
     <div className="p-5 res-width-container">
+      <h1 className="mb-5">Add Project</h1>
       {
         isLoading ? 
           <Spinner animation="border" variant="secondary-cstm"/> :
           <>
-          <h1 className="mb-5">Add Project</h1>
             <Form onSubmit={ handleSubmit }>
 
               <Form.Group controlId="title">
@@ -179,7 +179,12 @@ export default function ProjectCreatePage() {
                 <Form.Label> Select at least one Project Manager </Form.Label>
                 {
                   formInputs.managers.map((value, index) => (
-                    <Form.Select aria-label={ value } onChange={ (e) => handleInputs(e, index) } className="my-1">
+                    <Form.Select 
+                      aria-label={ value } 
+                      onChange={ (e) => handleInputs(e, index) } 
+                      className="my-1"
+                      key={ index }
+                    >
                       <option> </option>
                       {
                         allUsers.map(user => (
