@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Nav, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import ProjectSummary from "../components/ProjectSummary";
@@ -107,25 +107,14 @@ export default function ProjectDetailsPage() {
             )}
           </div>
 
-          <div className="w-100 d-flex justify-content-between align-items-center">
-            <Link
-              className="text-decoration-none text-primary-cstm mt-2"
-              to={`/home/customers/${project.customer?._id}`}
-            >
-              <h6>
-                Client:{" "}
-                {[project.customer?.firstName, project.customer?.lastName].join(
-                  " "
-                )}
-              </h6>
-            </Link>
-            <Button size="sm" variant="custom" className="bg-secondary-cstm">
-              <ButtonMailTo
-                label="Email Client"
-                mailto={`mailto:${project.customer?.email}`}
-              />
-            </Button>
-          </div>
+          <p>
+            Customer: {" "}
+            <ButtonMailTo
+              label={ [project.customer?.firstName, project.customer?.lastName].join(" ") }
+              mailto={`mailto:${project.customer?.email}`}
+              className="text-decoration-underline text-secondary-cstm"
+            />
+          </p>
 
           <Nav
             fill
