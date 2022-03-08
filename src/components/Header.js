@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import logoLight from '../logo/brand_light.png';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Header() {
 

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Nav} from 'react-bootstrap';
 import logoDark from '../logo/brand_dark.png';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 
 export default function NavBar() {
 

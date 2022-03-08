@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as RiIcons from "react-icons/ri";
 import * as CgIcons from "react-icons/cg";
 import { IconContext } from "react-icons/lib";
-import { AuthContext } from "../context/auth.context";
+import { AuthContext } from "../context/AuthContext";
 
 // navlink:
 // font-size: 18px;

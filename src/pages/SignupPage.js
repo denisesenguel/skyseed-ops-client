@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 
 export default function SignupPage() {
 

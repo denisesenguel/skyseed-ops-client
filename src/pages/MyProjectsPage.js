@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import ProjectsList from '../components/ProjectsList';
 import Spinner from 'react-bootstrap/Spinner';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 
 export default function AllProjectsPage(props) {
 

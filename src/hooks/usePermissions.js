@@ -1,5 +1,5 @@
 import { useState, useContext, useMemo } from 'react';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../context/AuthContext';
 
 export default function usePermissions(props) {
     
@@ -18,7 +18,7 @@ export default function usePermissions(props) {
             }
         }
         console.log("memo executed. isallowed: ", isAllowedTo);
-    }, [project, user])
+    }, [project, user, isAllowedTo])
     
     return  { isAllowedTo };
 }
