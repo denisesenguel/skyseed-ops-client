@@ -53,7 +53,15 @@ export default function ProjectDetailsPage() {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
-        setProject(response.data);
+        // api returns unpopulated fields for managers and customer
+        const { managers, customer, ...rest } = response.data;
+        setProject((previous) => {
+          return {
+            ...rest, 
+            managers: previous.managers, 
+            customer: previous.customer
+          } 
+        });
         toggleShowSuccess();
         setSuccessMessage("Project successfully updated");
       })
