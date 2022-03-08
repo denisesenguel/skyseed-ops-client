@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import axios from 'axios';
@@ -36,8 +36,8 @@ export default function SignupPage() {
     return (
         <div className="bg-forest vh-100">
             <NavBar />
-            <div className="fix-content-height d-flex justify-content-center align-items-center">
-                <Container fluid="md" className="cstm-max-width bg-neutral-grey p-5 m-4 rounded shadow">
+            <div className="vh-100 d-flex justify-content-center align-items-center">
+                <div className="res-width-container-sm cstm-max-width bg-neutral-grey p-5 m-4 rounded shadow">
                     <h1>Signup</h1>
                     <Form onSubmit={ createUser }>
                         <Form.Group className="mb-3" controlId="firstName">
@@ -76,9 +76,8 @@ export default function SignupPage() {
                         Already have an account? Login <Link className="text-secondary-cstm" to="/login">here</Link> </p>
 
                     { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
-                 </Container>
+                 </div>
             </div>
-            <h1>Signup</h1>
         </div>
     )
 }

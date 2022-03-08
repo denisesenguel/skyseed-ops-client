@@ -35,9 +35,9 @@ export default function InternalHomePage() {
   return (
     <div>
       <Header />
-      <div className="d-flex bg-neutral-grey fix-content-height">
+      <div className="d-flex bg-neutral-grey">
         <SideBar sidebar={ sidebar } toggleSidebar={ toggleSidebar }/>
-          <div className={ `fix-content-width ${ !sidebar && "hidden" }` }>     
+          <div className={ `fix-content-height fix-content-width ${ !sidebar && "hidden" }` }>     
             <Routes>
               <Route 
                 path="/" 

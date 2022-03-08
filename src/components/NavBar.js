@@ -10,7 +10,7 @@ export default function NavBar() {
 
     return (
         <div>
-            <Navbar bg="neutral-grey" className="fix-header-height fixed-top bg-neutral-grey px-4 d-flex justify-content-between">
+            <Navbar className="fix-header-height fixed-top bg-neutral-grey px-4 d-flex justify-content-between">
                 <Navbar.Brand>
                     <Link to="/">
                         <img height="32px" src={ logoDark } alt="Skyseed Logo"/>

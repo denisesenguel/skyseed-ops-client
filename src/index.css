@@ -92,6 +92,10 @@ p {
   width: 100%
 }
 
+.res-width-container-sm {
+  width: 100%
+}
+
 .below-header-right {
   position: absolute;
   right: 0;
@@ -108,15 +112,30 @@ p {
   bottom: 0px;
 }
 
+@media only screen and (min-width: 576px) {
+  .res-width-container-sm {
+    width: 80%;
+  } 
+}
+
+@media only screen and (min-width: 768px) {
+  .res-width-container-sm {
+    width: 60%;
+  } 
+}
+
 @media only screen and (min-width: 992px) {
   .res-width-container {
-    width: 80%
+    width: 80%;
   }
 }
 
 @media only screen and (min-width: 1200px) and (orientation: landscape) {
   .res-width-container {
-    width: 60%
+    width: 60%;
+  }
+  .res-width-container-sm {
+    width: 40%;
   } 
 }
 
