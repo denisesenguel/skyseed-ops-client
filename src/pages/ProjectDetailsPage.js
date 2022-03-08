@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Nav, Button, ToastContainer, Toast, Spinner } from 'react-bootstrap';
+import { Nav, Button, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import ProjectSummary from '../components/ProjectSummary';
 import ButtonMailTo from '../components/ButtonMailTo';
 import StatusTag from '../components/StatusTag';
 import ProjectChecklist from '../components/ProjectChecklist';
 import SuccessToast from '../components/SuccessToast';
-import { enumArrays } from '../config/dataConfigs';
 import useShowSuccess from '../hooks/useShowSuccess';
+import StatusSelectToast from '../components/StatusSelectToast';
 
 export default function ProjectDetailsPage() {
 
@@ -133,34 +133,18 @@ export default function ProjectDetailsPage() {
           </>
       }
 
-        <div>
-            <ToastContainer position="top-center" className="mt-5 p-3">
-                <Toast onClose={ toggleSelectStatus } show={ showSelectStatus }  bg="neutral-grey">
-                    <Toast.Header className="d-flex justify-content-between text-secondary-cstm bg-neutral-grey">
-                      <h6>Change status</h6>
-                    </Toast.Header>
-                    <Toast.Body>
-                      <div className="d-flex justify-content-center">
-                        {
-                          enumArrays.status.map((type, index) => (
-                            <StatusTag 
-                              key={ index } 
-                              clickHandler={ () => editStatus(project._id, type) } 
-                              status={ type } 
-                              className="mx-2"/>
-                          ))
-                        }
-                      </div>
-                    </Toast.Body>
-                </Toast>
-            </ToastContainer>
-        </div>
+      <StatusSelectToast 
+        showSelectStatus={ showSelectStatus }
+        toggleSelectStatus={ toggleSelectStatus }
+        project={ project }
+        editStatus={ editStatus }
+      />
 
-        <SuccessToast 
-          showSuccess={ showSuccess } 
-          toggleShowSuccess={ toggleShowSuccess } 
-          message={ successMessage } 
-        />
+      <SuccessToast 
+        showSuccess={ showSuccess } 
+        toggleShowSuccess={ toggleShowSuccess } 
+        message={ successMessage } 
+      />
 
     </div>
   )
