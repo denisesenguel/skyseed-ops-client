@@ -7,7 +7,11 @@ export default function IsPrivate( {children} ) {
     
     const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-    if (isLoading) return <Spinner animation="border" variant="secondary-cstm"/>;
+    if (isLoading) return (
+        <div className="vh-100 vw-100 bg-neutral-grey d-flex justify-content-center align-items-center">
+            <Spinner animation="border" variant="secondary-cstm" size="lg"/>
+        </div>
+    );
  
     if (!isLoggedIn) {
         // If the user is logged in, navigate to home page     
