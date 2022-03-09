@@ -14,7 +14,9 @@ export default function ProjectsList(props) {
     keys: [
       "title",
       "season",
-      "location"
+      "year",
+      "location",
+      "status"
     ],
     includeScore: true
   });
