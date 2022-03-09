@@ -80,6 +80,8 @@ export default function ProjectCreatePage() {
       });
   }
 
+  console.log( "manager erros:", errors.managers)
+
   return (
     <div className="p-5 res-width-container">
       <h1 className="mb-5">Add Project</h1>
@@ -88,7 +90,7 @@ export default function ProjectCreatePage() {
       ) : (
         <>
           <Form onSubmit={handleSubmit(createProject)}>
-            <Form.Group controlId="title">
+            <Form.Group>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
@@ -97,22 +99,22 @@ export default function ProjectCreatePage() {
                 {...register("title", { required: true })}
               />
               {errors.title && (
-                <p className="text-danger font-s mt-1">Required</p>
+                <p className="text-danger font-s mt-1 mb-0">Required Field</p>
               )}
             </Form.Group>
 
             <div className="d-flex mt-2">
-              <Form.Group controlId="location">
+              <Form.Group>
                 <Form.Label>Location</Form.Label>
                 <Form.Control
                   className={errors.location ? "invalid" : ""}
                   {...register("location", { required: true })}
                 />
                 {errors.location && (
-                  <p className="text-danger font-s mt-1">Required</p>
+                  <p className="text-danger font-s mt-1 mb-0">Required Field</p>
                 )}
               </Form.Group>
-              <Form.Group controlId="season" className="mx-2">
+              <Form.Group className="mx-2">
                 <Form.Label>Season</Form.Label>
                 <Form.Select
                   className={errors.season ? "invalid" : ""}
@@ -126,10 +128,10 @@ export default function ProjectCreatePage() {
                   ))}
                 </Form.Select>
                 {errors.season && (
-                  <p className="text-danger font-s mt-1">Required</p>
+                  <p className="text-danger font-s mt-1 mb-0">Required Field</p>
                 )}
               </Form.Group>
-              <Form.Group controlId="year">
+              <Form.Group>
                 <Form.Label>Year</Form.Label>
                 <Form.Control
                   type="number"
@@ -138,12 +140,12 @@ export default function ProjectCreatePage() {
                   {...register("year", { required: true })}
                 />
                 {errors.year && (
-                  <p className="text-danger font-s mt-1">Required</p>
+                  <p className="text-danger font-s mt-1 mb-0">Required Field</p>
                 )}
               </Form.Group>
             </div>
 
-            <Form.Group controlId="description" className="mt-2">
+            <Form.Group className="mt-2">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
@@ -154,7 +156,7 @@ export default function ProjectCreatePage() {
             </Form.Group>
 
             <div className="d-flex mt-2">
-              <Form.Group controlId="sizeInHa">
+              <Form.Group>
                 <Form.Label>Size (in ha)</Form.Label>
                 <Form.Control
                   type="number"
@@ -162,7 +164,7 @@ export default function ProjectCreatePage() {
                   {...register("sizeInHa")}
                 />
               </Form.Group>
-              <Form.Group controlId="status" className="mx-2">
+              <Form.Group className="mx-2">
                 <Form.Label> Project Status </Form.Label>
                 <Form.Select {...register("status")}>
                   <option> </option>
@@ -175,7 +177,7 @@ export default function ProjectCreatePage() {
               </Form.Group>
             </div>
 
-            <Form.Group controlId="customer" className="mt-2">
+            <Form.Group className="mt-2">
               <Form.Label> Customer </Form.Label>
               <Form.Select
                 className={errors.customer ? "invalid" : ""}
@@ -189,29 +191,35 @@ export default function ProjectCreatePage() {
                 ))}
               </Form.Select>
               {errors.customer && (
-                <p className="text-danger font-s mt-1">Required</p>
+                <p className="text-danger font-s mt-1">Required Field</p>
               )}
             </Form.Group>
 
             <Form.Group className="mt-2">
               <Form.Label> Select at least one Project Manager </Form.Label>
               {controlledFields.map((field, index) => (
-                <Form.Select
-                  className="my-1"
-                  key={field.id}
-                  {...register(`managers.${index}`)}
-                >
-                  {allUsers.map((user) => (
-                    <option key={user._id} value={user._id}>
-                      {`${user.firstName} (${user.email})`}
-                    </option>
-                  ))}
-                </Form.Select>
+                <>
+                  <Form.Select
+                    key={field.id}
+                    className={errors.managers && errors.managers[index] ? "my-1 invalid" : "my-1"}
+                    {...register(`managers.${index}`, {required: true})}
+                  >
+                    <option></option>
+                    {allUsers.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {`${user.firstName} (${user.email})`}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  { errors.managers && (
+                      errors.managers[index] && <p className="text-danger font-s mt-1"> { index === 0 ? "Must select at least one" : "Remove empty fields if unused" } </p>
+                  )}
+                </>
               ))}
             </Form.Group>
             <div className="mt-2">
               <Button
-                onClick={() => append("")}
+                onClick={() => append()}
                 variant="custom"
                 size="sm"
                 className="border-secondary-cstm text-secondary-cstm"
