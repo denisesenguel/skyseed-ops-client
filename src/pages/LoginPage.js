@@ -8,11 +8,7 @@ import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { storeToken, verifyStoredToken } = useContext(AuthContext);
   const [failure, setFailure] = useState(false);
 
@@ -51,11 +47,12 @@ export default function LoginPage() {
                   pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
                 })}
               />
-              {errors.email && (
-                <p className="text-danger font-s mt-1">
-                  Please provide a valid Email.
-                </p>
-              )}
+              {
+                  errors.email && 
+                    <p className="text-danger font-s mt-1">
+                        Please provide a valid Email.
+                    </p>
+              }
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
@@ -74,11 +71,12 @@ export default function LoginPage() {
                   },
                 })}
               />
-              {errors.password && (
-                <p className="text-danger font-s mt-1">
-                  { errors.password.message }
-                </p>
-              )}
+              {
+                  errors.password && 
+                    <p className="text-danger font-s mt-1">
+                        { errors.password.message }
+                    </p>
+              }
             </Form.Group>
             <Button
               variant="custom"
