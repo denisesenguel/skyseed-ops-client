@@ -1,13 +1,18 @@
-# Client Side Skyseed Ops Prototype Built with ReactJS.
+# Skyseed Ops Prototype Built with ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Find the deployed version [here](https://skyseed-ops.netlify.app/)
+
+The API it is built on may be found [in this repo](https://github.com/denisesenguel/skyseed-ops-server). 
 
 ## Local Setup
-`npm install`
+
+Install all relevant dependencies by running `npm install`
+
 Create an `.env` with the following contents 
 ```
 REACT_APP_API_URL=https://localhost:5005/path/to/local/api
 ```
+Note that you'll need the API running locally in order for the app to be run in development mode (see below)
 
 ## Available Scripts
 
@@ -36,12 +41,9 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Automation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+On push to main, a new version is automatically deployed to Netlify.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Misc
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
