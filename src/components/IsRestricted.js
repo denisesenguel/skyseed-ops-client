@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 // works as a Wrapper component around buttons and adds 'disabled' 
@@ -8,8 +8,8 @@ export default function IsRestricted(props) {
   const { user } = useContext(AuthContext);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
-  useMemo(() => {
-    if (user.role === "admin") setIsAuthorized(true);
+  useEffect(() => {
+    if (user?.role === "admin") setIsAuthorized(true);
     if (project && Object.entries(project).length > 0) {
       if (
         project.owner === user._id ||
@@ -18,7 +18,7 @@ export default function IsRestricted(props) {
         setIsAuthorized(true);
       }
     }
-  }, [project, user]);
+  }, [project, user])
 
   return React.cloneElement(children, { disabled: !isAuthorized });
 }
