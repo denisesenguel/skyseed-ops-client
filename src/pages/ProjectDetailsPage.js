@@ -92,14 +92,16 @@ export default function ProjectDetailsPage({ fetchProjects }) {
           <div className="d-flex my-2">
             <p className="my-auto">{project.location}</p>
             {!project.status ? (
-              <Button
-                onClick={toggleSelectStatus}
-                variant="custom"
-                className="text-decoration-underline text-secondary-cstm"
-              >
-                {" "}
-                Add Project Status{" "}
-              </Button>
+              <IsRestricted>  
+                <Button
+                  onClick={toggleSelectStatus}
+                  variant="custom"
+                  className="text-decoration-underline text-secondary-cstm"
+                >
+                  {" "}
+                  Add Project Status{" "}
+                </Button>
+              </IsRestricted>
             ) : (
               <StatusTag
                 clickHandler={toggleSelectStatus}
@@ -164,12 +166,14 @@ export default function ProjectDetailsPage({ fetchProjects }) {
         </>
       )}
 
-      <StatusSelectToast
-        showSelectStatus={showSelectStatus}
-        toggleSelectStatus={toggleSelectStatus}
-        project={project}
-        editStatus={editStatus}
-      />
+      <IsRestricted project={ project }>
+        <StatusSelectToast
+          showSelectStatus={showSelectStatus}
+          toggleSelectStatus={toggleSelectStatus}
+          project={project}
+          editStatus={editStatus}
+        />
+      </IsRestricted>
 
       <SuccessToast
         showSuccess={showSuccess}
