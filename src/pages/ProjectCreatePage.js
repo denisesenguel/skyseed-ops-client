@@ -64,6 +64,12 @@ export default function ProjectCreatePage(props) {
   }, [storedToken]);
 
   function createProject(data) {
+    // remove empty strings from data
+    for (const key in data) {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    }
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/projects`,
