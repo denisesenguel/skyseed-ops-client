@@ -1,41 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useForm, useFieldArray } from 'react-hook-form';
 
 export default function CustomerCreatePage() {
 
   const navigate = useNavigate();
-  const [formInputArray, setFormInputArray] = useState([{}]);
   const [failure, setFailure] = useState({ hasOccured: false });
-
+  //const [formInputArray, setFormInputArray] = useState([{}]);
   const storedToken = localStorage.getItem('authToken');
-
-  function handleInputs(index, evnt) {
-    const newInputs = {...formInputArray[index]};
-    newInputs[evnt.target.id] = evnt.target.value;
-    setFormInputArray((previous) => {
-      previous[index] = newInputs;
-      return previous;
-    });
-  }
-
-  const addForm = () => setFormInputArray((previous) => [...previous, {}]);
-
-  function removeForm() {
-    if (formInputArray.length > 1) {
-      const newArr = [...formInputArray];
-      newArr.pop();
-      setFormInputArray(newArr);
+  
+  // create all form handlers
+  const { register, handleSubmit, formState: { errors }, control, watch} = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "newCustomers"
+  })
+  const watchFieldsArray = watch("newCustomers");
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldsArray[index]
     }
+  })
+  // initialize controlled Fields array on initial render
+  const emptyCustomer = {
+    firstName: "", 
+    lastName:"", 
+    email:""
   }
+  useEffect(() => append(emptyCustomer), [])
 
-  function createCustomers(evnt) {
-    evnt.preventDefault();
+  function createCustomers(data) {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/customers`, 
-        formInputArray,
+        data.newCustomers,
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then(() => navigate("/home/customers?created=true"))
@@ -51,42 +52,83 @@ export default function CustomerCreatePage() {
       { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
 
       <h1>Add Customers</h1>
-      <Form onSubmit={ createCustomers }>
+      <Form onSubmit={ handleSubmit(createCustomers) }>
         {
-          formInputArray.map((formInputs, index) => (
+          controlledFields.map((fields, index) => (
             <>
-              <h5 key={ index } className="my-3 mt-5">Customer { index + 1 }</h5>
+              <h5 key={ fields.id } className="my-3 mt-5">Customer { index + 1 }</h5>
               <div className="d-flex w-100">
                 <Form.Group className="w-50" controlId="firstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text" placeholder="Horst"
-                    value={formInputs.firstName} onChange={ (e) => handleInputs(index, e) } />
+                    className={errors.newCustomers?.[index]?.firstName ? "my-1 invalid" : "my-1"}
+                    {...register(`newCustomers.${index}.firstName`, {required:true})}
+                  />
+                  {
+                    errors.newCustomers?.[index] &&
+                    (Object.entries(errors.newCustomers?.[index])?.length < 3 || index === 0) &&
+                    errors.newCustomers?.[index]?.firstName &&
+                    <p className="text-danger font-s mt-1 mb-0">Required Field</p>
+                  }
                 </Form.Group>
                 <Form.Group className="w-50" controlId="lastName">
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text" placeholder="Forst"
-                    value={formInputs.lastName} onChange={ (e) => handleInputs(index, e) } />
+                    className={errors.newCustomers?.[index]?.lastName ? "my-1 invalid" : "my-1"}
+                    {...register(`newCustomers.${index}.lastName`, {required:true})}
+                  />
+                  {
+                    errors.newCustomers?.[index] &&
+                    (Object.entries(errors.newCustomers?.[index])?.length < 3 || index === 0) &&
+                    errors.newCustomers?.[index]?.lastName &&
+                    <p className="text-danger font-s mt-1 mb-0">Required Field</p>
+                  }
                 </Form.Group>
               </div>
-              <Form.Group controlId="email">
+              <Form.Group className="mt-2">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email" placeholder="horst@forst.de"
-                  value={formInputs.email} onChange={ (e) => handleInputs(index, e) } />
+                  className={errors.newCustomers && errors.newCustomers[index]?.email ? "my-1 invalid" : "my-1"}
+                  {...register(`newCustomers.${index}.email`,
+                  {
+                    required:{
+                      value: true,
+                      message: "Required Field"
+                    },
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                      message: "Please provide a valid email adress."
+                    }
+                  })} />
+                  {
+                    errors.newCustomers?.[index] &&
+                    (Object.entries(errors.newCustomers?.[index])?.length < 3 || index === 0) &&
+                    errors.newCustomers?.[index]?.email &&
+                      <p className="text-danger font-s mt-1 mb-0"> 
+                        { errors.newCustomers[index].email.message } 
+                      </p>
+                  }
               </Form.Group>
+              {
+                errors.newCustomers?.[index] &&
+                Object.entries(errors.newCustomers?.[index])?.length === 3 && 
+                  index > 0 &&
+                  <p className="text-danger mt-1 mb-0"> Remove empty fields if unused! </p> 
+              }
             </>
           ))
         }
         <Button 
-          onClick={ addForm } 
+          onClick={ () => append(emptyCustomer) } 
           className="border-secondary-cstm text-secondary-cstm mt-4" 
           variant="custom" 
           size="sm"
         >Add More</Button>
         <Button 
-          onClick={ removeForm } 
+          onClick={ () => controlledFields.length > 1 ? remove(controlledFields.length - 1) : null } 
           className="border-secondary-cstm text-secondary-cstm mt-4 mx-2" 
           variant="custom" 
           size="sm"
