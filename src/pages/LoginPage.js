@@ -93,14 +93,15 @@ export default function LoginPage() {
               here
             </Link>
           </p>
-          {failure.hasOccured && (
-            <Alert
-              variant="danger"
-              className="d-flex justify-content-center text-danger"
-            >
-              {failure.message || "Something went wrong. Please try again."}
-            </Alert>
-          )}
+          {
+              failure.hasOccured && 
+                <Alert
+                variant="danger"
+                className="d-flex justify-content-center text-danger"
+                >
+                {failure.message || "Something went wrong. Please try again."}
+                </Alert>
+          }
         </div>
       </div>
     </div>
