@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, ListGroup, FormGroup, Form } from 'react-bootstrap';
+import { Row, Col, Button, ListGroup } from 'react-bootstrap';
 import moment from 'moment';
 import Fuse from 'fuse.js';
 import StatusTag from './StatusTag';
+import SearchBar from './SearchBar';
 
 export default function ProjectsList(props) {
 
@@ -23,15 +24,9 @@ export default function ProjectsList(props) {
 
   return (
     <div className="res-width-container-lg">
+      
       <div className="mb-2 d-flex justify-content-end">
-        <FormGroup className="w-50">
-          <Form.Control 
-            type="search" 
-            placeholder="Search Projects" 
-            value={ query } 
-            onChange={ (e) => setQuery(e.target.value) }
-          />
-        </FormGroup>
+        <SearchBar query={ query } setQuery={ setQuery } width={50}/>
       </div>
 
       <ListGroup className="shadow">
