@@ -112,12 +112,6 @@ p, .font-lato-light {
   top:70px;
 }
 
-.fix-at-bottom-right {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-}
-
 .rounded-circle {
   border-radius: 50%;
 }

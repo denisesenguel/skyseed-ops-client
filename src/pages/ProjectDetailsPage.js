@@ -80,91 +80,98 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   }
 
   return (
-    <div className="res-width-container fix-content-height-below-header p-5 position-relative">
+    <>
+    <div className="res-width-container fix-content-height-below-header p-5 d-flex flex-column justify-content-between">
+
       {isLoading ? (
         <Spinner animation="border" variant="secondary-cstm" />
       ) : (
         <>
-          <h4>
-            {project.title} - {project.season} {project.year}
-          </h4>
+          <div>
+            <h4>
+              {project.title} - {project.season} {project.year}
+            </h4>
 
-          <div className="d-flex my-2">
-            <p className="my-auto">{project.location}</p>
-            {!project.status ? (
-              <IsRestricted>  
-                <Button
-                  onClick={toggleSelectStatus}
-                  variant="custom"
-                  className="text-decoration-underline text-secondary-cstm"
-                >
-                  {" "}
-                  Add Project Status{" "}
-                </Button>
-              </IsRestricted>
-            ) : (
-              <StatusTag
-                clickHandler={toggleSelectStatus}
-                className="mx-3"
-                status={project.status}
+            <div className="d-flex my-2">
+              <p className="my-auto">{project.location}</p>
+              {!project.status ? (
+                <IsRestricted>  
+                  <Button
+                    onClick={toggleSelectStatus}
+                    variant="custom"
+                    className="text-decoration-underline text-secondary-cstm"
+                  >
+                    {" "}
+                    Add Project Status{" "}
+                  </Button>
+                </IsRestricted>
+              ) : (
+                <StatusTag
+                  clickHandler={toggleSelectStatus}
+                  className="mx-3"
+                  status={project.status}
+                />
+              )}
+            </div>
+
+            <p>
+              Customer: {" "}
+              <ButtonMailTo
+                label={ [project.customer?.firstName, project.customer?.lastName].join(" ") }
+                mailto={`mailto:${project.customer?.email}`}
+                className="text-decoration-underline text-secondary-cstm"
               />
+            </p>
+
+            <Nav
+              fill
+              variant="tabs"
+              className="mt-4"
+              defaultActiveKey="summary"
+              onSelect={(key) => setSelectedTab(key)}
+            >
+              <Nav.Item>
+                <Nav.Link className="text-primary-cstm" eventKey="summary">
+                  Summary
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link className="text-primary-cstm" eventKey="details">
+                  Sowing Details
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link className="text-primary-cstm" eventKey="checklist">
+                  Checklist
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+
+            {selectedTab === "summary" && (
+              <ProjectSummary project={project} onEdit={editProject} />
+            )}
+            {selectedTab === "details" && (
+              <div> Will be populated when model gets extended </div>
+            )}
+            {selectedTab === "checklist" && (
+              <ProjectChecklist project={project} onEdit={editProject} />
             )}
           </div>
-
-          <p>
-            Customer: {" "}
-            <ButtonMailTo
-              label={ [project.customer?.firstName, project.customer?.lastName].join(" ") }
-              mailto={`mailto:${project.customer?.email}`}
-              className="text-decoration-underline text-secondary-cstm"
-            />
-          </p>
-
-          <Nav
-            fill
-            variant="tabs"
-            className="mt-4"
-            defaultActiveKey="summary"
-            onSelect={(key) => setSelectedTab(key)}
-          >
-            <Nav.Item>
-              <Nav.Link className="text-primary-cstm" eventKey="summary">
-                Summary
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link className="text-primary-cstm" eventKey="details">
-                Sowing Details
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link className="text-primary-cstm" eventKey="checklist">
-                Checklist
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-
-          {selectedTab === "summary" && (
-            <ProjectSummary project={project} onEdit={editProject} />
-          )}
-          {selectedTab === "details" && (
-            <div> Will be populated when model gets extended </div>
-          )}
-          {selectedTab === "checklist" && (
-            <ProjectChecklist project={project} onEdit={editProject} />
-          )}
-
-          <IsRestricted project={ project }>
-            <Button
-              onClick={() => deleteProject(project._id)}
-              variant="custom"
-              className="border-danger text-danger fix-at-bottom-right m-5"
-            >
-              Delete this project
-            </Button>
-          </IsRestricted>
+          
+          <div className="d-flex justify-content-end">
+            <IsRestricted project={ project }>
+              <Button
+                onClick={() => deleteProject(project._id)}
+                variant="custom"
+                className="border-danger text-danger fix-at-bottom-right"
+              >
+                Delete this project
+              </Button>
+            </IsRestricted>
+          </div>
         </>
       )}
+    </div>
 
       <IsRestricted project={ project }>
         <StatusSelectToast
@@ -180,6 +187,6 @@ export default function ProjectDetailsPage({ fetchProjects }) {
         toggleShowSuccess={toggleShowSuccess}
         message={successMessage}
       />
-    </div>
+      </>
   );
 }
