@@ -122,6 +122,10 @@ p, .font-lato-light {
   border-radius: 50%;
 }
 
+svg:focus {
+  outline: none !important;
+}
+
 input.invalid:active, input.invalid:focus,
 select.invalid:active, select.invalid:focus {
   border-color: #d53118 !important;
