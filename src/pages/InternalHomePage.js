@@ -18,7 +18,10 @@ export default function InternalHomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const storedToken = localStorage.getItem('authToken');
 
-  useEffect(() => {
+  useEffect(fetchProjects, [storedToken]);
+  
+  function fetchProjects() {
+    console.log("getting projects now.")
     setIsLoading(true);
     axios
       .get(
@@ -30,7 +33,7 @@ export default function InternalHomePage() {
         setIsLoading(false);
       })
       .catch((error) => console.log("Could not get projects from DB: ", error));
-  }, [storedToken]);
+  }
 
   return (
     <div>
@@ -52,7 +55,7 @@ export default function InternalHomePage() {
                 element={ <MyProjectsPage projects={ projects } isLoading={ isLoading }/>}   
               />
               <Route path="/projects/create" element={ <ProjectCreatePage />} />
-              <Route path="/projects/:projectId" element={<ProjectDetailsPage />} />
+              <Route path="/projects/:projectId" element={<ProjectDetailsPage fetchProjects={ fetchProjects } />} />
               <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
             </Routes>

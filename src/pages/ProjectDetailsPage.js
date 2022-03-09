@@ -11,7 +11,7 @@ import useShowSuccess from "../hooks/useShowSuccess";
 import StatusSelectToast from "../components/StatusSelectToast";
 import IsRestricted from "../components/IsRestricted";
 
-export default function ProjectDetailsPage() {
+export default function ProjectDetailsPage({ fetchProjects }) {
   
   const navigate = useNavigate();
   const { projectId } = useParams();
@@ -42,6 +42,7 @@ export default function ProjectDetailsPage() {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then(() => {
+        fetchProjects();
         navigate("/home/projects?deleted=true");
       })
       .catch((error) => console.log("Error deleting project: ", error));
@@ -62,6 +63,7 @@ export default function ProjectDetailsPage() {
             customer: previous.customer
           } 
         });
+        fetchProjects();
         toggleShowSuccess();
         setSuccessMessage("Project successfully updated");
       })

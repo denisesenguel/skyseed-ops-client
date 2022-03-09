@@ -80,8 +80,6 @@ export default function ProjectCreatePage() {
       });
   }
 
-  console.log( "manager erros:", errors.managers)
-
   return (
     <div className="p-5 res-width-container">
       <h1 className="mb-5">Add Project</h1>
