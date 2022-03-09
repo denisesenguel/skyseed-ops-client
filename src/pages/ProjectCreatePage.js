@@ -251,7 +251,7 @@ export default function ProjectCreatePage() {
           {failure.hasOccured && (
             <Alert
               variant="danger"
-              className="d-flex justify-content-center text-danger"
+              className="d-flex justify-content-center text-danger mt-4"
             >
               {failure.message || "Something went wrong. Please try again."}
             </Alert>

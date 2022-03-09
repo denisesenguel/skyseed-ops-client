@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -42,14 +42,12 @@ export default function CustomerCreatePage() {
       .then(() => navigate("/home/customers?created=true"))
       .catch((error) => {
         console.log("Error creating Customer(s): ", error);
-        setFailure({hasOccured: true, message: error.response.data.message});
+        setFailure({hasOccured: true, message: error.response?.data.message});
       })
   }
 
   return (
     <div className="p-5 res-width-container">
-      
-      { failure.hasOccured && <h6 className="text-error-cstm text-center mt-4">{ failure.message }</h6> }
 
       <h1>Add Customers</h1>
       <Form onSubmit={ handleSubmit(createCustomers) }>
@@ -140,6 +138,15 @@ export default function CustomerCreatePage() {
           variant="custom" 
         >Create All</Button>
       </Form>
+
+      {failure.hasOccured && (
+            <Alert
+              variant="danger"
+              className="d-flex justify-content-center text-danger mt-4"
+            >
+              {failure.message || "Something went wrong. Please try again."}
+            </Alert>
+          )}
     </div>
   )
 }
