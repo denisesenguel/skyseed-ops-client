@@ -4,13 +4,29 @@ import axios from 'axios';
 import { enumArrays } from '../config/dataConfigs';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useForm, useFieldArray } from 'react-hook-form';
 
 export default function ProjectCreatePage() {
 
   const navigate = useNavigate();
-  const [formInputs, setFormInputs] = useState({ managers: [''] });
+  const { register, handleSubmit, formState: { errors }, control, watch } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "managers"
+  })
+  const watchManagers = watch("managers");
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchManagers[index]
+    }
+  })
+  // initialize controlledFields array by appending once on render
+  useEffect(() => append(""), []);
+
   const [allUsers, setAllUsers] = useState([]);
   const [allCustomers, setAllCustomers] = useState([]);
+  
   const [failure, setFailure] = useState({ hasOccured: false });
   const [isLoading, setIsLoading] = useState(false);
   
@@ -41,38 +57,13 @@ export default function ProjectCreatePage() {
     .catch((error) => console.log("Error getting users and customers from API: ", error));
 
   }, [storedToken]);
-  
-  function handleInputs(evnt, index=null) {
 
-    const newInputs = JSON.parse(JSON.stringify(formInputs));
-    if (evnt.target.id === 'managers') {
-      newInputs[evnt.target.id][index] = evnt.target.value;
-    } else {
-      newInputs[evnt.target.id] = evnt.target.value;
-    }
-    setFormInputs(newInputs);
-  }
+  function createProject(data) {
 
-  function addSelectField() {
-    const newInputs = JSON.parse(JSON.stringify(formInputs));
-    newInputs.managers.push({});
-    setFormInputs(newInputs);
-  }
-
-  function removeSelectField() {
-    if (formInputs.managers.length > 1) {
-      const newInputs = JSON.parse(JSON.stringify(formInputs));
-      newInputs.managers.pop();
-      setFormInputs(newInputs);
-    }
-  }
-
-  function handleSubmit(evnt) {
-    evnt.preventDefault();
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/projects`, 
-        { ...formInputs, owner: user._id },
+        { ...data, owner: user._id },
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then((response) => {
@@ -94,27 +85,39 @@ export default function ProjectCreatePage() {
         isLoading ? 
           <Spinner animation="border" variant="secondary-cstm"/> :
           <>
-            <Form onSubmit={ handleSubmit }>
+            <Form onSubmit={ handleSubmit(createProject) }>
 
               <Form.Group controlId="title">
                 <Form.Label>Title</Form.Label>
                 <Form.Control 
-                  type="text" placeholder="Forst XYZ" 
-                  value={ formInputs.title } onChange={ handleInputs }  
+                  type="text" placeholder="Forst XYZ"
+                  className={errors.title ? "invalid" : ""} 
+                  {...register("title", {required: true})}
                 />
+                {
+                  errors.title && 
+                  <p className="text-danger font-s mt-1">Required</p>
+                }
               </Form.Group>
 
               <div className="d-flex mt-2">
                 <Form.Group controlId="location">
                   <Form.Label>Location</Form.Label>
                   <Form.Control 
-                    type="text" placeholder=""
-                    value={ formInputs.location } onChange={ handleInputs }
+                    className={errors.location ? "invalid" : ""} 
+                    {...register("location", {required: true})}
                   />
+                  {
+                    errors.location && 
+                    <p className="text-danger font-s mt-1">Required</p>
+                  }
                 </Form.Group>
                 <Form.Group controlId="season" className="mx-2">
                   <Form.Label>Season</Form.Label>
-                  <Form.Select aria-label={ formInputs.season } onChange={ handleInputs }>
+                  <Form.Select 
+                    className={errors.season ? "invalid" : ""} 
+                    {...register("season", {required: true})}
+                  >
                     <option></option>
                     {
                       enumArrays.season.map((season, index) => (
@@ -122,21 +125,33 @@ export default function ProjectCreatePage() {
                       ))
                     }
                   </Form.Select>
+                  {
+                    errors.season && 
+                    <p className="text-danger font-s mt-1">Required</p>
+                  }
                 </Form.Group>
                 <Form.Group controlId="year">
                   <Form.Label>Year</Form.Label>
                   <Form.Control 
                     type="number"
-                    value={ formInputs.year } onChange={ handleInputs }
+                    className={errors.year ? "invalid" : ""}
+                    // TODO add min/max validation 
+                    {...register("year", {required: true})}
                   />
+                  {
+                    errors.year && 
+                    <p className="text-danger font-s mt-1">Required</p>
+                  }
                 </Form.Group>
               </div>
 
               <Form.Group controlId="description" className="mt-2">
                 <Form.Label>Description</Form.Label>
                 <Form.Control 
-                  as="textarea" rows={3} placeholder="Give a short description"
-                  value={ formInputs.description } onChange={ handleInputs }
+                  as="textarea" 
+                  rows={3} 
+                  placeholder="Give a short description"
+                  {...register("description")}
                 />
               </Form.Group>
 
@@ -145,12 +160,14 @@ export default function ProjectCreatePage() {
                   <Form.Label>Size (in ha)</Form.Label>
                   <Form.Control 
                     type="number" placeholder="5.6"
-                    value={ formInputs.sizeInHa } onChange={ handleInputs }
+                    {...register("sizeInHa")}
                   />
                 </Form.Group>
                 <Form.Group controlId="status" className="mx-2">
                   <Form.Label> Project Status </Form.Label>
-                  <Form.Select aria-label={ formInputs.status } onChange={ handleInputs }>
+                  <Form.Select
+                    {...register("status")}
+                  >
                     <option> </option>
                     {
                       enumArrays.status.map((status, index) => (
@@ -163,7 +180,10 @@ export default function ProjectCreatePage() {
 
               <Form.Group controlId="customer" className="mt-2">
                 <Form.Label> Customer </Form.Label>
-                <Form.Select aria-label={ formInputs.customer } onChange={ handleInputs }>
+                <Form.Select
+                  className={errors.customer ? "invalid" : ""}
+                  {...register("customer", {required: true})}
+                >
                   <option> </option>
                   {
                     allCustomers.map(customer => (
@@ -173,46 +193,48 @@ export default function ProjectCreatePage() {
                     ))
                   }
                 </Form.Select>
+                {
+                    errors.customer && 
+                    <p className="text-danger font-s mt-1">Required</p>
+                  }
               </Form.Group>
 
-              <Form.Group controlId="managers" className="mt-2">
-                <Form.Label> Select at least one Project Manager </Form.Label>
-                {
-                  formInputs.managers.map((value, index) => (
-                    <Form.Select 
-                      aria-label={ value } 
-                      onChange={ (e) => handleInputs(e, index) } 
-                      className="my-1"
-                      key={ index }
-                    >
-                      <option> </option>
-                      {
+              <Form.Group className="mt-2">
+              <Form.Label> Select at least one Project Manager </Form.Label>
+              {
+                controlledFields.map((field, index) => (
+                  <Form.Select
+                    className="my-1"
+                    key={ field.id }
+                    {... register(`managers.${index}`) }
+                  >
+                    {
                         allUsers.map(user => (
                           <option key={ user._id } value={ user._id }>
                             { `${user.firstName} (${user.email})` } 
                           </option>
                         ))
-                      }
-                    </Form.Select>
-                  ))
-                }
-                <div className="mt-2">
-                  <Button 
-                    onClick={ addSelectField } 
-                    variant="custom" size="sm"
-                    className="border-secondary-cstm text-secondary-cstm" 
-                  >
-                    Add More
-                  </Button>
-                  <Button 
-                    onClick={ removeSelectField } 
-                    variant="custom" size="sm mx-2"
-                    className="border-secondary-cstm text-secondary-cstm" 
-                  > 
-                    Remove
-                  </Button>
-                </div>
+                    }
+                  </Form.Select>
+                ))
+              }
               </Form.Group>
+              <div className="mt-2">
+                <Button 
+                  onClick={ () => append("") } 
+                  variant="custom" size="sm"
+                  className="border-secondary-cstm text-secondary-cstm" 
+                >
+                  Add More
+                </Button>
+                <Button 
+                  onClick={ () => (controlledFields.length > 1) ? remove(controlledFields.length - 1) : null }
+                  variant="custom" size="sm mx-2"
+                  className="border-secondary-cstm text-secondary-cstm" 
+                > 
+                  Remove
+                </Button>
+              </div>  
 
               <Button className="bg-secondary-cstm text-primary-cstm mt-4" variant="custom" type="submit">
                 Add Project

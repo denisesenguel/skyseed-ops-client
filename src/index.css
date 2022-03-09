@@ -122,7 +122,8 @@ p, .font-lato-light {
   border-radius: 50%;
 }
 
-input.invalid:active, input.invalid:focus {
+input.invalid:active, input.invalid:focus,
+select.invalid:active, select.invalid:focus {
   border-color: #d53118 !important;
   box-shadow: 0 0 0 0.25rem rgb(213 49 24 / 25%) !important;
 }
@@ -149,7 +150,6 @@ a:hover, .nav-link:hover, a:focus, a:hover svg, a:focus svg {
   background-color: #d53118; 
   color: white !important;
 }
-
 
 @media only screen and (min-width: 576px) {
   .res-width-container-sm {
