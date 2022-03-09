@@ -46,10 +46,10 @@ export default function CustomersPage() {
                   <ListGroup key={ index } className="mb-1 shadow">
                     <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
                     {
-                      (customers.filter(customer => customer.lastName.indexOf(letter) > -1).length === 0) ?
+                      (customers.filter(customer => customer.lastName.toUpperCase().indexOf(letter) > -1).length === 0) ?
                         <ListGroup.Item className="text-muted"> None </ListGroup.Item> :
                         customers
-                          .filter(customer => customer.lastName.indexOf(letter) > -1)
+                          .filter(customer => customer.lastName.toUpperCase().indexOf(letter) > -1)
                           .map((customer, index) => (
                             <ListGroup.Item className="text-primary-cstm d-flex align-items-center p-3" key={ index }>
                               <img className="rounded-circle fix-img-height" src={ exampleImg } alt={ customer.lastName } />
