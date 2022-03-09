@@ -21,7 +21,6 @@ export default function InternalHomePage() {
   useEffect(fetchProjects, [storedToken]);
   
   function fetchProjects() {
-    console.log("getting projects now.")
     setIsLoading(true);
     axios
       .get(

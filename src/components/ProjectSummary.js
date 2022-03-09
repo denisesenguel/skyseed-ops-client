@@ -5,20 +5,29 @@ import ButtonMailTo from './ButtonMailTo';
 
 export default function ProjectSummary(props) {
     
-    const { project, editMode, editProject, submitEdit } = props;
+    const { project, editMode, editProject, submitEdit, discardEdit, setDiscardEdit, toggleEditMode } = props;
     const [description, setDescription] = useState(project.description);
     const [sizeInHa, setSizeInHa] = useState(project.sizeInHa);
 
     useEffect(() => {
         setDescription(project.description);
         setSizeInHa(project.sizeInHa);
-    }, [project])
+    }, [project]);
 
     useEffect(() => {
         if (submitEdit) {
             editProject(project._id, {sizeInHa, description});
         }
     }, [submitEdit]);
+
+    useEffect(() => {
+        if (discardEdit) {
+            setDescription(project.description);
+            setSizeInHa(project.sizeInHa);
+            toggleEditMode();
+            setDiscardEdit(false);
+        }
+    }, [discardEdit]);
 
     return (
         <div className="mt-3">

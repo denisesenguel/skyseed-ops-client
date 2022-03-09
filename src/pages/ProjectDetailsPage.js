@@ -18,6 +18,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   const [project, setProject] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [submitEdit, setSubmitEdit] = useState(false);
+  const [discardEdit, setDiscardEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } = useShowSuccess();
   const [showSelectStatus, setShowSelectStatus] = useState(false);
@@ -157,7 +158,15 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               </Nav>
 
               {selectedTab === "summary" && (
-                <ProjectSummary project={project}  editMode={editMode} editProject={editProject} submitEdit={ submitEdit }/>
+                <ProjectSummary 
+                  project={ project }  
+                  editMode={ editMode } 
+                  toggleEditMode={ toggleEditMode }
+                  editProject={ editProject } 
+                  submitEdit={ submitEdit }
+                  discardEdit={ discardEdit }
+                  setDiscardEdit={ setDiscardEdit }
+                />
               )}
               {selectedTab === "details" && (
                 <div> Will be populated when model gets extended </div>
@@ -178,13 +187,22 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                     >
                       Edit Details
                     </Button> :
-                    <Button
-                      onClick={ () => setSubmitEdit(true) }
-                      variant="custom"
-                      className="border-secondary-cstm text-secondary-cstm mx-2"
-                    >
-                      Save Changes
-                    </Button>
+                    <>
+                      <Button
+                        onClick={ () => setDiscardEdit(true) }
+                        variant="custom"
+                        className="border-secondary-cstm text-secondary-cstm"
+                      >
+                        Discard Changes
+                      </Button>
+                      <Button
+                        onClick={ () => setSubmitEdit(true) }
+                        variant="custom"
+                        className="border-secondary-cstm text-secondary-cstm mx-2"
+                      >
+                        Save Changes
+                      </Button>
+                    </>
                 }
                 <Button
                   onClick={() => deleteProject(project._id)}
