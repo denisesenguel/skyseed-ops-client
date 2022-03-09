@@ -6,7 +6,9 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 
-export default function ProjectCreatePage() {
+export default function ProjectCreatePage(props) {
+  
+  const { fetchProjects } = props;
   const navigate = useNavigate();
   const {
     register,
@@ -69,13 +71,14 @@ export default function ProjectCreatePage() {
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then((response) => {
+        fetchProjects();
         navigate(`/home/projects/${response.data._id}?created=true`);
       })
       .catch((error) => {
         console.log("Error creating project: ", error);
         setFailure({
           hasOccured: true,
-          message: error.response.data.error.message,
+          message: error.response.data.error?.message,
         });
       });
   }

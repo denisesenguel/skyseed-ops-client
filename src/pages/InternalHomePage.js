@@ -54,7 +54,7 @@ export default function InternalHomePage() {
                 path="/projects/my-projects" 
                 element={ <MyProjectsPage projects={ projects } isLoading={ isLoading }/>}   
               />
-              <Route path="/projects/create" element={ <ProjectCreatePage />} />
+              <Route path="/projects/create" element={ <ProjectCreatePage fetchProjects={ fetchProjects } />} />
               <Route path="/projects/:projectId" element={<ProjectDetailsPage fetchProjects={ fetchProjects } />} />
               <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
