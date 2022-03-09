@@ -100,7 +100,7 @@ export default function LoginPage() {
               variant="danger"
               className="d-flex justify-content-center text-danger"
             >
-              {failure.message}
+              {failure.message || "Something went wrong. Please try again."}
             </Alert>
           )}
         </div>
