@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, ListGroup } from 'react-bootstrap';
-import * as FaIcons from 'react-icons/fa';
 import moment from 'moment';
 import Fuse from 'fuse.js';
 import StatusTag from './StatusTag';
@@ -10,10 +9,6 @@ import SearchBar from './SearchBar';
 export default function ProjectsList(props) {
 
   const [query, setQuery] = useState('');
-  const [sortByTime, setSortByTime] = useState(false);
-  const [sortByUpdate, setSortByUpdate] = useState(false);
-  // const [filterByStatus, setFilterByStatus] = useState(null);
-
   const { projects } = props;
   const fuse = new Fuse(projects, {
     keys: [
@@ -27,53 +22,21 @@ export default function ProjectsList(props) {
   const searchResults = fuse.search(query);
   const projectsToShow = (query === '') ? projects : searchResults.map(result => result.item);
 
-  if (sortByTime) {
-    projectsToShow.sort((a, b) => a.year - b.year)
-  }
-  if (sortByUpdate) {
-    projectsToShow.sort((a, b) => moment(b.updatedAt) - moment(a.updatedAt))
-  }
-  // if (filterByStatus) {
-  //   projectsToShow.filter(project => project.status === filterByStatus);
-  // }
-
   return (
     <div className="res-width-container-lg">
       
-      <div className="mb-4 d-flex justify-content-end">
+      <div className="mb-2 d-flex justify-content-end">
         <SearchBar query={ query } setQuery={ setQuery } width={50}/>
       </div>
 
       <ListGroup className="shadow">
-        <ListGroup.Item className="text-primary-cstm bg-neutral-grey rounded p-3 px-5">
+        <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3 px-5">
           <Row>
-            <Col xs={3}>
-              <h6 className="m-0">Title</h6>
-            </Col>
-            <Col xs={2} className="d-flex">
-              <Link 
-                to="#" onClick={ () => setSortByTime(!sortByTime)} 
-                className={ `d-flex align-items-center text-primary-cstm ${ sortByTime ?  "text-decoration-underline" : "text-decoration-none" }` }
-              >
-                <h6 className="m-0">Time</h6>
-                <FaIcons.FaSort className="mx-2"/>
-              </Link>
-            </Col>
-            <Col xs={3} className="d-flex align-items-center">
-              <h6 className="m-0">Location</h6>
-            </Col>
-            <Col xs={2} className="d-flex align-items-center justify-content-center">
-              <h6 className="m-0">Status</h6>
-            </Col>
-            <Col xs={2} className="d-flex">
-              <Link 
-                to="#" onClick={ () => setSortByUpdate(!sortByUpdate) } 
-                className={`d-flex align-items-center text-primary-cstm ${ sortByUpdate ?  "text-decoration-underline" : "text-decoration-none" }`}
-              >
-                <h6 className="m-0">Updated</h6>
-                <FaIcons.FaSort className="mx-2" />
-              </Link>
-            </Col>
+            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Title</h6></Col>
+            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Time</h6></Col>
+            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Location</h6></Col>
+            <Col xs={2} className="d-flex align-items-center justify-content-center"><h6 className="m-0">Status</h6></Col>
+            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Updated</h6></Col>
           </Row>
         </ListGroup.Item>
         {
@@ -85,21 +48,13 @@ export default function ProjectsList(props) {
                       className="text-decoration-none active-green text-primary-cstm"
                     >
                       <Row>
-                          <Col xs={3} className="d-flex align-items-center font-m"> 
-                            { project.title } 
-                          </Col>
-                          <Col xs={2} className="d-flex align-items-center font-lato-light">
-                            { [project.season, project.year].join(" ") } 
-                          </Col>
-                          <Col xs={3} className="d-flex align-items-center font-lato-light">
-                            { project.location }
-                          </Col>
+                          <Col xs={3} className="d-flex align-items-center font-m"> { project.title } </Col>
+                          <Col xs={2} className="d-flex align-items-center font-lato-light">{ [project.season, project.year].join(" ") } </Col>
+                          <Col xs={3} className="d-flex align-items-center font-lato-light">{ project.location }</Col>
                           <Col xs={2} className="d-flex align-items-center justify-content-center font-lato-light"> 
                             { project.status ? <StatusTag status={ project.status }/> : "Unknown" }
                           </Col>
-                          <Col xs={2} className="d-flex align-items-center font-lato-light font-s"> 
-                            { moment(project.updatedAt).fromNow() }
-                          </Col>
+                          <Col xs={2} className="d-flex align-items-center font-lato-light font-s"> { moment(project.updatedAt).fromNow() }</Col>
                       </Row>
                     </Link>
                   </ListGroup.Item>
