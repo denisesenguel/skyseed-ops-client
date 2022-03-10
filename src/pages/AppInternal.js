@@ -7,11 +7,12 @@ import ProjectDetailsPage from './ProjectDetailsPage';
 import ProjectCreatePage from './ProjectCreatePage';
 import AllCustomersPage from './AllCustomersPage';
 import CustomerCreatePage from './CustomerCreatePage';
+import ErrorPage from './ErrorPage';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import useSidebar from '../hooks/useSidebar';
 
-export default function InternalHomePage() {
+export default function AppInternal() {
 
   const { sidebar, toggleSidebar } = useSidebar();
   const [projects, setProjects] = useState([]);
@@ -57,6 +58,8 @@ export default function InternalHomePage() {
               <Route path="/projects/:projectId" element={<ProjectDetailsPage fetchProjects={ fetchProjects } />} />
               <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
+              {/* TODO: improve error view on this page (no header!) */}
+              <Route path="*" element={<ErrorPage status={404} message="Requested URL not found" />}/>
             </Routes>
           </div>
       </div>
