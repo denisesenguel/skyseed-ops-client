@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
@@ -15,6 +15,8 @@ export default function LoginPage() {
   } = useForm();
   const { storeToken, verifyStoredToken } = useContext(AuthContext);
   const [failure, setFailure] = useState(false);
+  const [ searchParams ] = useSearchParams();
+  const confirmed = searchParams.get('confirmed');
 
   function loginUser(data) {
     axios
@@ -36,7 +38,8 @@ export default function LoginPage() {
   return (
     <div className="bg-forest vh-100">
       <NavBar />
-      <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div className="vh-100 d-flex flex-column justify-content-center align-items-center">
+        {confirmed && <Alert variant="custom" className="bg-neutral-grey text-secondary-cstm"> Email successfully confirmed. You may login now. </Alert>}
         <div className="res-width-container-sm bg-neutral-grey p-5 m-4 rounded shadow">
           <h1>Login</h1>
           <Form onSubmit={handleSubmit(loginUser)}>
