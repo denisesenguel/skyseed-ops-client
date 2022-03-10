@@ -9,6 +9,7 @@ import ProjectChecklist from "../components/ProjectChecklist";
 import SuccessToast from "../components/SuccessToast";
 import useShowSuccess from "../hooks/useShowSuccess";
 import IsRestricted from "../components/IsRestricted";
+import DeleteModal from "../components/DeleteModal";
 
 export default function ProjectDetailsPage({ fetchProjects }) {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   const [editedProject, setEditedProject] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
   const { showSuccess, toggleShowSuccess} = useShowSuccess();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState("summary");
 
   const storedToken = localStorage.getItem("authToken");
@@ -39,12 +41,13 @@ export default function ProjectDetailsPage({ fetchProjects }) {
     setEditedProject(project);
   }, [project]);
 
-  function deleteProject(id) {
+  function deleteProject() {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then(() => {
+        setShowDeleteModal(false);
         fetchProjects();
         navigate("/home/projects/my-projects?deleted=true");
       })
@@ -187,7 +190,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                       Discard Changes
                     </Button>
                     <Button
-                      onClick={editProject}
+                      onClick={ editProject }
                       variant="custom"
                       className="border-secondary-cstm text-secondary-cstm mx-2"
                     >
@@ -196,7 +199,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                   </>
                 )}
                 <Button
-                  onClick={() => deleteProject(project._id)}
+                  onClick={ () => setShowDeleteModal(true) }
                   variant="custom"
                   className="border-danger text-danger fix-at-bottom-right"
                 >
@@ -207,6 +210,12 @@ export default function ProjectDetailsPage({ fetchProjects }) {
           </>
         )}
       </div>
+
+      <DeleteModal
+        show={ showDeleteModal }
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={ deleteProject }
+      />
 
       <SuccessToast
         showSuccess={showSuccess}

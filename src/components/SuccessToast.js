@@ -5,7 +5,6 @@ export default function SuccessToast(props) {
 
     const { showSuccess, message, toggleShowSuccess } = props;
 
-    console.log(showSuccess, message);
     return (
         <div>
             <ToastContainer className="below-header-right">
