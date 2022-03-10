@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, ListGroup } from 'react-bootstrap';
 import moment from 'moment';
+import Fuse from 'fuse.js';
 import StatusTag from './StatusTag';
+import SearchBar from './SearchBar';
 
 export default function ProjectsList(props) {
 
+  const [query, setQuery] = useState('');
   const { projects } = props;
+  const fuse = new Fuse(projects, {
+    keys: [
+      "title",
+      "season",
+      "year",
+      "location",
+      "status"
+    ],
+    includeScore: true
+  });
+
+  const searchResults = fuse.search(query);
+  const projectsToShow = (query === '') ? projects : searchResults.map(result => result.item);
 
   return (
     <div className="res-width-container-lg">
+      
+      <div className="mb-2 d-flex justify-content-end">
+        <SearchBar query={ query } setQuery={ setQuery } width={50}/>
+      </div>
+
       <ListGroup className="shadow">
-        <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3">
+        <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3 px-5">
           <Row>
             <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Title</h6></Col>
             <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Time</h6></Col>
@@ -21,9 +42,9 @@ export default function ProjectsList(props) {
           </Row>
         </ListGroup.Item>
         {
-          (projects.length > 0) &&
-              projects.map((project) => (
-                  <ListGroup.Item action key={ project._id } className="p-3">
+          (projectsToShow.length > 0) &&
+              projectsToShow.map((project) => (
+                  <ListGroup.Item action key={ project._id } className="p-3 px-5">
                     <Link 
                       to={ `/home/projects/${project._id}` }
                       className="text-decoration-none active-green text-primary-cstm"
@@ -45,7 +66,7 @@ export default function ProjectsList(props) {
       </ListGroup>
 
       { 
-        (projects.length === 0) && 
+        (projectsToShow.length === 0) && 
           <div className="mx-0 my-4">
             No projects found. 
           </div> 

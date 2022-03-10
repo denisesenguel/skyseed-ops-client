@@ -5,10 +5,15 @@ export default function ErrorPage(props) {
 
     const { status, message } = props;
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center">
-            <Alert variant="danger" className="w-50 text-center">
-                <Alert.Heading> { status } Error!</Alert.Heading>
-                <p>{ message }</p>
+        <div className="p-5 bg-dead-forest vh-100 d-flex flex-column justify-content-start align-items-center">
+            <Alert variant="custom" className="mt-5 res-width-container text-center text-danger border-danger">
+                <Alert.Heading> 
+                    {
+                        (status && message) ? 
+                            [status, message].join(" - ")  :
+                            "Ooops - an error occured!"
+                    } 
+                </Alert.Heading>
             </Alert>
         </div>
     )
