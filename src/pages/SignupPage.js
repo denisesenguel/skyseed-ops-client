@@ -19,13 +19,12 @@ export default function SignupPage() {
     setSendingEmail(true);
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, data)
-      .then((response) => {
-        console.log("send email now");
+      .then(() => {
         setSendingEmail(false);
-        // Navigate to email sent! page
         navigate("/signup/success");
       })
       .catch((error) => {
+        setSendingEmail(false);
         setFailure({
           hasOccured: true,
           message: error.response.data.message,
