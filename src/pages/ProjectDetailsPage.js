@@ -17,8 +17,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   const [editMode, setEditMode] = useState(false);
   const [editedProject, setEditedProject] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
-  const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } =
-    useShowSuccess();
+  const { showSuccess, toggleShowSuccess} = useShowSuccess();
   const [selectedTab, setSelectedTab] = useState("summary");
 
   const storedToken = localStorage.getItem("authToken");
@@ -82,7 +81,6 @@ export default function ProjectDetailsPage({ fetchProjects }) {
         fetchProjects();
         toggleEditMode();
         toggleShowSuccess();
-        setSuccessMessage("Project successfully updated");
       })
       .catch((error) =>
         console.log("Error updating project: ", error.response)
@@ -213,7 +211,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       <SuccessToast
         showSuccess={showSuccess}
         toggleShowSuccess={toggleShowSuccess}
-        message={successMessage}
+        message={"Project successfully updated"}
       />
     </>
   );

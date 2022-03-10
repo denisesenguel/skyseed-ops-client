@@ -15,7 +15,7 @@ export default function CustomersPage() {
   const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
-  const { showSuccess, toggleShowSuccess, successMessage } = useShowSuccess();
+  const { showSuccess, toggleShowSuccess } = useShowSuccess();
   const storedToken = localStorage.getItem('authToken');
   const fuse = new Fuse(customers, {
     keys: [
@@ -85,7 +85,7 @@ export default function CustomersPage() {
     <SuccessToast
       showSuccess={ showSuccess }
       toggleShowSuccess={ toggleShowSuccess }
-      message={ successMessage }
+      message={ "Customers successfully created" }
     />
     </div>
   )

@@ -8,7 +8,7 @@ import SuccessToast from "../components/SuccessToast";
 export default function AllProjectsPage(props) {
   const { projects, isLoading } = props;
   const { user } = useContext(AuthContext);
-  const { showSuccess, toggleShowSuccess, successMessage } = useShowSuccess();
+  const { showSuccess, toggleShowSuccess } = useShowSuccess();
 
   function getMyProjects(userId, projects) {
     if (projects.length > 0) {
@@ -35,7 +35,7 @@ export default function AllProjectsPage(props) {
       <SuccessToast
         showSuccess={showSuccess}
         toggleShowSuccess={toggleShowSuccess}
-        message={successMessage}
+        message={"Project successfully deleted"}
       />
     </div>
   );
