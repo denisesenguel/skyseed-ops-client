@@ -24,7 +24,8 @@ export default function ProjectSummary(props) {
                     <Form.Label>Size (in ha)</Form.Label>
                     <Form.Control 
                         disabled={ !editMode }
-                        type="number" 
+                        type="number"
+                        step={0.1} 
                         className="bg-white"
                         onChange={ (e) => updateEditedProject(e.target.id, e.target.value) } 
                         value={ editedProject.sizeInHa } 

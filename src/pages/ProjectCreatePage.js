@@ -143,8 +143,7 @@ export default function ProjectCreatePage(props) {
                 <Form.Control
                   type="number"
                   className={errors.year ? "invalid" : ""}
-                  // TODO add min/max validation
-                  {...register("year", { 
+                  {...register("year", {
                     required: {
                       value: true,
                       message: "Required Field"
@@ -180,6 +179,7 @@ export default function ProjectCreatePage(props) {
                 <Form.Label>Size (in ha)</Form.Label>
                 <Form.Control
                   type="number"
+                  step={0.1}
                   placeholder="5.6"
                   {...register("sizeInHa")}
                 />
