@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Nav, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import ProjectSummary from "../components/ProjectSummary";
+import ProjectSowingDetails from "../components/ProjectSowingDetails";
+import ProjectChecklist from "../components/ProjectChecklist";
 import ButtonMailTo from "../components/ButtonMailTo";
 import StatusTag from "../components/StatusTag";
-import ProjectChecklist from "../components/ProjectChecklist";
 import SuccessToast from "../components/SuccessToast";
 import useShowSuccess from "../hooks/useShowSuccess";
 import IsRestricted from "../components/IsRestricted";
@@ -163,10 +164,18 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                 />
               )}
               {selectedTab === "details" && (
-                <div> Will be populated when model gets extended </div>
+                <ProjectSowingDetails 
+                  project={project}
+                  editMode={editMode}
+                  editedProject={editedProject}
+                  updateEditedProject={updateEditedProject}
+                />
               )}
               {selectedTab === "checklist" && (
-                <ProjectChecklist project={project} onEdit={editProject} />
+                <ProjectChecklist 
+                  project={project} 
+                  editMode={editMode} 
+                />
               )}
             </div>
 
