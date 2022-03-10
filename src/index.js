@@ -7,17 +7,14 @@ import './custom.scss';
 import './index.css';
 import App from './App';
 import { AuthProviderWrapper } from './context/AuthContext';
-import ErrorBoundary from './components/ErrorBoundary';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <ErrorBoundary>
-        <AuthProviderWrapper>
-          <App />
-        </AuthProviderWrapper>
-      </ErrorBoundary>
+      <AuthProviderWrapper>
+        <App />
+      </AuthProviderWrapper>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
