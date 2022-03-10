@@ -11,14 +11,14 @@ import useShowSuccess from "../hooks/useShowSuccess";
 import IsRestricted from "../components/IsRestricted";
 
 export default function ProjectDetailsPage({ fetchProjects }) {
-  
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editedProject, setEditedProject] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
-  const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } = useShowSuccess();
+  const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } =
+    useShowSuccess();
   const [selectedTab, setSelectedTab] = useState("summary");
 
   const storedToken = localStorage.getItem("authToken");
@@ -37,8 +37,8 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   }, [projectId, storedToken]);
 
   useEffect(() => {
-    setEditedProject(project)
-  }, [project])
+    setEditedProject(project);
+  }, [project]);
 
   function deleteProject(id) {
     axios
@@ -47,33 +47,37 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       })
       .then(() => {
         fetchProjects();
-        navigate("/home/projects?deleted=true");
+        navigate("/home/projects/my-projects?deleted=true");
       })
       .catch((error) => console.log("Error deleting project: ", error));
   }
 
   const toggleEditMode = () => setEditMode((previous) => !previous);
-  
+
   function updateEditedProject(key, value) {
-    const newEdit = {...editedProject};
+    const newEdit = { ...editedProject };
     newEdit[key] = value;
-    setEditedProject(newEdit)
+    setEditedProject(newEdit);
   }
 
   function editProject() {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, editedProject, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
+      .put(
+        `${process.env.REACT_APP_API_URL}/projects/${projectId}`,
+        editedProject,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
       .then((response) => {
         // api returns unpopulated fields for managers and customer
         const { managers, customer, ...rest } = response.data;
         setProject((previous) => {
           return {
-            ...rest, 
-            managers: previous.managers, 
-            customer: previous.customer
-          } 
+            ...rest,
+            managers: previous.managers,
+            customer: previous.customer,
+          };
         });
         fetchProjects();
         toggleEditMode();
@@ -87,7 +91,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
 
   function discardChanges() {
     setEditedProject(project);
-    toggleEditMode()
+    toggleEditMode();
   }
 
   return (
@@ -104,12 +108,12 @@ export default function ProjectDetailsPage({ fetchProjects }) {
 
               <div className="d-flex my-2">
                 <p className="my-auto">{project.location}</p>
-                
+
                 <StatusTag
-                  status={ project.status }
-                  editMode={ editMode }
-                  editedProject={ editedProject }
-                  updateEditedProject={ updateEditedProject }
+                  status={project.status}
+                  editMode={editMode}
+                  editedProject={editedProject}
+                  updateEditedProject={updateEditedProject}
                 />
               </div>
 
@@ -150,11 +154,11 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               </Nav>
 
               {selectedTab === "summary" && (
-                <ProjectSummary 
-                  project={ project }  
-                  editMode={ editMode } 
-                  editedProject={ editedProject } 
-                  updateEditedProject={ updateEditedProject } 
+                <ProjectSummary
+                  project={project}
+                  editMode={editMode}
+                  editedProject={editedProject}
+                  updateEditedProject={updateEditedProject}
                 />
               )}
               {selectedTab === "details" && (
@@ -167,32 +171,32 @@ export default function ProjectDetailsPage({ fetchProjects }) {
 
             <div className="d-flex justify-content-end">
               <IsRestricted project={project}>
-                {
-                  !editMode ?
+                {!editMode ? (
+                  <Button
+                    onClick={toggleEditMode}
+                    variant="custom"
+                    className="border-secondary-cstm text-secondary-cstm mx-2"
+                  >
+                    Edit Details
+                  </Button>
+                ) : (
+                  <>
                     <Button
-                      onClick={ toggleEditMode }
+                      onClick={discardChanges}
+                      variant="custom"
+                      className="border-secondary-cstm text-secondary-cstm"
+                    >
+                      Discard Changes
+                    </Button>
+                    <Button
+                      onClick={editProject}
                       variant="custom"
                       className="border-secondary-cstm text-secondary-cstm mx-2"
                     >
-                      Edit Details
-                    </Button> :
-                    <>
-                      <Button
-                        onClick={ discardChanges }
-                        variant="custom"
-                        className="border-secondary-cstm text-secondary-cstm"
-                      >
-                        Discard Changes
-                      </Button>
-                      <Button
-                        onClick={ editProject }
-                        variant="custom"
-                        className="border-secondary-cstm text-secondary-cstm mx-2"
-                      >
-                        Save Changes
-                      </Button>
-                    </>
-                }
+                      Save Changes
+                    </Button>
+                  </>
+                )}
                 <Button
                   onClick={() => deleteProject(project._id)}
                   variant="custom"
