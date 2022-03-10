@@ -23,7 +23,7 @@ export default function SignupPage() {
         console.log("send email now");
         setSendingEmail(false);
         // Navigate to email sent! page
-        // navigate("/home?userCreated=true");
+        navigate("/signup/success");
       })
       .catch((error) => {
         setFailure({

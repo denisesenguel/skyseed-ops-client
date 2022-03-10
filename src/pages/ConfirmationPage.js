@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
@@ -13,8 +13,8 @@ export default function ConfirmationPage() {
 
     useEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/auth/confirm/${userId}`)
-            .then((data) => {
+            .post(`${process.env.REACT_APP_API_URL}/auth/confirm/${userId}`)
+            .then(() => {
                 setConfirming(false);
             })
             .catch((error) => {
@@ -22,7 +22,7 @@ export default function ConfirmationPage() {
                 setConfirming(false);
                 setFailed(true);
             })
-    }, []);
+    }, [userId]);
 
 
     return(
@@ -33,7 +33,7 @@ export default function ConfirmationPage() {
                     <NavBar />
                     {confirming
                         ? <Spinner animation="border" variant="secondary-cstm"/>
-                        : <p>Confirmed!</p>
+                        : <Navigate to="/login?confirmed=true" />
                     }
                 </>
             }
