@@ -58,12 +58,12 @@ export default function CustomersPage() {
               customersToShow.length === 0 ?
                 <p>No customers found.</p> :
                 generateAlphabet().map((letter, index) => (
-                        (customersToShow.filter(customer => customer.lastName.indexOf(letter) > -1).length > 0) &&
+                        (customersToShow.filter(customer => customer.lastName.toUpperCase().indexOf(letter) > -1).length > 0) &&
                           <ListGroup key={ index } className="mb-1 shadow">
                             <ListGroup.Item className="bg-neutral-grey text-secondary-cstm"> { letter } </ListGroup.Item>
                             {
                               customersToShow
-                                .filter(customer => customer.lastName.indexOf(letter) > -1)
+                                .filter(customer => customer.lastName.toUpperCase().indexOf(letter) > -1)
                                 .map((customer, index) => (
                                   <ListGroup.Item className="text-primary-cstm d-flex align-items-center p-3" key={ index }>
                                     <img className="rounded-circle fix-img-height" src={ exampleImg } alt={ customer.lastName } />
@@ -78,7 +78,6 @@ export default function CustomersPage() {
                   ))
             }
           </>
-  
       }
       
     <SuccessToast

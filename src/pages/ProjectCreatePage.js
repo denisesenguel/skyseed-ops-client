@@ -6,7 +6,9 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 
-export default function ProjectCreatePage() {
+export default function ProjectCreatePage(props) {
+  
+  const { fetchProjects } = props;
   const navigate = useNavigate();
   const {
     register,
@@ -37,7 +39,7 @@ export default function ProjectCreatePage() {
   const storedToken = localStorage.getItem("authToken");
 
   // initialize controlledFields array by appending once on render
-  useEffect(() => append(""), []);
+  useEffect(() => append(""), [append]);
 
   // get list of all users and customers for form select fields
   useEffect(() => {
@@ -62,6 +64,12 @@ export default function ProjectCreatePage() {
   }, [storedToken]);
 
   function createProject(data) {
+    // remove empty strings from data
+    for (const key in data) {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    }
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/projects`,
@@ -69,13 +77,14 @@ export default function ProjectCreatePage() {
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then((response) => {
+        fetchProjects();
         navigate(`/home/projects/${response.data._id}?created=true`);
       })
       .catch((error) => {
         console.log("Error creating project: ", error);
         setFailure({
           hasOccured: true,
-          message: error.response.data.error.message,
+          message: error.response.data.message,
         });
       });
   }
@@ -135,10 +144,23 @@ export default function ProjectCreatePage() {
                   type="number"
                   className={errors.year ? "invalid" : ""}
                   // TODO add min/max validation
-                  {...register("year", { required: true })}
+                  {...register("year", { 
+                    required: {
+                      value: true,
+                      message: "Required Field"
+                    },
+                    min: {
+                      value: 2018,
+                      message: "Provide valid year (after 2018)"
+                    },
+                    max: {
+                      value: 2100,
+                      message: "Provide valid year (after 2018)"
+                    }
+                  })}
                 />
                 {errors.year && (
-                  <p className="text-danger font-s mt-1 mb-0">Required Field</p>
+                  <p className="text-danger font-s mt-1 mb-0">{ errors.year.message }</p>
                 )}
               </Form.Group>
             </div>
@@ -251,7 +273,7 @@ export default function ProjectCreatePage() {
               variant="danger"
               className="d-flex justify-content-center text-danger mt-4"
             >
-              {failure.message || "Something went wrong. Please try again."}
+              { "Failed: " + failure.message || "Something went wrong. Please try again."}
             </Alert>
           )}
         </>

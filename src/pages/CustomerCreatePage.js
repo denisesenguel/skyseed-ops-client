@@ -56,7 +56,7 @@ export default function CustomerCreatePage() {
             <>
               <h5 key={ fields.id } className="my-3 mt-5">Customer { index + 1 }</h5>
               <div className="d-flex w-100">
-                <Form.Group className="w-50" controlId="firstName">
+                <Form.Group className="w-50 mr-2" controlId="firstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text" placeholder="Horst"
