@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, FormGroup, FormLabel } from 'react-bootstrap';
+import Creatable from 'react-select/creatable';
+import { Form, FormGroup } from 'react-bootstrap';
+import UserCard from './UserCard';
 
 export default function ProjectSowingDetails(props) {
     
@@ -17,7 +19,7 @@ export default function ProjectSowingDetails(props) {
                     >
                     </Form.Control>
                 </FormGroup>
-                <FormGroup className="w-75">
+                <FormGroup className="w-75 ml-2">
                     <Form.Label>
                         Area Type
                     </Form.Label>
@@ -30,9 +32,24 @@ export default function ProjectSowingDetails(props) {
                 <Form.Label>
                     Seed Mixture
                 </Form.Label>
-                <Form.Control>
-
-                </Form.Control>
+                {
+                    project.seedMixture?.map(item => (
+                        <>
+                            <Form.Control
+                                type="text"
+                                placeholder="Seed Type, e.g. Birch Tree"
+                            >    
+                            </Form.Control>
+                            <Form.Control
+                                type="number"
+                            >
+                            </Form.Control>
+                            <Form.Check>
+                                Seeds available
+                            </Form.Check>
+                        </>
+                    ))
+                }
             </FormGroup>
             <FormGroup className="w-25">
                 <Form.Label>
@@ -44,15 +61,13 @@ export default function ProjectSowingDetails(props) {
                 >
                 </Form.Control>
             </FormGroup>
-            <FormGroup>
-                <Form.Label>
-                    Pilots
-                </Form.Label>
-                <Form.Control>
-
-                </Form.Control>
-            </FormGroup>
         </Form>
+        <div className="mt-4">
+            <h6>Pilots</h6>
+            {
+                project.pilots?.map(pilot => <UserCard user={pilot}/>)
+            }
+        </div>
     </div>
   )
 }

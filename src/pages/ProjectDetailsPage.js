@@ -173,7 +173,8 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               )}
               {selectedTab === "checklist" && (
                 <ProjectChecklist 
-                  project={project} 
+                  editedProject={editedProject}
+                  updateEditedProject={updateEditedProject} 
                   editMode={editMode} 
                 />
               )}

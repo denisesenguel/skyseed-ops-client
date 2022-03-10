@@ -1,7 +1,6 @@
 import React from 'react';
-import { Form, Card } from 'react-bootstrap';
-import userImg from '../images/forest_bg_website.jpg';
-import ButtonMailTo from './ButtonMailTo';
+import Form from 'react-bootstrap/Form';
+import UserCard from './UserCard';
 
 export default function ProjectSummary(props) {
     
@@ -39,21 +38,7 @@ export default function ProjectSummary(props) {
                         ( !project || !project?.managers || project?.managers?.length === 0 ) ?
                             <p> None assigned yet.</p> :
                             project.managers.map((user) => (
-                                <Card key={ user._id } className="d-flex flex-row align-items-center my-1 shadow">
-                                    <img 
-                                        src={ userImg } 
-                                        className="rounded-circle fix-img-height m-2" 
-                                        alt={ user.firstName }
-                                    />
-                                    <div className="mx-2">
-                                        <p className="mb-0">{ user.firstName }</p>
-                                        <ButtonMailTo 
-                                            label={ user.email } 
-                                            mailto={ `mailto:${user.email}` }
-                                            className="text-decoration-underline text-secondary-cstm"
-                                        />
-                                    </div>
-                                </Card>
+                                <UserCard user={user} />
                             ))        
                     }
                 </div>
