@@ -28,6 +28,17 @@ export default function NavBar() {
             </div>
           </Nav.Link>
           {isLoggedIn ? (
+            <>
+            <NavLink
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "text-secondary-cstm" : "text-primary-cstm"
+                  } nav-link font-lato-light-uppercase`
+                }
+                to="/home"
+              >
+                Internal
+            </NavLink>
             <NavLink
               className={({ isActive }) =>
                 `${
@@ -39,6 +50,7 @@ export default function NavBar() {
             >
               Logout
             </NavLink>
+            </>
           ) : (
             <>
               <NavLink
