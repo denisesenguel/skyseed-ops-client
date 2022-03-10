@@ -1,33 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Form, Card } from 'react-bootstrap';
 import userImg from '../images/forest_bg_website.jpg';
 import ButtonMailTo from './ButtonMailTo';
 
 export default function ProjectSummary(props) {
     
-    const { project, editMode, editProject, submitEdit, discardEdit, setDiscardEdit, toggleEditMode } = props;
-    const [description, setDescription] = useState(project.description);
-    const [sizeInHa, setSizeInHa] = useState(project.sizeInHa);
-
-    useEffect(() => {
-        setDescription(project.description);
-        setSizeInHa(project.sizeInHa);
-    }, [project]);
-
-    useEffect(() => {
-        if (submitEdit) {
-            editProject(project._id, {sizeInHa, description});
-        }
-    }, [submitEdit]);
-
-    useEffect(() => {
-        if (discardEdit) {
-            setDescription(project.description);
-            setSizeInHa(project.sizeInHa);
-            toggleEditMode();
-            setDiscardEdit(false);
-        }
-    }, [discardEdit]);
+    const { project, editMode,  editedProject, updateEditedProject } = props;
 
     return (
         <div className="mt-3">
@@ -35,21 +13,21 @@ export default function ProjectSummary(props) {
                 <Form.Group controlId="description" className="mt-2">
                     <Form.Label>Description</Form.Label>
                     <Form.Control 
-                        readOnly={ editMode ? false : true }
+                        disabled={ !editMode }
                         className="bg-white"
                         as="textarea" rows={3}
-                        onChange={ (e) => setDescription(e.target.value) }
-                        value={ description } 
+                        onChange={ (e) => updateEditedProject(e.target.id, e.target.value) }
+                        value={ editedProject.description } 
                     />
                 </Form.Group>
                 <Form.Group controlId="sizeInHa" className="mt-2">
                     <Form.Label>Size (in ha)</Form.Label>
                     <Form.Control 
-                        readOnly={ editMode ? false : true }
+                        disabled={ !editMode }
                         type="number" 
                         className="bg-white"
-                        onChange={ (e) => setSizeInHa(e.target.value) } 
-                        value={ sizeInHa } 
+                        onChange={ (e) => updateEditedProject(e.target.id, e.target.value) } 
+                        value={ editedProject.sizeInHa } 
                     />
                 </Form.Group>
             </Form>

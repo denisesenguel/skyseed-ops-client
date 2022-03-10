@@ -3,10 +3,10 @@ const enumArrays = {
     season: ['Fall', 'Winter', 'Spring', 'Summer']
 }
 
-const stateColorMapping = {
+const statusColorMapping = {
     planned: "warning-cstm",
     ongoing: "info-cstm",
     finished: "success-cstm"
 }
 
-export { enumArrays, stateColorMapping };
+export { enumArrays, statusColorMapping };

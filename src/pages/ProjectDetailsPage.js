@@ -8,7 +8,6 @@ import StatusTag from "../components/StatusTag";
 import ProjectChecklist from "../components/ProjectChecklist";
 import SuccessToast from "../components/SuccessToast";
 import useShowSuccess from "../hooks/useShowSuccess";
-import StatusSelectToast from "../components/StatusSelectToast";
 import IsRestricted from "../components/IsRestricted";
 
 export default function ProjectDetailsPage({ fetchProjects }) {
@@ -17,11 +16,9 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [editMode, setEditMode] = useState(false);
-  const [submitEdit, setSubmitEdit] = useState(false);
-  const [discardEdit, setDiscardEdit] = useState(false);
+  const [editedProject, setEditedProject] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
   const { showSuccess, toggleShowSuccess, successMessage, setSuccessMessage } = useShowSuccess();
-  const [showSelectStatus, setShowSelectStatus] = useState(false);
   const [selectedTab, setSelectedTab] = useState("summary");
 
   const storedToken = localStorage.getItem("authToken");
@@ -39,6 +36,10 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       .catch((error) => console.log("Error getting project: ", error));
   }, [projectId, storedToken]);
 
+  useEffect(() => {
+    setEditedProject(project)
+  }, [project])
+
   function deleteProject(id) {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
@@ -51,11 +52,17 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       .catch((error) => console.log("Error deleting project: ", error));
   }
 
-  const toggleEditMode = () => setEditMode(!editMode);
+  const toggleEditMode = () => setEditMode((previous) => !previous);
+  
+  function updateEditedProject(key, value) {
+    const newEdit = {...editedProject};
+    newEdit[key] = value;
+    setEditedProject(newEdit)
+  }
 
-  function editProject(id, newProject) {
+  function editProject() {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/projects/${id}`, newProject, {
+      .put(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, editedProject, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
@@ -70,21 +77,17 @@ export default function ProjectDetailsPage({ fetchProjects }) {
         });
         fetchProjects();
         toggleEditMode();
-        setSubmitEdit(false);
         toggleShowSuccess();
         setSuccessMessage("Project successfully updated");
-        console.log("changes submitted!");
       })
       .catch((error) =>
         console.log("Error updating project: ", error.response)
       );
   }
 
-  const toggleSelectStatus = () => setShowSelectStatus(!showSelectStatus);
-
-  function editStatus(id, newStatus) {
-    editProject(id, { status: newStatus });
-    toggleSelectStatus();
+  function discardChanges() {
+    setEditedProject(project);
+    toggleEditMode()
   }
 
   return (
@@ -101,24 +104,13 @@ export default function ProjectDetailsPage({ fetchProjects }) {
 
               <div className="d-flex my-2">
                 <p className="my-auto">{project.location}</p>
-                {!project.status ? (
-                  <IsRestricted>
-                    <Button
-                      onClick={ toggleSelectStatus }
-                      variant="custom"
-                      className="text-decoration-underline text-secondary-cstm"
-                    >
-                      {" "}
-                      Add Project Status{" "}
-                    </Button>
-                  </IsRestricted>
-                ) : (
-                  <StatusTag
-                    clickHandler={ toggleSelectStatus }
-                    className="mx-3"
-                    status={project.status}
-                  />
-                )}
+                
+                <StatusTag
+                  status={ project.status }
+                  editMode={ editMode }
+                  editedProject={ editedProject }
+                  updateEditedProject={ updateEditedProject }
+                />
               </div>
 
               <p>
@@ -161,11 +153,8 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                 <ProjectSummary 
                   project={ project }  
                   editMode={ editMode } 
-                  toggleEditMode={ toggleEditMode }
-                  editProject={ editProject } 
-                  submitEdit={ submitEdit }
-                  discardEdit={ discardEdit }
-                  setDiscardEdit={ setDiscardEdit }
+                  editedProject={ editedProject } 
+                  updateEditedProject={ updateEditedProject } 
                 />
               )}
               {selectedTab === "details" && (
@@ -189,14 +178,14 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                     </Button> :
                     <>
                       <Button
-                        onClick={ () => setDiscardEdit(true) }
+                        onClick={ discardChanges }
                         variant="custom"
                         className="border-secondary-cstm text-secondary-cstm"
                       >
                         Discard Changes
                       </Button>
                       <Button
-                        onClick={ () => setSubmitEdit(true) }
+                        onClick={ editProject }
                         variant="custom"
                         className="border-secondary-cstm text-secondary-cstm mx-2"
                       >
@@ -216,15 +205,6 @@ export default function ProjectDetailsPage({ fetchProjects }) {
           </>
         )}
       </div>
-
-      <IsRestricted project={project}>
-        <StatusSelectToast
-          showSelectStatus={showSelectStatus}
-          toggleSelectStatus={toggleSelectStatus}
-          project={project}
-          editStatus={editStatus}
-        />
-      </IsRestricted>
 
       <SuccessToast
         showSuccess={showSuccess}
