@@ -1,6 +1,7 @@
 const enumArrays = {
     status: ['ongoing', 'planned', 'finished'],
-    season: ['Fall', 'Winter', 'Spring', 'Summer']
+    season: ['Fall', 'Winter', 'Spring', 'Summer'],
+    areaType: ['Freifläche', 'Untersaat', 'Steep Slopes', 'Multiple Areas']
 }
 
 const statusColorMapping = {
