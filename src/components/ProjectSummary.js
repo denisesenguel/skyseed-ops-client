@@ -1,22 +1,26 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import UserCard from "./UserCard";
+import { useForm } from "react-hook-form";
 
 export default function ProjectSummary(props) {
   const { project, editMode, editedProject, updateEditedProject } = props;
+  const { register } = useForm({
+      defaultValues: editedProject
+  });
 
   return (
     <div className="mt-3">
       <Form>
-        <Form.Group controlId="description" className="mt-2">
+        <Form.Group className="mt-2">
           <Form.Label>Description</Form.Label>
           <Form.Control
             disabled={!editMode}
             className="bg-white"
             as="textarea"
             rows={3}
-            onChange={(e) => updateEditedProject(e.target.id, e.target.value)}
-            value={editedProject.description}
+            {...register("description")}
+            onChange={(e) => updateEditedProject(e.target.name, e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="sizeInHa" className="mt-2">
@@ -26,8 +30,8 @@ export default function ProjectSummary(props) {
             type="number"
             step={0.1}
             className="bg-white"
-            onChange={(e) => updateEditedProject(e.target.id, e.target.value)}
-            value={editedProject.sizeInHa}
+            {...register("sizeInHa")}
+            onChange={(e) => updateEditedProject(e.target.name, e.target.value)}
           />
         </Form.Group>
       </Form>
