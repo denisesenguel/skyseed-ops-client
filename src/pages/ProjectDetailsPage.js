@@ -108,7 +108,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                 {project.title} - {project.season} {project.year}
               </h4>
 
-              <div className="d-flex my-2">
+              <div className="d-flex my-3">
                 <p className="my-auto">{project.location}</p>
 
                 <StatusTag

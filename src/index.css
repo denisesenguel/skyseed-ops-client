@@ -123,9 +123,12 @@ p, .font-lato-light {
   border-radius: 50%;
 }
 
-/* seems to be broken in bootstrap */
+/* these seem to be broken in bootstrap */
 .mr-2 {
   margin-right: 0.5rem !important;
+}
+.ml-2 {
+  margin-left: 0.5rem !important;
 }
 
 input.invalid:active, input.invalid:focus,
