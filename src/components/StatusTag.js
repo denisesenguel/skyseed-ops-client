@@ -5,8 +5,6 @@ import { statusColorMapping } from "../config/dataConfigs";
 export default function StatusTag(props) {
     
   const { status, editMode, editedProject, updateEditedProject } = props;
-  console.log("this is updated")
-  console.log("edited version: ", editedProject)
 
   return (
     <div>

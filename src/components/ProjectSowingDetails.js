@@ -4,7 +4,7 @@ import { Form, FormGroup, Row, Col } from "react-bootstrap";
 import UserCard from "./UserCard";
 import { enumArrays } from "../config/dataConfigs";
 import AddMoreButton from "./AddMoreButton";
-import moment from 'moment';
+import moment from "moment";
 
 export default function ProjectSowingDetails(props) {
   const { editedProject, editMode } = props;
@@ -17,7 +17,11 @@ export default function ProjectSowingDetails(props) {
             type="date"
             disabled={!editMode}
             className="bg-white"
-            value={moment(editedProject.sowingDate).format("yyyy-MM-DD")}
+            value={
+              editedProject.sowingDate
+                ? moment(editedProject.sowingDate).format("yyyy-MM-DD")
+                : undefined
+            }
             placeholder="Pick a date"
           ></Form.Control>
         </FormGroup>
@@ -54,48 +58,54 @@ export default function ProjectSowingDetails(props) {
             </Col>
             <Col xs={3}></Col>
           </Row>
-          {
-              (!editedProject.seedMixture || editedProject.seedMixture?.length === 0) ?
-
-              (editMode ? <AddMoreButton /> :!editMode && <p className="mb-0 mt-2">Noting specified yet</p> ) :
-              editedProject.seedMixture?.map((item, index) => (
-            <Row className="mt-2">
-              <Col xs={4}>
-                <Form.Control
-                  className="bg-white"
-                  disabled={!editMode}
-                  type="text"
-                  placeholder="Birch Tree"
-                  value={item.seedType}
-                />
-              </Col>
-              <Col xs={3}>
-                <Form.Control
-                  className="bg-white"
-                  disabled={!editMode}
-                  type="number"
-                  value={item.percentage}
-                />
-              </Col>
-              <Col
-                xs={2}
-                className="d-flex align-items-center justify-content-center font-m"
-              >
-                <Form.Check disabled={!editMode} value={item.available} />
-              </Col>
-              <Col
-                xs={3}
-                className="d-flex align-items-center text-primary-cstm"
-              >
-                {
-                  // If edit mode on show Add more Button on last row
-                  editMode && index === editedProject.seedMixture.length - 1 && (
-                    <AddMoreButton />
-                  )
-                }
-              </Col>
-            </Row>
-          ))}
+          {!editedProject.seedMixture ||
+          editedProject.seedMixture?.length === 0 ? (
+            editMode ? (
+              <AddMoreButton />
+            ) : (
+              !editMode && <p className="mb-0 mt-2">Noting specified yet</p>
+            )
+          ) : (
+            editedProject.seedMixture?.map((item, index) => (
+              <Row className="mt-2">
+                <Col xs={4}>
+                  <Form.Control
+                    className="bg-white"
+                    disabled={!editMode}
+                    type="text"
+                    placeholder="Birch Tree"
+                    value={item.seedType}
+                  />
+                </Col>
+                <Col xs={3}>
+                  <Form.Control
+                    className="bg-white"
+                    disabled={!editMode}
+                    type="number"
+                    value={item.percentage}
+                  />
+                </Col>
+                <Col
+                  xs={2}
+                  className="d-flex align-items-center justify-content-center font-m"
+                >
+                  <Form.Check disabled={!editMode} value={item.available} />
+                </Col>
+                <Col
+                  xs={3}
+                  className="d-flex align-items-center text-primary-cstm"
+                >
+                  {
+                    // If edit mode on show Add more Button on last row
+                    editMode &&
+                      index === editedProject.seedMixture.length - 1 && (
+                        <AddMoreButton />
+                      )
+                  }
+                </Col>
+              </Row>
+            ))
+          )}
         </div>
       </Form>
       <div className="mt-4">
