@@ -5,9 +5,16 @@ import UserCard from "./UserCard";
 import { enumArrays } from "../config/dataConfigs";
 import AddMoreButton from "./AddMoreButton";
 import moment from "moment";
+import { useForm } from "react-hook-form";
 
 export default function ProjectSowingDetails(props) {
-  const { editedProject, editMode } = props;
+  
+    const { editedProject, editMode, updateEditedProject } = props;
+    // TBD: transform date
+    // moment(editedProject.sowingDate).format("yyyy-MM-DD")
+    const { register } = useForm({
+        defaultValues: editedProject
+    });
   return (
     <div className="mt-3">
       <Form>
@@ -17,12 +24,9 @@ export default function ProjectSowingDetails(props) {
             type="date"
             disabled={!editMode}
             className="bg-white"
-            value={
-              editedProject.sowingDate
-                ? moment(editedProject.sowingDate).format("yyyy-MM-DD")
-                : undefined
-            }
             placeholder="Pick a date"
+            {...register("sowingDate")}
+            onChange={ (e) => updateEditedProject(e.target.name, e.target.value) }
           ></Form.Control>
         </FormGroup>
         <div className="d-flex mt-2">
@@ -32,6 +36,8 @@ export default function ProjectSowingDetails(props) {
               className="bg-white"
               disabled={!editMode}
               type="number"
+              {...register("sowingDensity")}
+              onChange={ (e) => updateEditedProject(e.target.name, e.target.value) }
             ></Form.Control>
           </FormGroup>
           <FormGroup className="w-75 ml-2">
@@ -41,6 +47,8 @@ export default function ProjectSowingDetails(props) {
                 return { value: item, label: item };
               })}
               isMulti
+              {...register("areaType")}
+              onChange={ (e) => updateEditedProject("areaType", e.map(selected => selected.value)) }
             />
           </FormGroup>
         </div>
