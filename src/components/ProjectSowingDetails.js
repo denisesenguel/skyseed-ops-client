@@ -5,16 +5,28 @@ import UserCard from "./UserCard";
 import { enumArrays } from "../config/dataConfigs";
 import AddMoreButton from "./AddMoreButton";
 import moment from "moment";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 
 export default function ProjectSowingDetails(props) {
-  
-    const { editedProject, editMode, updateEditedProject } = props;
-    // TBD: transform date
-    // moment(editedProject.sowingDate).format("yyyy-MM-DD")
-    const { register } = useForm({
-        defaultValues: editedProject
-    });
+  const { editedProject, editMode, updateEditedProject } = props;
+  const { register, control, watch } = useForm({
+    // TBD: transform date. Try this:
+    // Object.assign(editedProject,{sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD")})
+    defaultValues: editedProject,
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "seedMixture",
+  });
+  const watchFields = watch("seedMixture");
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFields[index],
+    };
+  });
+
   return (
     <div className="mt-3">
       <Form>
@@ -26,7 +38,7 @@ export default function ProjectSowingDetails(props) {
             className="bg-white"
             placeholder="Pick a date"
             {...register("sowingDate")}
-            onChange={ (e) => updateEditedProject(e.target.name, e.target.value) }
+            onChange={(e) => updateEditedProject(e.target.name, e.target.value)}
           ></Form.Control>
         </FormGroup>
         <div className="d-flex mt-2">
@@ -37,7 +49,9 @@ export default function ProjectSowingDetails(props) {
               disabled={!editMode}
               type="number"
               {...register("sowingDensity")}
-              onChange={ (e) => updateEditedProject(e.target.name, e.target.value) }
+              onChange={(e) =>
+                updateEditedProject(e.target.name, e.target.value)
+              }
             ></Form.Control>
           </FormGroup>
           <FormGroup className="w-75 ml-2">
@@ -48,7 +62,12 @@ export default function ProjectSowingDetails(props) {
               })}
               isMulti
               {...register("areaType")}
-              onChange={ (e) => updateEditedProject("areaType", e.map(selected => selected.value)) }
+              onChange={(e) =>
+                updateEditedProject(
+                  "areaType",
+                  e.map((selected) => selected.value)
+                )
+              }
             />
           </FormGroup>
         </div>
@@ -74,15 +93,23 @@ export default function ProjectSowingDetails(props) {
               !editMode && <p className="mb-0 mt-2">Noting specified yet</p>
             )
           ) : (
-            editedProject.seedMixture?.map((item, index) => (
-              <Row className="mt-2">
+            controlledFields.map((field, index) => (
+              <Row className="mt-2" key={field.id}>
                 <Col xs={4}>
                   <Form.Control
                     className="bg-white"
                     disabled={!editMode}
                     type="text"
                     placeholder="Birch Tree"
-                    value={item.seedType}
+                    {...register(`seedMixture.${index}.seedType`)}
+                    onChange={(e) => {
+                        const { percentage, available } = controlledFields[index];
+                        updateEditedProject("seedMixture", { 
+                            seedType: e.target.value, 
+                            percentage, 
+                            available
+                        });
+                    }}
                   />
                 </Col>
                 <Col xs={3}>
@@ -90,14 +117,33 @@ export default function ProjectSowingDetails(props) {
                     className="bg-white"
                     disabled={!editMode}
                     type="number"
-                    value={item.percentage}
+                    {...register(`seedMixture.${index}.percentage`)}
+                    onChange={(e) => {
+                        const { seedType, available } = controlledFields[index];
+                        updateEditedProject("seedMixture", { 
+                            seedType,
+                            percentage: e.target.value, 
+                            available
+                        });
+                    }}
                   />
                 </Col>
                 <Col
                   xs={2}
                   className="d-flex align-items-center justify-content-center font-m"
                 >
-                  <Form.Check disabled={!editMode} value={item.available} />
+                  <Form.Check
+                    disabled={!editMode}
+                    {...register(`seedMixture.${index}.available`)}
+                    onChange={(e) => {
+                        const { seedType, percentage } = controlledFields[index];
+                        updateEditedProject("seedMixture", { 
+                            seedType, 
+                            percentage, 
+                            available: e.target.checked
+                        })
+                    }}
+                  />
                 </Col>
                 <Col
                   xs={3}
