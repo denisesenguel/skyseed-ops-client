@@ -10,9 +10,9 @@ import { useForm, useFieldArray } from "react-hook-form";
 export default function ProjectSowingDetails(props) {
   const { editedProject, editMode, updateEditedProject } = props;
   const { register, control, watch } = useForm({
-    // TBD: transform date. Try this:
-    // Object.assign(editedProject,{sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD")})
-    defaultValues: editedProject,
+    defaultValues: Object.assign(editedProject, {
+      sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD"),
+    }),
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -160,12 +160,11 @@ export default function ProjectSowingDetails(props) {
                     })
                   }
                 />
-                {
-                    controlledFields.length > 1 &&
-                    <RemoveButton
-                    onClick={() =>remove(controlledFields.length - 1)}
-                    />
-                }
+                {controlledFields.length > 1 && (
+                  <RemoveButton
+                    onClick={() => remove(controlledFields.length - 1)}
+                  />
+                )}
               </div>
             )
           }
