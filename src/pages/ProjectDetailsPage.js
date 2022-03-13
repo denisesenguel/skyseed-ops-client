@@ -5,7 +5,7 @@ import axios from "axios";
 import ProjectSummary from "../components/ProjectSummary";
 import ProjectSowingDetails from "../components/ProjectSowingDetails";
 import ProjectChecklist from "../components/ProjectChecklist";
-import ButtonMailTo from "../components/ButtonMailTo";
+import { ButtonMailTo } from "../components/Buttons";
 import StatusTag from "../components/StatusTag";
 import SuccessToast from "../components/SuccessToast";
 import useShowSuccess from "../hooks/useShowSuccess";

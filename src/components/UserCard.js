@@ -1,6 +1,6 @@
 import React from "react";
 import userImg from "../images/forest_bg_website.jpg";
-import ButtonMailTo from "./ButtonMailTo";
+import { ButtonMailTo } from "./Buttons"; 
 import Card from "react-bootstrap/Card";
 
 export default function UserCard(props) {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Fuse from 'fuse.js';
 import ListGroup from 'react-bootstrap/ListGroup';
 import exampleImg from '../images/forest_bg_website.jpg';
-import ButtonMailTo from '../components/ButtonMailTo';
+import { ButtonMailTo } from '../components/Buttons';
 import SuccessToast from '../components/SuccessToast';
 import useShowSuccess from '../hooks/useShowSuccess';
 import { generateAlphabet, lastNameStartsWith } from '../utils/helpers';

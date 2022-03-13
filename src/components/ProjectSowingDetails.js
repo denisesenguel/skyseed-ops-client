@@ -3,7 +3,7 @@ import CreatableSelect from "react-select/creatable";
 import { Form, FormGroup, Row, Col } from "react-bootstrap";
 import UserCard from "./UserCard";
 import { enumArrays } from "../config/dataConfigs";
-import AddMoreButton from "./AddMoreButton";
+import { AddMoreButton, RemoveButton } from "./Buttons";
 import moment from "moment";
 import { useForm, useFieldArray } from "react-hook-form";
 
@@ -83,7 +83,6 @@ export default function ProjectSowingDetails(props) {
             <Col xs={2} className="d-flex justify-content-center">
               <Form.Label>Available?</Form.Label>
             </Col>
-            <Col xs={3}></Col>
           </Row>
           {!editedProject.seedMixture ||
           editedProject.seedMixture?.length === 0 ? (
@@ -103,12 +102,12 @@ export default function ProjectSowingDetails(props) {
                     placeholder="Birch Tree"
                     {...register(`seedMixture.${index}.seedType`)}
                     onChange={(e) => {
-                        const { percentage, available } = controlledFields[index];
-                        updateEditedProject("seedMixture", { 
-                            seedType: e.target.value, 
-                            percentage, 
-                            available
-                        });
+                      const { percentage, available } = controlledFields[index];
+                      updateEditedProject("seedMixture", {
+                        seedType: e.target.value,
+                        percentage,
+                        available,
+                      });
                     }}
                   />
                 </Col>
@@ -119,12 +118,12 @@ export default function ProjectSowingDetails(props) {
                     type="number"
                     {...register(`seedMixture.${index}.percentage`)}
                     onChange={(e) => {
-                        const { seedType, available } = controlledFields[index];
-                        updateEditedProject("seedMixture", { 
-                            seedType,
-                            percentage: e.target.value, 
-                            available
-                        });
+                      const { seedType, available } = controlledFields[index];
+                      updateEditedProject("seedMixture", {
+                        seedType,
+                        percentage: e.target.value,
+                        available,
+                      });
                     }}
                   />
                 </Col>
@@ -136,30 +135,40 @@ export default function ProjectSowingDetails(props) {
                     disabled={!editMode}
                     {...register(`seedMixture.${index}.available`)}
                     onChange={(e) => {
-                        const { seedType, percentage } = controlledFields[index];
-                        updateEditedProject("seedMixture", { 
-                            seedType, 
-                            percentage, 
-                            available: e.target.checked
-                        })
+                      const { seedType, percentage } = controlledFields[index];
+                      updateEditedProject("seedMixture", {
+                        seedType,
+                        percentage,
+                        available: e.target.checked,
+                      });
                     }}
                   />
-                </Col>
-                <Col
-                  xs={3}
-                  className="d-flex align-items-center text-primary-cstm"
-                >
-                  {
-                    // If edit mode on show Add more Button on last row
-                    editMode &&
-                      index === editedProject.seedMixture.length - 1 && (
-                        <AddMoreButton />
-                      )
-                  }
                 </Col>
               </Row>
             ))
           )}
+          {
+            // If edit mode on show Add more Button below
+            editMode && (
+              <div className="d-flex">
+                <AddMoreButton
+                  onClick={() =>
+                    append({
+                      seedType: "",
+                      percentage: 0,
+                      available: false,
+                    })
+                  }
+                />
+                {
+                    controlledFields.length > 1 &&
+                    <RemoveButton
+                    onClick={() =>remove(controlledFields.length - 1)}
+                    />
+                }
+              </div>
+            )
+          }
         </div>
       </Form>
       <div className="mt-4">
