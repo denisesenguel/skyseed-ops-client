@@ -41,6 +41,8 @@ export default function ProjectSowingDetails(props) {
     updateEditedProject("seedMixture", newArray);
   }
 
+  console.log(controlledFields);
+
   return (
     <div className="mt-3">
       <Form>
@@ -113,15 +115,8 @@ export default function ProjectSowingDetails(props) {
             </Col>
             <Col xs={2}></Col>
           </Row>
-          {!editedProject.seedMixture ||
-          editedProject.seedMixture?.length === 0 ? (
-            editMode ? (
-              <AddMoreButton />
-            ) : (
-              !editMode && (
-                <p className="mb-0 mt-2 text-muted">Keine Angaben.</p>
-              )
-            )
+          {controlledFields.length === 0 ? (
+            <p className="mb-0 mt-2 text-muted">Keine Angaben.</p>
           ) : (
             controlledFields.map((field, index) => (
               <>
