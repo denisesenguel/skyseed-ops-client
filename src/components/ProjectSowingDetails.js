@@ -9,12 +9,11 @@ import { useForm, useFieldArray } from "react-hook-form";
 
 export default function ProjectSowingDetails(props) {
   const { editedProject, editMode, updateEditedProject } = props;
-  const { register, control, watch } = useForm({
+  const { register, control, watch, formState: { errors } } = useForm({
     defaultValues: Object.assign(editedProject, {
       sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD"),
     }),
   });
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "seedMixture",
@@ -26,6 +25,16 @@ export default function ProjectSowingDetails(props) {
       ...watchFields[index],
     };
   });
+
+  function updateSeedMixture(index, name, value) {
+
+    const newArray = controlledFields.map((fieldObject, i) => {
+      const {id, _id, ...rest} = fieldObject;
+      if (i === index) rest[name] = value;
+      return rest 
+    })
+    updateEditedProject("seedMixture", newArray)
+  }
 
   return (
     <div className="mt-3">
@@ -93,6 +102,7 @@ export default function ProjectSowingDetails(props) {
             )
           ) : (
             controlledFields.map((field, index) => (
+              <>
               <Row className="mt-2" key={field.id}>
                 <Col xs={4}>
                   <Form.Control
@@ -100,15 +110,8 @@ export default function ProjectSowingDetails(props) {
                     disabled={!editMode}
                     type="text"
                     placeholder="Birch Tree"
-                    {...register(`seedMixture.${index}.seedType`)}
-                    onChange={(e) => {
-                      const { percentage, available } = controlledFields[index];
-                      updateEditedProject("seedMixture", {
-                        seedType: e.target.value,
-                        percentage,
-                        available,
-                      });
-                    }}
+                    {...register(`seedMixture.${index}.seedType`, {required: true})}
+                    onChange={(e) => updateSeedMixture(index, "seedType", e.target.value)}
                   />
                 </Col>
                 <Col xs={3}>
@@ -116,15 +119,8 @@ export default function ProjectSowingDetails(props) {
                     className="bg-white"
                     disabled={!editMode}
                     type="number"
-                    {...register(`seedMixture.${index}.percentage`)}
-                    onChange={(e) => {
-                      const { seedType, available } = controlledFields[index];
-                      updateEditedProject("seedMixture", {
-                        seedType,
-                        percentage: e.target.value,
-                        available,
-                      });
-                    }}
+                    {...register(`seedMixture.${index}.percentage`, {required: true})}
+                    onChange={(e) => updateSeedMixture(index, "percentage", e.target.value)}
                   />
                 </Col>
                 <Col
@@ -133,18 +129,16 @@ export default function ProjectSowingDetails(props) {
                 >
                   <Form.Check
                     disabled={!editMode}
-                    {...register(`seedMixture.${index}.available`)}
-                    onChange={(e) => {
-                      const { seedType, percentage } = controlledFields[index];
-                      updateEditedProject("seedMixture", {
-                        seedType,
-                        percentage,
-                        available: e.target.checked,
-                      });
-                    }}
+                    {...register(`seedMixture.${index}.available`, {required: true})}
+                    onChange={(e) => updateSeedMixture(index, "available", e.target.checked)}
                   />
                 </Col>
               </Row>
+              {
+                errors.seedMixture?.[index] &&
+                  <p className="text-danger mt-1 mb-0"> Please fill or remove all fields! </p> 
+              }
+              </>
             ))
           )}
           {
