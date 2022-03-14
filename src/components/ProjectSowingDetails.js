@@ -1,7 +1,6 @@
 import React from "react";
 import CreatableSelect from "react-select/creatable";
 import { Form, FormGroup, Row, Col } from "react-bootstrap";
-import UserCard from "./UserCard";
 import { enumArrays } from "../config/dataConfigs";
 import { AddMoreButton, RemoveButton } from "./Buttons";
 import moment from "moment";
@@ -16,6 +15,7 @@ export default function ProjectSowingDetails(props) {
     watch,
     formState: { errors },
   } = useForm({
+    mode: "onBlur",
     defaultValues: Object.assign(editedProject, {
       sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD"),
     }),
@@ -40,6 +40,7 @@ export default function ProjectSowingDetails(props) {
     });
     updateEditedProject("seedMixture", newArray);
   }
+  console.log(errors)
 
   return (
     <div className="mt-3">
@@ -62,7 +63,7 @@ export default function ProjectSowingDetails(props) {
               className="bg-white"
               disabled={!editMode}
               type="number"
-              {...register("sowingDensity")}
+              {...register("sowingDensity", {min: 0, max: 100})}
               onChange={(e) =>
                 updateEditedProject(e.target.name, e.target.value)
               }
@@ -97,6 +98,7 @@ export default function ProjectSowingDetails(props) {
             <Col xs={2} className="d-flex justify-content-center">
               <Form.Label>Available?</Form.Label>
             </Col>
+            <Col xs={2}></Col>
           </Row>
           {!editedProject.seedMixture ||
           editedProject.seedMixture?.length === 0 ? (
@@ -132,6 +134,8 @@ export default function ProjectSowingDetails(props) {
                       type="number"
                       {...register(`seedMixture.${index}.percentage`, {
                         required: true,
+                        min: 0,
+                        max: 100
                       })}
                       onChange={(e) =>
                         updateSeedMixture(index, "percentage", e.target.value)
@@ -152,6 +156,11 @@ export default function ProjectSowingDetails(props) {
                       }
                     />
                   </Col>
+                  <Col xs={2}>
+                    {editMode && index > 0 && (
+                      <RemoveButton onClick={() => remove(index)} />
+                    )}
+                  </Col>
                 </Row>
                 {errors.seedMixture?.[index] && (
                   <p className="text-danger mt-1 mb-0">
@@ -165,22 +174,15 @@ export default function ProjectSowingDetails(props) {
           {
             // If edit mode on show Add more Button below
             editMode && (
-              <div className="d-flex">
-                <AddMoreButton
-                  onClick={() =>
-                    append({
-                      seedType: "",
-                      percentage: 0,
-                      available: false,
-                    })
-                  }
-                />
-                {controlledFields.length > 1 && (
-                  <RemoveButton
-                    onClick={() => remove(controlledFields.length - 1)}
-                  />
-                )}
-              </div>
+              <AddMoreButton
+                onClick={() =>
+                  append({
+                    seedType: "",
+                    percentage: 0,
+                    available: false,
+                  })
+                }
+              />
             )
           }
         </div>
