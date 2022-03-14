@@ -6,10 +6,16 @@ import { enumArrays } from "../config/dataConfigs";
 import { AddMoreButton, RemoveButton } from "./Buttons";
 import moment from "moment";
 import { useForm, useFieldArray } from "react-hook-form";
+import EditableUserList from "./EditableUserList";
 
 export default function ProjectSowingDetails(props) {
   const { editedProject, editMode, updateEditedProject } = props;
-  const { register, control, watch, formState: { errors } } = useForm({
+  const {
+    register,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: Object.assign(editedProject, {
       sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD"),
     }),
@@ -27,13 +33,12 @@ export default function ProjectSowingDetails(props) {
   });
 
   function updateSeedMixture(index, name, value) {
-
     const newArray = controlledFields.map((fieldObject, i) => {
-      const {id, _id, ...rest} = fieldObject;
+      const { id, _id, ...rest } = fieldObject;
       if (i === index) rest[name] = value;
-      return rest 
-    })
-    updateEditedProject("seedMixture", newArray)
+      return rest;
+    });
+    updateEditedProject("seedMixture", newArray);
   }
 
   return (
@@ -98,46 +103,62 @@ export default function ProjectSowingDetails(props) {
             editMode ? (
               <AddMoreButton />
             ) : (
-              !editMode && <p className="mb-0 mt-2">Noting specified yet</p>
+              !editMode && (
+                <p className="mb-0 mt-2 text-muted">Noting specified yet</p>
+              )
             )
           ) : (
             controlledFields.map((field, index) => (
               <>
-              <Row className="mt-2" key={field.id}>
-                <Col xs={4}>
-                  <Form.Control
-                    className="bg-white"
-                    disabled={!editMode}
-                    type="text"
-                    placeholder="Birch Tree"
-                    {...register(`seedMixture.${index}.seedType`, {required: true})}
-                    onChange={(e) => updateSeedMixture(index, "seedType", e.target.value)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <Form.Control
-                    className="bg-white"
-                    disabled={!editMode}
-                    type="number"
-                    {...register(`seedMixture.${index}.percentage`, {required: true})}
-                    onChange={(e) => updateSeedMixture(index, "percentage", e.target.value)}
-                  />
-                </Col>
-                <Col
-                  xs={2}
-                  className="d-flex align-items-center justify-content-center font-m"
-                >
-                  <Form.Check
-                    disabled={!editMode}
-                    {...register(`seedMixture.${index}.available`, {required: true})}
-                    onChange={(e) => updateSeedMixture(index, "available", e.target.checked)}
-                  />
-                </Col>
-              </Row>
-              {
-                errors.seedMixture?.[index] &&
-                  <p className="text-danger mt-1 mb-0"> Please fill or remove all fields! </p> 
-              }
+                <Row className="mt-2" key={field.id}>
+                  <Col xs={4}>
+                    <Form.Control
+                      className="bg-white"
+                      disabled={!editMode}
+                      type="text"
+                      placeholder="Birch Tree"
+                      {...register(`seedMixture.${index}.seedType`, {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        updateSeedMixture(index, "seedType", e.target.value)
+                      }
+                    />
+                  </Col>
+                  <Col xs={3}>
+                    <Form.Control
+                      className="bg-white"
+                      disabled={!editMode}
+                      type="number"
+                      {...register(`seedMixture.${index}.percentage`, {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        updateSeedMixture(index, "percentage", e.target.value)
+                      }
+                    />
+                  </Col>
+                  <Col
+                    xs={2}
+                    className="d-flex align-items-center justify-content-center font-m"
+                  >
+                    <Form.Check
+                      disabled={!editMode}
+                      {...register(`seedMixture.${index}.available`, {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        updateSeedMixture(index, "available", e.target.checked)
+                      }
+                    />
+                  </Col>
+                </Row>
+                {errors.seedMixture?.[index] && (
+                  <p className="text-danger mt-1 mb-0">
+                    {" "}
+                    Please fill or remove all fields!{" "}
+                  </p>
+                )}
               </>
             ))
           )}
@@ -164,14 +185,14 @@ export default function ProjectSowingDetails(props) {
           }
         </div>
       </Form>
-      <div className="mt-4">
-        <h6>Pilots</h6>
-        {editedProject.pilots?.length > 0 ? (
-          editedProject.pilots?.map((pilot) => <UserCard user={pilot} />)
-        ) : (
-          <p>None assigned yet</p>
-        )}
-      </div>
+
+      <EditableUserList
+        title="Pilots"
+        field="pilots"
+        editMode={editMode}
+        editedProject={editedProject}
+        updateEditedProject={updateEditedProject}
+      />
     </div>
   );
 }

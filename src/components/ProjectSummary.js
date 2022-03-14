@@ -1,12 +1,12 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
-import UserCard from "./UserCard";
-import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
+import EditableUserList from "./EditableUserList";
+import { useForm } from "react-hook-form";
 
 export default function ProjectSummary(props) {
-  const { project, editMode, editedProject, updateEditedProject } = props;
+  const { editMode, editedProject, updateEditedProject } = props;
   const { register } = useForm({
-      defaultValues: editedProject
+    defaultValues: editedProject,
   });
 
   return (
@@ -35,16 +35,14 @@ export default function ProjectSummary(props) {
           />
         </Form.Group>
       </Form>
-      <div className="w-100 mt-4">
-        <h6>Project Managers</h6>
-        <div className="w-50 mt-3">
-          {!project || !project?.managers || project?.managers?.length === 0 ? (
-            <p> None assigned yet.</p>
-          ) : (
-            project.managers.map((user) => <UserCard user={user} />)
-          )}
-        </div>
-      </div>
+
+      <EditableUserList
+        title="Project Managers"
+        field="managers"
+        editMode={editMode}
+        editedProject={editedProject}
+        updateEditedProject={updateEditedProject}
+      />
     </div>
   );
 }

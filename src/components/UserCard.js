@@ -4,9 +4,9 @@ import { ButtonMailTo } from "./Buttons";
 import Card from "react-bootstrap/Card";
 
 export default function UserCard(props) {
-    const {user} = props;
+    const {user, className} = props;
   return (
-    <div>
+    <div className={className}>
       <Card
         key={user._id}
         className="d-flex flex-row align-items-center my-1 shadow"
