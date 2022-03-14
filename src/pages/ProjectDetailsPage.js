@@ -73,15 +73,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
         }
       )
       .then((response) => {
-        // api returns unpopulated fields for managers and customer
-        const { managers, customer, ...rest } = response.data;
-        setProject((previous) => {
-          return {
-            ...rest,
-            managers: previous.managers,
-            customer: previous.customer,
-          };
-        });
+        setProject(response.data);
         fetchProjects();
         toggleEditMode();
         toggleShowSuccess();

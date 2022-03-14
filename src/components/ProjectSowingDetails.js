@@ -17,7 +17,7 @@ export default function ProjectSowingDetails(props) {
   } = useForm({
     mode: "onBlur",
     defaultValues: Object.assign(editedProject, {
-      sowingDate: moment(editedProject.sowingDate).format("yyyy-MM-DD"),
+      sowingDate: editedProject.sowingDate ? moment(editedProject.sowingDate).format("yyyy-MM-DD") : undefined,
     }),
   });
   const { fields, append, remove } = useFieldArray({
@@ -41,7 +41,7 @@ export default function ProjectSowingDetails(props) {
     updateEditedProject("seedMixture", newArray);
   }
 
-  console.log(controlledFields);
+  console.log(editedProject.areaType);
 
   return (
     <div className="mt-3">
@@ -91,6 +91,10 @@ export default function ProjectSowingDetails(props) {
                 return { value: item, label: item };
               })}
               isMulti
+              isDisabled={!editMode}
+              defaultValue={editedProject.areaType.map((item) => { 
+                return { value: item, label: item };
+              })}
               {...register("areaType")}
               onChange={(e) =>
                 updateEditedProject(
