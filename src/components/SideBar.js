@@ -30,7 +30,7 @@ return (
         sidebar ?
           <div className="d-flex justify-content-between align-items-center p-4 text-neutral-grey border-bottom">
             <div>
-              <h6 className="m-0">Hello { user.firstName }!</h6> 
+              <h6 className="m-0">Hallo { user.firstName }!</h6> 
               { (user.role === 'admin') && <p className="m-0 font-xs text-muted">You're an admin.</p> }
             </div>
             <Link to="#" className="d-flex align-items-center">
@@ -64,7 +64,7 @@ return (
           >
           <div className="d-flex align-items-center">
             <CgIcons.CgTrees />
-            <span className="mx-2 my-0">Projects</span>
+            <span className="mx-2 my-0">Projekte</span>
           </div>
           <div>
             { subNav[0] ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill /> }
@@ -77,20 +77,20 @@ return (
                   to="/home/projects"
                   className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
                 >
-                  <span> Browse All </span>
+                  <span> Übersicht </span>
                 </Link>
                 <Link 
                   to="/home/projects/my-projects"
                   className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
                 >
-                  <span> My Projects </span>
+                  <span> Meine Projekte </span>
                 </Link>
                 <Link 
                   to="/home/projects/create"
                   className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
                 >
                   {/* icon here? */}
-                  <span> Add New </span>
+                  <span> Hinzufügen </span>
                 </Link>
               </div>
           }
@@ -102,7 +102,7 @@ return (
           >
           <div className="d-flex align-items-center">
           <CgIcons.CgList />
-            <span className="mx-2 my-0">Customers</span>
+            <span className="mx-2 my-0">Kunden</span>
           </div>
           <div>
           { subNav[1] ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill /> }
@@ -115,13 +115,13 @@ return (
                   to="/home/customers"
                   className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
                 >
-                  <span> Browse All </span>
+                  <span> Übersicht </span>
                 </Link>
                 <Link 
                   to="/home/customers/create"
                   className = "px-4 mx-4 py-2 d-flex align-items-center text-decoration-none text-neutral-grey"
                 >
-                  <span> Add New </span>
+                  <span> Hinzufügen </span>
                 </Link>
               </div>
           }

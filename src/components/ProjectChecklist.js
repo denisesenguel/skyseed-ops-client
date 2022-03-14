@@ -13,7 +13,7 @@ export default function ProjectChecklist(props) {
       <Form>
         <Form.Check
           type="checkbox"
-          label="Seeds ordered"
+          label="Saatgut bestellt"
           className="my-2"
           disabled={
             !editMode ||
@@ -24,14 +24,14 @@ export default function ProjectChecklist(props) {
         />
         <Form.Check
           type="checkbox"
-          label="Date fixed"
+          label="Aussaat Termin festgelegt"
           disabled={true}
           checked={!editedProject.sowingDate ? false : true}
           className="my-2"
         />
         <Form.Check
           type="checkbox"
-          label="Area specified and confirmed"
+          label="Fläche bestätigt"
           className="my-2"
           disabled={!editMode}
           {...register("areaConfirmed")}
@@ -39,7 +39,7 @@ export default function ProjectChecklist(props) {
         />
         <Form.Check
           type="checkbox"
-          label="Flight permit requested"
+          label="Flugantrag gestellt"
           className="my-2"
           disabled={!editMode}
           {...register("permitRequested")}
@@ -47,10 +47,26 @@ export default function ProjectChecklist(props) {
         />
         <Form.Check
           type="checkbox"
-          label="Flight permit granted"
+          label="Flugantrag genehmigt"
           className="my-2"
           disabled={!editMode}
           {...register("permitGranted")}
+          onChange={ (e) => updateEditedProject(e.target.name, e.target.checked) } 
+        />
+        <Form.Check
+          type="checkbox"
+          label="Personal und Reise gebucht"
+          className="my-2"
+          disabled={!editMode}
+          {...register("travelBooked")}
+          onChange={ (e) => updateEditedProject(e.target.name, e.target.checked) } 
+        />
+        <Form.Check
+          type="checkbox"
+          label="Vertragliches geklärt"
+          className="my-2"
+          disabled={!editMode}
+          {...register("contractClarified")}
           onChange={ (e) => updateEditedProject(e.target.name, e.target.checked) } 
         />
       </Form>

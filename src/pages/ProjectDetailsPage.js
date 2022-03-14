@@ -120,7 +120,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               </div>
 
               <p>
-                Customer:{" "}
+                Kunde: {" "}
                 <ButtonMailTo
                   label={[
                     project.customer?.firstName,
@@ -140,17 +140,17 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               >
                 <Nav.Item>
                   <Nav.Link className="text-primary-cstm" eventKey="summary">
-                    Summary
+                    Überblick
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link className="text-primary-cstm" eventKey="details">
-                    Sowing Details
+                    Aussaat
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link className="text-primary-cstm" eventKey="checklist">
-                    Checklist
+                    Checkliste
                   </Nav.Link>
                 </Nav.Item>
               </Nav>
@@ -188,7 +188,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                     variant="custom"
                     className="border-secondary-cstm text-secondary-cstm mx-2"
                   >
-                    Edit Details
+                    Bearbeiten
                   </Button>
                 ) : (
                   <>
@@ -197,14 +197,14 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                       variant="custom"
                       className="border-secondary-cstm text-secondary-cstm"
                     >
-                      Discard Changes
+                      Verwerfen
                     </Button>
                     <Button
                       onClick={ editProject }
                       variant="custom"
                       className="border-secondary-cstm text-secondary-cstm mx-2"
                     >
-                      Save Changes
+                      Speichern
                     </Button>
                   </>
                 )}
@@ -213,7 +213,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                   variant="custom"
                   className="border-danger text-danger fix-at-bottom-right"
                 >
-                  Delete this project
+                  Löschen
                 </Button>
               </IsRestricted>
             </div>
@@ -230,7 +230,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       <SuccessToast
         showSuccess={showSuccess}
         toggleShowSuccess={toggleShowSuccess}
-        message={"Project successfully updated"}
+        message={"Projekt wurde geändert."}
       />
     </>
   );

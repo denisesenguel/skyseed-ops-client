@@ -45,7 +45,7 @@ export default function ProjectSowingDetails(props) {
     <div className="mt-3">
       <Form>
         <FormGroup className="w-50">
-          <Form.Label>Exact Date</Form.Label>
+          <Form.Label>Aussaat Termin</Form.Label>
           <Form.Control
             type="date"
             disabled={!editMode}
@@ -57,7 +57,7 @@ export default function ProjectSowingDetails(props) {
         </FormGroup>
         <div className="d-flex mt-2">
           <FormGroup className="w-25">
-            <Form.Label>% Sowing Density</Form.Label>
+            <Form.Label>Bestockungsdichte</Form.Label>
             <Form.Control
               className={errors.sowingDensity ? "bg-white invalid" : "bg-white"}
               disabled={!editMode}
@@ -83,7 +83,7 @@ export default function ProjectSowingDetails(props) {
             )}
           </FormGroup>
           <FormGroup className="w-75 ml-2">
-            <Form.Label>Area Type</Form.Label>
+            <Form.Label>Flächentyp</Form.Label>
             <CreatableSelect
               options={enumArrays.areaType.map((item) => {
                 return { value: item, label: item };
@@ -100,16 +100,16 @@ export default function ProjectSowingDetails(props) {
           </FormGroup>
         </div>
         <div className="mt-3">
-          <h6>Seed Mixture</h6>
+          <h6>Saatgut Mix</h6>
           <Row className="border-bottom">
             <Col xs={4}>
-              <Form.Label>Seed Type</Form.Label>
+              <Form.Label>Art</Form.Label>
             </Col>
             <Col xs={3}>
-              <Form.Label>% of Total</Form.Label>
+              <Form.Label>% im Mix</Form.Label>
             </Col>
             <Col xs={2} className="d-flex justify-content-center">
-              <Form.Label>Available?</Form.Label>
+              <Form.Label>Vorhanden?</Form.Label>
             </Col>
             <Col xs={2}></Col>
           </Row>
@@ -119,7 +119,7 @@ export default function ProjectSowingDetails(props) {
               <AddMoreButton />
             ) : (
               !editMode && (
-                <p className="mb-0 mt-2 text-muted">Noting specified yet</p>
+                <p className="mb-0 mt-2 text-muted">Keine Angaben.</p>
               )
             )
           ) : (
@@ -128,7 +128,11 @@ export default function ProjectSowingDetails(props) {
                 <Row className="mt-2" key={field.id}>
                   <Col xs={4}>
                     <Form.Control
-                      className={errors.seedMixture?.[index]?.seedType ? "bg-white invalid" : "bg-white"}
+                      className={
+                        errors.seedMixture?.[index]?.seedType
+                          ? "bg-white invalid"
+                          : "bg-white"
+                      }
                       disabled={!editMode}
                       type="text"
                       placeholder="Birch Tree"
@@ -142,7 +146,11 @@ export default function ProjectSowingDetails(props) {
                   </Col>
                   <Col xs={3}>
                     <Form.Control
-                      className={errors.seedMixture?.[index]?.percentage ? "bg-white invalid" : "bg-white"}
+                      className={
+                        errors.seedMixture?.[index]?.percentage
+                          ? "bg-white invalid"
+                          : "bg-white"
+                      }
                       disabled={!editMode}
                       type="number"
                       {...register(`seedMixture.${index}.percentage`, {
@@ -186,11 +194,12 @@ export default function ProjectSowingDetails(props) {
                     )}
                   </Col>
                 </Row>
-                {errors.seedMixture?.[index] && Object.entries(errors.seedMixture[index]).length > 1 && (
-                  <p className="text-danger mt-1 mb-0">
-                    Please fill or remove all fields!
-                  </p>
-                )}
+                {errors.seedMixture?.[index] &&
+                  Object.entries(errors.seedMixture[index]).length > 1 && (
+                    <p className="text-danger mt-1 mb-0">
+                      Please fill or remove all fields!
+                    </p>
+                  )}
               </>
             ))
           )}
@@ -212,7 +221,7 @@ export default function ProjectSowingDetails(props) {
       </Form>
 
       <EditableUserList
-        title="Pilots"
+        title="Piloten"
         field="pilots"
         editMode={editMode}
         editedProject={editedProject}

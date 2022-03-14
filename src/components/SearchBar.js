@@ -10,7 +10,7 @@ export default function SearchBar(props) {
         <FormGroup className={ `w-${width}` }>
           <Form.Control 
             type="search" 
-            placeholder="Search..." 
+            placeholder="Suche..." 
             value={ query } 
             onChange={ (e) => setQuery(e.target.value) }
           />

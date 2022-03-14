@@ -36,7 +36,7 @@ export default function EditableUserList(props) {
         {!editedProject ||
         !editedProject[field] ||
         editedProject[field].length === 0 ? (
-          <p className="mb-0 text-muted"> None assigned yet.</p>
+          <p className="mb-0 text-muted"> Keine Angaben.</p>
         ) : (
           editedProject[field].map((user) => (
             <div className="d-flex align-items-center" key={user._id}>

@@ -26,7 +26,7 @@ export default function AllProjectsPage(props) {
 
   return (
     <div className="p-5">
-      <h1 className="mb-5">My Projects</h1>
+      <h1 className="mb-5">Meine Projekte</h1>
       {isLoading ? (
         <Spinner animation="border" variant="secondary-cstm" />
       ) : (
@@ -35,7 +35,7 @@ export default function AllProjectsPage(props) {
       <SuccessToast
         showSuccess={showSuccess}
         toggleShowSuccess={toggleShowSuccess}
-        message={"Project successfully deleted"}
+        message={"Projekt wurde gelöscht."}
       />
     </div>
   );

@@ -6,22 +6,22 @@ export default function DeleteModal(props) {
   return (
     <Modal show={show} size="lg" centered variant="danger">
       <Modal.Body className="text-center text-primary-cstm ">
-        <h4>Are you Sure?</h4>
-        <p>Sure you want to delete this project?</p>
+        <h4>Sicher?</h4>
+        <p>Willst du dieses Projekt wirklich löschen?</p>
         <div className="d-flex justify-content-center">
           <Button
             onClick={ onCancel }
             variant="custom"
             className="bg-secondary-cstm text-white mx-2"
           >
-            No, Cancel
+            Abbrechen
           </Button>
           <Button
             onClick={ onConfirm }
             variant="custom"
             className="bg-error-cstm text-white mx-2"
           >
-            Yes, Delete
+            Löschen
           </Button>
         </div>
       </Modal.Body>

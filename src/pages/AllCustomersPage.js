@@ -46,7 +46,7 @@ export default function CustomersPage() {
 
   return (
     <div className="res-width-container p-5">
-      <h1 className="mb-5">All Customers</h1>
+      <h1 className="mb-5">Alle Kunden</h1>
       {
         isLoading ?
           <Spinner animation="border" variant="secondary-cstm" /> : 
@@ -85,7 +85,7 @@ export default function CustomersPage() {
     <SuccessToast
       showSuccess={ showSuccess }
       toggleShowSuccess={ toggleShowSuccess }
-      message={ "Customers successfully created" }
+      message={ "Kunden wurden hinzugefügt" }
     />
     </div>
   )

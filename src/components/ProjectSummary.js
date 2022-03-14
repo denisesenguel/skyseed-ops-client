@@ -13,7 +13,7 @@ export default function ProjectSummary(props) {
     <div className="mt-3">
       <Form>
         <Form.Group className="mt-2">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Kurzbeschreibung</Form.Label>
           <Form.Control
             disabled={!editMode}
             className="bg-white"
@@ -24,7 +24,7 @@ export default function ProjectSummary(props) {
           />
         </Form.Group>
         <Form.Group controlId="sizeInHa" className="mt-2">
-          <Form.Label>Size (in ha)</Form.Label>
+          <Form.Label>Größe (in Hektar)</Form.Label>
           <Form.Control
             disabled={!editMode}
             type="number"
@@ -37,7 +37,7 @@ export default function ProjectSummary(props) {
       </Form>
 
       <EditableUserList
-        title="Project Managers"
+        title="Projektmanager"
         field="managers"
         editMode={editMode}
         editedProject={editedProject}

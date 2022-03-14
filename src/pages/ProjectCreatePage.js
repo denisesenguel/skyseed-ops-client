@@ -91,14 +91,14 @@ export default function ProjectCreatePage(props) {
 
   return (
     <div className="p-5 res-width-container">
-      <h1 className="mb-5">Add Project</h1>
+      <h1 className="mb-5">Neues Projekt</h1>
       {isLoading ? (
         <Spinner animation="border" variant="secondary-cstm" />
       ) : (
         <>
           <Form onSubmit={handleSubmit(createProject)}>
             <Form.Group>
-              <Form.Label>Title</Form.Label>
+              <Form.Label>Titel</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Forst XYZ"
@@ -112,7 +112,7 @@ export default function ProjectCreatePage(props) {
 
             <div className="d-flex mt-2">
               <Form.Group>
-                <Form.Label>Location</Form.Label>
+                <Form.Label>Ort</Form.Label>
                 <Form.Control
                   className={errors.location ? "invalid" : ""}
                   {...register("location", { required: true })}
@@ -122,7 +122,7 @@ export default function ProjectCreatePage(props) {
                 )}
               </Form.Group>
               <Form.Group className="mx-2">
-                <Form.Label>Season</Form.Label>
+                <Form.Label>Saison</Form.Label>
                 <Form.Select
                   className={errors.season ? "invalid" : ""}
                   {...register("season", { required: true })}
@@ -139,7 +139,7 @@ export default function ProjectCreatePage(props) {
                 )}
               </Form.Group>
               <Form.Group>
-                <Form.Label>Year</Form.Label>
+                <Form.Label>Jahr</Form.Label>
                 <Form.Control
                   type="number"
                   className={errors.year ? "invalid" : ""}
@@ -165,7 +165,7 @@ export default function ProjectCreatePage(props) {
             </div>
 
             <Form.Group className="mt-2">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>Kurzbeschreibung</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -176,7 +176,7 @@ export default function ProjectCreatePage(props) {
 
             <div className="d-flex mt-2">
               <Form.Group>
-                <Form.Label>Size (in ha)</Form.Label>
+                <Form.Label>Größe (in Hektar)</Form.Label>
                 <Form.Control
                   type="number"
                   step={0.1}
@@ -185,7 +185,7 @@ export default function ProjectCreatePage(props) {
                 />
               </Form.Group>
               <Form.Group className="mx-2">
-                <Form.Label> Project Status </Form.Label>
+                <Form.Label> Status </Form.Label>
                 <Form.Select {...register("status")}>
                   <option> </option>
                   {enumArrays.status.map((status, index) => (
@@ -198,7 +198,7 @@ export default function ProjectCreatePage(props) {
             </div>
 
             <Form.Group className="mt-2">
-              <Form.Label> Customer </Form.Label>
+              <Form.Label> Kunde </Form.Label>
               <Form.Select
                 className={errors.customer ? "invalid" : ""}
                 {...register("customer", { required: true })}
@@ -216,7 +216,7 @@ export default function ProjectCreatePage(props) {
             </Form.Group>
 
             <Form.Group className="mt-2">
-              <Form.Label> Select at least one Project Manager </Form.Label>
+              <Form.Label> Projektmanager </Form.Label>
               {controlledFields.map((field, index) => (
                 <>
                   <Form.Select
@@ -244,7 +244,7 @@ export default function ProjectCreatePage(props) {
                 size="sm"
                 className="border-secondary-cstm text-secondary-cstm"
               >
-                Add More
+                Mehr
               </Button>
               <Button
                 onClick={() =>
@@ -256,7 +256,7 @@ export default function ProjectCreatePage(props) {
                 size="sm mx-2"
                 className="border-secondary-cstm text-secondary-cstm"
               >
-                Remove
+                Entfernen
               </Button>
             </div>
 
@@ -265,7 +265,7 @@ export default function ProjectCreatePage(props) {
               variant="custom"
               type="submit"
             >
-              Add Project
+              Hinzufügen
             </Button>
           </Form>
           {failure.hasOccured && (

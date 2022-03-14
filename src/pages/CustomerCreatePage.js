@@ -49,15 +49,15 @@ export default function CustomerCreatePage() {
   return (
     <div className="p-5 res-width-container">
 
-      <h1>Add Customers</h1>
+      <h1>Neuer Kunde</h1>
       <Form onSubmit={ handleSubmit(createCustomers) }>
         {
           controlledFields.map((fields, index) => (
             <>
-              <h5 key={ fields.id } className="my-3 mt-5">Customer { index + 1 }</h5>
+              <h5 key={ fields.id } className="my-3 mt-5">Kunde { index + 1 }</h5>
               <div className="d-flex w-100">
                 <Form.Group className="w-50 mr-2" controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label>Vorname</Form.Label>
                   <Form.Control
                     type="text" placeholder="Horst"
                     className={errors.newCustomers?.[index]?.firstName ? "my-1 invalid" : "my-1"}
@@ -71,7 +71,7 @@ export default function CustomerCreatePage() {
                   }
                 </Form.Group>
                 <Form.Group className="w-50" controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
+                  <Form.Label>Nachname</Form.Label>
                   <Form.Control
                     type="text" placeholder="Forst"
                     className={errors.newCustomers?.[index]?.lastName ? "my-1 invalid" : "my-1"}
@@ -124,19 +124,19 @@ export default function CustomerCreatePage() {
           className="border-secondary-cstm text-secondary-cstm mt-4" 
           variant="custom" 
           size="sm"
-        >Add More</Button>
+        >Mehr</Button>
         <Button 
           onClick={ () => controlledFields.length > 1 ? remove(controlledFields.length - 1) : null } 
           className="border-secondary-cstm text-secondary-cstm mt-4 mx-2" 
           variant="custom" 
           size="sm"
-        >Remove</Button>
+        >Entfernen</Button>
         <br />
         <Button 
           type="submit" 
           className="bg-secondary-cstm text-primary-cstm mt-4" 
           variant="custom" 
-        >Create All</Button>
+        >Alle Hinzufügen</Button>
       </Form>
 
       {failure.hasOccured && (

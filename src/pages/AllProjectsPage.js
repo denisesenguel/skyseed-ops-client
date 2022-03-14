@@ -7,7 +7,7 @@ export default function AllProjectsPage(props) {
 
   return (
     <div className="p-5">
-      <h1 className="mb-5">All Projects</h1>
+      <h1 className="mb-5">Alle Projekte</h1>
       {isLoading ? (
         <Spinner animation="border" variant="secondary-cstm" />
       ) : (

@@ -34,11 +34,11 @@ export default function ProjectsList(props) {
       <ListGroup className="shadow">
         <ListGroup.Item className="text-secondary-cstm bg-neutral-grey rounded p-3 px-5">
           <Row>
-            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Title</h6></Col>
-            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Time</h6></Col>
-            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Location</h6></Col>
+            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Titel</h6></Col>
+            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Zeitraum</h6></Col>
+            <Col xs={3} className="d-flex align-items-center"><h6 className="m-0">Ort</h6></Col>
             <Col xs={2} className="d-flex align-items-center justify-content-center"><h6 className="m-0">Status</h6></Col>
-            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Updated</h6></Col>
+            <Col xs={2} className="d-flex align-items-center"><h6 className="m-0">Update</h6></Col>
           </Row>
         </ListGroup.Item>
         {
