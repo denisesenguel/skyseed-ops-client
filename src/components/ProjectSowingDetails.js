@@ -40,7 +40,6 @@ export default function ProjectSowingDetails(props) {
     });
     updateEditedProject("seedMixture", newArray);
   }
-  console.log(errors)
 
   return (
     <div className="mt-3">
@@ -60,14 +59,28 @@ export default function ProjectSowingDetails(props) {
           <FormGroup className="w-25">
             <Form.Label>% Sowing Density</Form.Label>
             <Form.Control
-              className="bg-white"
+              className={errors.sowingDensity ? "bg-white invalid" : "bg-white"}
               disabled={!editMode}
               type="number"
-              {...register("sowingDensity", {min: 0, max: 100})}
+              {...register("sowingDensity", {
+                min: {
+                  value: 0,
+                  message: "Invalid value.",
+                },
+                max: {
+                  value: 100,
+                  message: "Invalid value.",
+                },
+              })}
               onChange={(e) =>
                 updateEditedProject(e.target.name, e.target.value)
               }
             ></Form.Control>
+            {errors?.sowingDensity && (
+              <p className="text-danger font-s mt-1 mb-0">
+                {errors.sowingDensity.message}
+              </p>
+            )}
           </FormGroup>
           <FormGroup className="w-75 ml-2">
             <Form.Label>Area Type</Form.Label>
@@ -115,7 +128,7 @@ export default function ProjectSowingDetails(props) {
                 <Row className="mt-2" key={field.id}>
                   <Col xs={4}>
                     <Form.Control
-                      className="bg-white"
+                      className={errors.seedMixture?.[index]?.seedType ? "bg-white invalid" : "bg-white"}
                       disabled={!editMode}
                       type="text"
                       placeholder="Birch Tree"
@@ -129,18 +142,29 @@ export default function ProjectSowingDetails(props) {
                   </Col>
                   <Col xs={3}>
                     <Form.Control
-                      className="bg-white"
+                      className={errors.seedMixture?.[index]?.percentage ? "bg-white invalid" : "bg-white"}
                       disabled={!editMode}
                       type="number"
                       {...register(`seedMixture.${index}.percentage`, {
                         required: true,
-                        min: 0,
-                        max: 100
+                        min: {
+                          value: 0,
+                          message: "Invalid Value.",
+                        },
+                        max: {
+                          value: 100,
+                          message: "Invalid Value.",
+                        },
                       })}
                       onChange={(e) =>
                         updateSeedMixture(index, "percentage", e.target.value)
                       }
                     />
+                    {errors.seedMixture?.[index]?.percentage?.message && (
+                      <p className="text-danger font-s mt-1 mb-0">
+                        {errors.seedMixture[index].percentage.message}
+                      </p>
+                    )}
                   </Col>
                   <Col
                     xs={2}
@@ -162,10 +186,9 @@ export default function ProjectSowingDetails(props) {
                     )}
                   </Col>
                 </Row>
-                {errors.seedMixture?.[index] && (
+                {errors.seedMixture?.[index] && Object.entries(errors.seedMixture[index]).length > 1 && (
                   <p className="text-danger mt-1 mb-0">
-                    {" "}
-                    Please fill or remove all fields!{" "}
+                    Please fill or remove all fields!
                   </p>
                 )}
               </>
@@ -178,7 +201,7 @@ export default function ProjectSowingDetails(props) {
                 onClick={() =>
                   append({
                     seedType: "",
-                    percentage: 0,
+                    percentage: "",
                     available: false,
                   })
                 }
