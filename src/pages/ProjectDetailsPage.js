@@ -5,6 +5,7 @@ import axios from "axios";
 import ProjectSummary from "../components/ProjectSummary";
 import ProjectSowingDetails from "../components/ProjectSowingDetails";
 import ProjectChecklist from "../components/ProjectChecklist";
+import Map from "../components/Map";
 import { ButtonMailTo } from "../components/Buttons";
 import StatusTag from "../components/StatusTag";
 import SuccessToast from "../components/SuccessToast";
@@ -145,6 +146,11 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                     Checkliste
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link className="text-primary-cstm" eventKey="map">
+                    Karte
+                  </Nav.Link>
+                </Nav.Item>
               </Nav>
 
               {selectedTab === "summary" && (
@@ -170,6 +176,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                   editMode={editMode} 
                 />
               )}
+              {selectedTab === "map" && <Map />}
             </div>
 
             <div className="d-flex justify-content-end">
