@@ -25,7 +25,7 @@ export default function Map(props) {
   function initializeMap() {
     map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/sengueld/cl0w9vgyd000h14pe651as181',
+        style: process.env.REACT_APP_MAPBOX_STYLE,
         center: [long, lat],
         zoom:zoom
     })
