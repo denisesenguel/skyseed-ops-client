@@ -20,7 +20,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
   const [editMode, setEditMode] = useState(false);
   const [editedProject, setEditedProject] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
-  const { showSuccess, toggleShowSuccess} = useShowSuccess();
+  const { showSuccess, toggleShowSuccess } = useShowSuccess();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState("summary");
 
@@ -113,7 +113,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
               </div>
 
               <p>
-                Kunde: {" "}
+                Kunde:{" "}
                 <ButtonMailTo
                   label={[
                     project.customer?.firstName,
@@ -162,7 +162,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                 />
               )}
               {selectedTab === "details" && (
-                <ProjectSowingDetails 
+                <ProjectSowingDetails
                   project={project}
                   editMode={editMode}
                   editedProject={editedProject}
@@ -170,13 +170,19 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                 />
               )}
               {selectedTab === "checklist" && (
-                <ProjectChecklist 
+                <ProjectChecklist
                   editedProject={editedProject}
-                  updateEditedProject={updateEditedProject} 
-                  editMode={editMode} 
+                  updateEditedProject={updateEditedProject}
+                  editMode={editMode}
                 />
               )}
-              {selectedTab === "map" && <Map />}
+              {selectedTab === "map" && (
+                <Map
+                  className="position-relative my-5"
+                  clickable={true}
+                  projectId={projectId}
+                />
+              )}
             </div>
 
             <div className="d-flex justify-content-end">
@@ -199,7 +205,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                       Verwerfen
                     </Button>
                     <Button
-                      onClick={ editProject }
+                      onClick={editProject}
                       variant="custom"
                       className="border-secondary-cstm text-secondary-cstm mx-2"
                     >
@@ -208,7 +214,7 @@ export default function ProjectDetailsPage({ fetchProjects }) {
                   </>
                 )}
                 <Button
-                  onClick={ () => setShowDeleteModal(true) }
+                  onClick={() => setShowDeleteModal(true)}
                   variant="custom"
                   className="border-danger text-danger fix-at-bottom-right"
                 >
@@ -221,9 +227,9 @@ export default function ProjectDetailsPage({ fetchProjects }) {
       </div>
 
       <DeleteModal
-        show={ showDeleteModal }
+        show={showDeleteModal}
         onCancel={() => setShowDeleteModal(false)}
-        onConfirm={ deleteProject }
+        onConfirm={deleteProject}
       />
 
       <SuccessToast

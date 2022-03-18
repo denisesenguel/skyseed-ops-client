@@ -11,8 +11,13 @@ Install all relevant dependencies by running `npm install`
 Create an `.env` with the following contents 
 ```
 REACT_APP_API_URL=https://localhost:5005/path/to/local/api
+REACT_APP_MAPBOX_TOKEN=your-mapbox-account-access-token
+REACT_APP_MAPBOX_STYLE=mapbox://styles/link-to-your-style
 ```
-Note that you'll need the API running locally in order for the app to be run in development mode (see below)
+[Read this](https://docs.mapbox.com/help/getting-started/access-tokens/) for more information on how to get a Mapbox access token.
+For the style, you may use your own custom styles or public ones.
+
+Note that you'll need the API running locally in order for the app to be run in development mode (see below).
 
 ## Available Scripts
 

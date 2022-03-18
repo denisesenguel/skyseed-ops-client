@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
+import { Link } from "react-router-dom";
 //import "mapbox-gl/dist/mapbox-gl.css";
 
-export default function Map() {
+export default function Map(props) {
   
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
+  
+  const { className, clickable, projectId } = props;
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -29,5 +31,7 @@ export default function Map() {
     })
   }
 
-  return <div ref={mapContainer} className="position-relative my-5"></div>;
+  return clickable ? 
+    <Link ref={mapContainer} className={className} to={`/home/projects/${projectId}/map`} /> :
+    <div ref={mapContainer} className={className}></div>;
 }

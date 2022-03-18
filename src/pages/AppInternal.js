@@ -4,6 +4,7 @@ import axios from 'axios';
 import AllProjectsPage from './AllProjectsPage';
 import MyProjectsPage from './MyProjectsPage';
 import ProjectDetailsPage from './ProjectDetailsPage';
+import ProjectMapPage from './ProjectMapPage';
 import ProjectCreatePage from './ProjectCreatePage';
 import AllCustomersPage from './AllCustomersPage';
 import CustomerCreatePage from './CustomerCreatePage';
@@ -56,6 +57,7 @@ export default function AppInternal() {
               />
               <Route path="/projects/create" element={ <ProjectCreatePage fetchProjects={ fetchProjects } />} />
               <Route path="/projects/:projectId" element={<ProjectDetailsPage fetchProjects={ fetchProjects } />} />
+              <Route path="/projects/:projectId/map" element={<ProjectMapPage />}/>
               <Route path="/customers" element={ <AllCustomersPage /> }/>
               <Route path="/customers/create" element={ <CustomerCreatePage />}/>
               {/* TODO: improve error view on this page (no header!) */}
