@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import { Link } from "react-router-dom";
 import airspaceLayer from "../data/openaip-airspaces.json";
-//import "mapbox-gl/dist/mapbox-gl.css";
+import airportsLayer from "../data/openaip-airports.json";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function Map(props) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -22,6 +23,7 @@ export default function Map(props) {
 
   map.current?.on("load", () => {
     addAirspaceLayer(map.current);
+    addAirportsLayer(map.current);
   });
 
   function initializeMap() {
@@ -41,11 +43,10 @@ export default function Map(props) {
         feature.properties.lowerLimit?.unit === 1 &&
         feature.properties.lowerLimit.value <= 328
     );
-    console.log(filteredAirspaces);
 
     map.addSource("airspaces", {
       type: "geojson",
-      data: filteredAirspaces,
+      data: filteredAirspaces
     });
     // there seems to be a filter expression here too
     map.addLayer({
@@ -57,6 +58,38 @@ export default function Map(props) {
         "fill-opacity": 0.3
       },
     });
+  }
+
+  function addAirportsLayer(map) {
+    
+
+    const airportsSource = {type: "FeatureCollection", features: []};
+    airportsSource.features = airportsLayer.map((airport, index) => {
+        const { geometry, ...properties } = airport;
+        return {
+            type: "Feature",
+            id: index,
+            geometry: geometry,
+            properties: properties
+        };
+    })
+
+    map.addSource("airports", {
+        type: "geojson",
+        data: airportsSource
+    });
+
+    map.addLayer({
+        id: "openaip-airports",
+        type: "circle",
+        source: "airports",
+        paint: {
+            "circle-color": "#189181",
+            "circle-opacity": 0.3,
+            "circle-radius": 20
+        }
+    })
+
   }
 
   return clickable ? (
