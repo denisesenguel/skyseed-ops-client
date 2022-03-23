@@ -1,14 +1,13 @@
 function addMapLayer(map, data, name, type, paint) {
 
-  try {
-      
-      map.addSource(name, {
-        type: "geojson",
-        data: data,
-      });
-  } catch (error) {
-      console.log("error adding source: ", error);
-  }
+  if (map.getSource(name)) {
+    map.removeLayer(name);
+    map.removeSource(name);
+  } 
+  map.addSource(name, {
+    type: "geojson",
+    data: data,
+  });
 
   map.addLayer({
     id: name,
