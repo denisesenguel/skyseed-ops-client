@@ -12,7 +12,7 @@ export default function ProjectSummary(props) {
   return (
     <div className="mt-3">
       <Form>
-        <Form.Group className="mt-2">
+        <Form.Group className="mt-2" controlId="description">
           <Form.Label>Kurzbeschreibung</Form.Label>
           <Form.Control
             disabled={!editMode}
